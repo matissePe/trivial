@@ -15,6 +15,7 @@ def run(f, embed):
 def page_1(embed):
     embed.add_field(name='lefevre swing', value='Parle de swing', inline = False)
     embed.add_field(name='lefevre forum', value='Parle du forum', inline = False)
+    embed.add_field(name='lefevre ant', value="ANT c'est super!", inline = False)
     embed.add_field(name='lefevre travail', value='Parle de notre charge de travail', inline = False)
     embed.add_field(name='lefevre javadoc', value="C'est pas mon travail de vous faire apprendre", inline = False)
     embed.add_field(name='lefevre question', value='Déjà répondu à cette question.', inline = False)

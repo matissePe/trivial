@@ -160,6 +160,10 @@ async def forum(ctx):
     response = "Si vous avez une question, utilisez les forums moodle! Après tout vous n'êtes jamais là sur le chat sur les créneaux prévus ..."
     await ctx.send(response)
 
+@bot.command(name='ant')
+async def forum(ctx):
+    response = "ANT c'est un super outil open source de la fondation Apache, qui permet de faire plein de commandes utiles que vous êtes incapables de taper vous-mêmes! Suffit de faire un build.xml, ça prend quoi, 1h?"
+    await ctx.send(response)
 
 
 @bot.command(name='travail')

@@ -8,9 +8,11 @@ from dotenv import load_dotenv
 
 HELP_PAGES = 2
 
-USER_RATE_CONST = 417948452
+USER_RATE_CONST1 = 267234
 
-SHIP_RATE_CONST = 9090338
+USER_RATE_CONST2 = 112680
+
+USER_RATE_CONST3 = 130984
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -20,6 +22,8 @@ BOT_ID = int(os.getenv('BOT_ID'))
 
 bot = commands.Bot(command_prefix='lefevre ')
 bot.remove_command('help')
+
+
 
 
 
@@ -161,7 +165,7 @@ async def forum(ctx):
     await ctx.send(response)
 
 @bot.command(name='ant')
-async def forum(ctx):
+async def ant(ctx):
     response = "ANT c'est un super outil open source de la fondation Apache, qui permet de faire plein de commandes utiles que vous êtes incapables de taper vous-mêmes! Suffit de faire un build.xml, ça prend quoi, 1h?"
     await ctx.send(response)
 
@@ -172,13 +176,85 @@ async def travail(ctx):
     await ctx.send(response)
 
 
+
+
+def rate1(user_id: int):
+    number = ((((user_id)%USER_RATE_CONST1)%169)/32)
+    number = (int(20 * (number + 4.75)))/10
+    return number
+
+
+def rate2(user_id: int):
+    number = ((((user_id)%USER_RATE_CONST2)%169)/32)
+    number = (int(20 * (number + 4.75)))/10
+    return number
+
+def rate3(user_id: int):
+    number = ((((user_id)%USER_RATE_CONST3)%169)/32)
+    number = (int(20 * (number + 4.75)))/10
+    return number
+
+@bot.command(name='noteprojet')
+async def noteprojet(ctx):
+    try:
+        try:
+            mentionned_user = ctx.message.mentions[0].id
+        except:
+            mentionned_user = ctx.author.id
+        finally:
+            note1 = rate1(int(mentionned_user))
+            note2 = rate2(int(mentionned_user))
+            note3 = rate3(int(mentionned_user))
+
+
+
+            cposs1 = ["absolument dégueulasse", "passable pour un travail de CP", "presque pas mal", "plutôt bon", "excellent", "bien mais moins que swing quand même faut pas déconner",
+                      "passable de commentaire", "presque intéressant à lire", "inqualifiable parce que j'ai pas lu", "fort sympathique à ignorer"]
+
+            cposs2 = ["plus fun à regarder qu'à lire", "drôle par moments", "une joie à noter", "très détaillé sur les points les moins importants", "une véritable déception",
+                      "[insérer une remarque faite par un autre élève]", "tout simplement le dark souls du random.org"]
+
+            cposs3 = ["bien travaillé, on a vu que tu as passé bien plus que ton week-end dessus", "inexistant, mais j'ai pas vérifié donc np", "une superbe démonstration des possibilités (oui, avec un s) de swing",
+                      "politiquement correct, c'est déjà bien", "à la hauteur de mes attentes (félicitations)", "une perte de temps pour nous deux"]
+
+            commentaire1 = cposs1[mentionned_user % 10]
+            commentaire2 = cposs2[(mentionned_user * 47) % 7]
+            commentaire3 = cposs3[(mentionned_user * 81) % 6]
+
+            nbpages1 = (mentionned_user * 37) % 158 + 5
+            nbpages2 = (mentionned_user * 54) % 131 + 5
+            nbpages3 = (mentionned_user * 71) % 171 + 5
+
+            avg = int (100 * (note1 + note2 + note3) / 3) / 100
+
+            msg = str("J'octroie à <@!" + str(mentionned_user) + "> la note de " + str(avg) + "/20.0 pour le projet de programmation:"
+                + "\n\n - Le cahier des charges remis était " + commentaire1 + ", et faisait " + str(nbpages1) + " pages, il mérite donc la note de " + str(note1)
+                + "\n\n - Le cahier d'analyse et de conception remis était " + commentaire2 + ", et faisait " + str(nbpages2) + " pages, il mérite donc la note de " + str(note2)
+                + "\n\n - Le rendu final était " + commentaire3 + ", et faisait " + str(nbpages3) + " pages, il mérite donc la note de " + str(note3)
+                )
+
+
+
+            await ctx.send(msg)
+    except:
+        response = 'Il y a eu un problème. Utilisez lefevre noteprojet ou lefevre noteprojet <@User>'
+        await ctx.send(response)
+
+
+
+
+
+
+
+
 @bot.command(name='random')
 async def randomQuote(ctx):
     quotes = ["Swing est la meilleure librairie graphique de tous les langages de programmation possibles et imaginables. Il s'agit d'une technlogie jeune et souple utilisée partout dans le monde!",
               "Si vous avez une question, utilisez les forums moodle! Après tout vous n'êtes jamais là sur le chat sur les créneaux prévus ...",
               "Vous avez autant de travail qu'en temps normal. N'oubliez pas de passer votre week-end sur le TP!",
               "Va voir la javadoc",
-              "J'ai déjà répondu " + str(random.randint(69,420)) + " fois à cette question!"
+              "J'ai déjà répondu " + str(random.randint(69,420)) + " fois à cette question!",
+              "ANT c'est un super outil open source de la fondation Apache, qui permet de faire plein de commandes utiles que vous êtes incapables de taper vous-mêmes! Suffit de faire un build.xml, ça prend quoi, 1h?"
     ]
     response = random.choice(quotes)
     await ctx.send(response)

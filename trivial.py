@@ -24,6 +24,8 @@ TUFFIGANG_C_ID = 783647651349659698
 
 TUFFIGANG_R_ID = 783647539840286741
 
+EVAN_ID = 282264924472737792
+
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
@@ -75,6 +77,10 @@ async def on_message(message: discord.Message):
             response = "Debrouille-toi."
             chan = message.channel
             await chan.send(response)
+        elif str(message.mentions[0].id) == str(EVAN_ID) :
+            response = "J'espere que tu le ping pour une bonne raison."
+            chan = message.channel
+            await chan.send(response)
 
     if (process and not message.author.bot) :
         if message.channel.id == TUFFIGANG_C_ID :
@@ -94,7 +100,7 @@ async def on_message(message: discord.Message):
                 game.incPveBattles(message.author.id)
 
             if message.content == "fuck ecobosto" :
-                await message.add_reaction('\U0001F44D') #:+1:
+                await message.channel.send("Ecobosto est la meilleure entreprise du monde. Rejoignez-nous, ayez un avenir.")
         await bot.process_commands(message)
 
 

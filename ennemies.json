@@ -1,0 +1,648 @@
+{
+    "ennemies" : [
+        {
+            "id": "1",
+            "name" : "Paint",
+            "stats": {
+                "level": 3,
+                "hp": 15,
+                "atk": 6,
+                "def": 6,
+                "spa": 1,
+                "spd": 6,
+                "spe": 1,
+                "exp": 30
+            }, "weapon": {
+                "id": 0,
+                "name": "Mains",
+                "atk": 1,
+                "def": 1,
+                "spa": 0,
+                "spd": 0,
+                "spe": 2
+            }
+        },
+
+        {
+            "id": "2",
+            "name" : "Swing",
+            "stats": {
+                "level": 3,
+                "hp": 15,
+                "atk": 1,
+                "def": 1,
+                "spa": 9,
+                "spd": 1,
+                "spe": 9,
+                "exp": 30
+            }, "weapon": {
+                "id": 0,
+                "name": "Mains",
+                "atk": 1,
+                "def": 1,
+                "spa": 0,
+                "spd": 0,
+                "spe": 2
+            }
+        },
+
+        {
+            "id": "3",
+            "name" : "Le-Forum",
+            "stats": {
+                "level": 3,
+                "hp": 15,
+                "atk": 4,
+                "def": 4,
+                "spa": 4,
+                "spd": 4,
+                "spe": 4,
+                "exp": 30
+            }, "weapon": {
+                "id": 0,
+                "name": "Mains",
+                "atk": 1,
+                "def": 1,
+                "spa": 0,
+                "spd": 0,
+                "spe": 2
+            }
+        },
+
+        {
+            "id": "4",
+            "name" : "Le-Tuffigang",
+            "stats": {
+                "level": 7,
+                "hp": 25,
+                "atk": 6,
+                "def": 9,
+                "spa": 9,
+                "spd": 9,
+                "spe": 9,
+                "exp": 60
+            }, "weapon": {
+                "id" : 1,
+                "name" : "Clavier",
+                "atk" : 5,
+                "def" : 2,
+                "spa" : 0,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+        {
+            "id": "5",
+            "name" : "Ant",
+            "stats": {
+                "level": 8,
+                "hp": 30,
+                "atk": 14,
+                "def": 14,
+                "spa": 4,
+                "spd": 6,
+                "spe": 6,
+                "exp": 80
+            }, "weapon": {
+                "id" : 2,
+                "name" : "Souris Filaire Accrochee a un baton",
+                "atk" : 3,
+                "def" : 1,
+                "spa" : 0,
+                "spd" : 0,
+                "spe" : 5
+            }
+        },
+
+        {
+            "id": "6",
+            "name" : "RadioBonheur",
+            "stats": {
+                "level": 9,
+                "hp": 35,
+                "atk": 12,
+                "def": 12,
+                "spa": 12,
+                "spd": 12,
+                "spe": 12,
+                "exp": 100
+            }, "weapon": {
+                "id" : 5,
+                "name" : "Cure dent",
+                "atk" : 7,
+                "def" : 1,
+                "spa" : 0,
+                "spd" : 0,
+                "spe" : 7
+            }
+        },
+
+        {
+            "id": "7",
+            "name" : "Via",
+            "stats": {
+                "level": 12,
+                "hp": 40,
+                "atk": 12,
+                "def": 20,
+                "spa": 12,
+                "spd": 20,
+                "spe": 1,
+                "exp": 140
+            }, "weapon": {
+                "id" : 4,
+                "name" : "Not Stonks",
+                "atk" : 1,
+                "def" : 5,
+                "spa" : 1,
+                "spd" : 5,
+                "spe" : 1
+            }
+        },
+
+        {
+            "id": "8",
+            "name" : "Momo",
+            "stats": {
+                "level": 13,
+                "hp": 45,
+                "atk": 20,
+                "def": 14,
+                "spa": 10,
+                "spd": 14,
+                "spe": 14,
+                "exp": 180
+            }, "weapon": {
+                "id" : 6,
+                "name" : "Java",
+                "atk" : 0,
+                "def" : 2,
+                "spa" : 10,
+                "spd" : 5,
+                "spe" : 0
+            }
+        },
+
+        {
+            "id": "9",
+            "name" : "JFK",
+            "stats": {
+                "level": 14,
+                "hp": 50,
+                "atk": 15,
+                "def": 10,
+                "spa": 30,
+                "spd": 10,
+                "spe": 15,
+                "exp": 220
+            }, "weapon": {
+                "id" : 6,
+                "name" : "Java",
+                "atk" : 0,
+                "def" : 2,
+                "spa" : 10,
+                "spd" : 5,
+                "spe" : 0
+            }
+        },
+
+
+        {
+            "id": "10",
+            "name" : "Bannevy",
+            "stats": {
+                "level": 17,
+                "hp": 70,
+                "atk": 20,
+                "def": 30,
+                "spa": 1,
+                "spd": 30,
+                "spe": 1,
+                "exp": 280
+            }, "weapon": {
+                "id" : 8,
+                "name" : "L'argent des abonnés",
+                "atk" : 0,
+                "def" : 5,
+                "spa" : 5,
+                "spd" : 5,
+                "spe" : 4
+            }
+        },
+
+
+        {
+            "id": "11",
+            "name" : "Kerbulluc",
+            "stats": {
+                "level": 18,
+                "hp": 75,
+                "atk": 15,
+                "def": 15,
+                "spa": 35,
+                "spd": 15,
+                "spe": 30,
+                "exp": 340
+            }, "weapon": {
+                "id" : 7,
+                "name" : "Pinte de biere",
+                "atk" : 10,
+                "def" : 5,
+                "spa" : 0,
+                "spd" : 4,
+                "spe" : 0
+            }
+        },
+
+
+        {
+            "id": "12",
+            "name" : "Ricard",
+            "stats": {
+                "level": 19,
+                "hp": 80,
+                "atk": 25,
+                "def": 25,
+                "spa": 25,
+                "spd": 25,
+                "spe": 25,
+                "exp": 400
+            }, "weapon": {
+                "id" : 7,
+                "name" : "Pinte de biere",
+                "atk" : 10,
+                "def" : 5,
+                "spa" : 0,
+                "spd" : 4,
+                "spe" : 0
+            }
+        },
+
+
+        {
+            "id": "13",
+            "name" : "Brodont",
+            "stats": {
+                "level": 22,
+                "hp": 85,
+                "atk": 25,
+                "def": 40,
+                "spa": 10,
+                "spd": 40,
+                "spe": 10,
+                "exp": 480
+            }, "weapon": {
+                "id" : 8,
+                "name" : "L'argent des abonnés",
+                "atk" : 0,
+                "def" : 5,
+                "spa" : 5,
+                "spd" : 5,
+                "spe" : 4
+            }
+        },
+
+
+        {
+            "id": "14",
+            "name" : "Florquaing",
+            "stats": {
+                "level": 23,
+                "hp": 90,
+                "atk": 25,
+                "def": 22,
+                "spa": 45,
+                "spd": 22,
+                "spe": 5,
+                "exp": 560
+            }, "weapon": {
+                "id" : 10,
+                "name" : "C++",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 0,
+                "spd" : 0,
+                "spe" : 23
+            }
+        },
+
+
+        {
+            "id": "15",
+            "name" : "PwitBDD",
+            "stats": {
+                "level": 24,
+                "hp": 95,
+                "atk": 1,
+                "def": 25,
+                "spa": 30,
+                "spd": 25,
+                "spe": 150,
+                "exp": 640
+            }, "weapon": {
+                "id" : 11,
+                "name" : "sms32v50",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 25,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+
+        {
+            "id": "16",
+            "name" : "Seigneur-Rand",
+            "stats": {
+                "level": 27,
+                "hp": 3,
+                "atk": 55,
+                "def": 10000,
+                "spa": 55,
+                "spd": 10000,
+                "spe": 1,
+                "exp": 740
+            }, "weapon": {
+                "id" : 12,
+                "name" : "https://youtu.be/DLzxrzFCyOs",
+                "atk" : 0,
+                "def" : 3,
+                "spa" : 10,
+                "spd" : 4,
+                "spe" : 10
+            }
+        },
+
+
+        {
+            "id": "17",
+            "name" : "JFM",
+            "stats": {
+                "level": 28,
+                "hp": 105,
+                "atk": 25,
+                "def": 10,
+                "spa": 40,
+                "spd": 45,
+                "spe": 25,
+                "exp": 840
+            }, "weapon": {
+                "id" : 9,
+                "name" : "Framalogiciel",
+                "atk" : 0,
+                "def" : 11,
+                "spa" : 0,
+                "spd" : 10,
+                "spe" : 0
+            }
+        },
+
+
+        {
+            "id": "18",
+            "name" : "Jouclavier",
+            "stats": {
+                "level": 29,
+                "hp": 110,
+                "atk": 40,
+                "def": 40,
+                "spa": 40,
+                "spd": 40,
+                "spe": 20,
+                "exp": 940
+            }, "weapon": {
+                "id" : 14,
+                "name" : "Nokia 3310",
+                "atk" : 13,
+                "def" : 10,
+                "spa" : 0,
+                "spd" : 0,
+                "spe" : 10
+            }
+        },
+
+
+
+        {
+            "id": "19",
+            "name" : "Evan(le-trolleur)",
+            "stats": {
+                "level": 32,
+                "hp": 115,
+                "atk": 10,
+                "def": 30,
+                "spa": 60,
+                "spd": 30,
+                "spe": 30,
+                "exp": 1020
+            }, "weapon": {
+                "id" : 14,
+                "name" : "Nokia 3310",
+                "atk" : 13,
+                "def" : 10,
+                "spa" : 0,
+                "spd" : 0,
+                "spe" : 10
+            }
+        },
+
+
+        {
+            "id": "20",
+            "name" : "Roi-de-la-conception-objet",
+            "stats": {
+                "level": 33,
+                "hp": 120,
+                "atk": 40,
+                "def": 80,
+                "spa": 40,
+                "spd": 40,
+                "spe": 10,
+                "exp": 1140
+            }, "weapon": {
+                "id" : 7,
+                "name" : "Pinte de biere",
+                "atk" : 10,
+                "def" : 5,
+                "spa" : 0,
+                "spd" : 4,
+                "spe" : 0
+            }
+        },
+
+
+        {
+            "id": "21",
+            "name" : "L'Anti-Tuffigang",
+            "stats": {
+                "level": 34,
+                "hp": 125,
+                "atk": 50,
+                "def": 50,
+                "spa": 50,
+                "spd": 50,
+                "spe": 50,
+                "exp": 1260
+            }, "weapon": {
+                "id" : 15,
+                "name" : "Cahier des charges imprimé",
+                "atk" : 20,
+                "def" : 3,
+                "spa" : 0,
+                "spd" : 3,
+                "spe" : 10
+            }
+        },
+
+
+
+        {
+            "id": "22",
+            "name" : ":Bornetrigger:",
+            "stats": {
+                "level": 37,
+                "hp": 130,
+                "atk": 60,
+                "def": 60,
+                "spa": 50,
+                "spd": 60,
+                "spe": 30,
+                "exp": 1400
+            }, "weapon": {
+                "id" : 17,
+                "name" : "La Hash",
+                "atk" : 30,
+                "def" : 10,
+                "spa" : 0,
+                "spd" : 0,
+                "spe" : 5
+            }
+        },
+
+
+
+        {
+            "id": "23",
+            "name" : "Tuff",
+            "stats": {
+                "level": 38,
+                "hp": 135,
+                "atk": 50,
+                "def": 30,
+                "spa": 80,
+                "spd": 80,
+                "spe": 50,
+                "exp": 1540
+            }, "weapon": {
+                "id" : 16,
+                "name" : "Mail flamme",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 40,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+
+
+        {
+            "id": "24",
+            "name" : "2020",
+            "stats": {
+                "level": 39,
+                "hp": 366,
+                "atk": 60,
+                "def": 10,
+                "spa": 70,
+                "spd": 10,
+                "spe": 70,
+                "exp": 2020
+            }, "weapon": {
+                "id" : 18,
+                "name" : "Grimoire Dichotomique",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 30,
+                "spd" : 10,
+                "spe" : 10
+            }
+        },
+
+
+        
+        {
+            "id": "1001",
+            "name" : "Ecobosto",
+            "stats": {
+                "level": 50,
+                "hp": 150,
+                "atk": 70,
+                "def": 70,
+                "spa": 70,
+                "spd": 70,
+                "spe": 70,
+                "exp": 10000
+            }, "weapon": {
+                "id" : 49,
+                "name" : "Stonks",
+                "atk" : 5,
+                "def" : 20,
+                "spa" : 5,
+                "spd" : 20,
+                "spe" : 5
+            }
+        },
+
+
+
+        {
+            "id": "1002",
+            "name" : "Thomas",
+            "stats": {
+                "level": 60,
+                "hp": 200,
+                "atk": 85,
+                "def": 85,
+                "spa": 85,
+                "spd": 85,
+                "spe": 85,
+                "exp": 15000
+            }, "weapon": {
+                "id" : 1001,
+                "name" : "Kick",
+                "atk" : 10,
+                "def" : 10,
+                "spa" : 10,
+                "spd" : 10,
+                "spe" : 10
+            }
+        },
+
+
+        {
+            "id": "1003",
+            "name" : "Lefevre",
+            "stats": {
+                "level": 70,
+                "hp": 250,
+                "atk": 100,
+                "def": 100,
+                "spa": 100,
+                "spd": 100,
+                "spe": 100,
+                "exp": 20000
+            }, "weapon": {
+                "id": 50,
+                "name": "Trivial",
+                "atk" : 10,
+			    "def" : 0,
+			    "spa" : 40,
+			    "spd" : 0,
+			    "spe" : 10
+            }
+        }
+    ]
+}

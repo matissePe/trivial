@@ -1,0 +1,29 @@
+{
+    "users": [
+        {
+            "id": "0",
+            "stats": {
+                "level": 0,
+                "hp": 5,
+                "atk": 1,
+                "def": 1,
+                "spa": 1,
+                "spd": 1,
+                "spe": 1,
+                "statpoints": 10,
+                "exp": 0
+            },
+            "weapon": {
+                "id": 0,
+                "name": "Mains",
+                "atk": 1,
+                "def": 1,
+                "spa": 0,
+                "spd": 0,
+                "spe": 2
+            },
+            "inventaire": [],
+            "pvebattles": 0
+        }
+    ]
+}

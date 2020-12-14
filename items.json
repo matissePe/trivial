@@ -1,0 +1,327 @@
+{
+    "weapons" : [
+        {
+            "id" : 0,
+            "name" : "Mains",
+            "atk" : 1,
+			"def" : 1,
+			"spa" : 0,
+			"spd" : 0,
+			"spe" : 2
+        },
+
+        {
+            "id" : 1,
+            "name" : "Clavier",
+            "atk" : 5,
+			"def" : 2,
+			"spa" : 0,
+			"spd" : 0,
+			"spe" : 0
+        },
+
+        {
+            "id" : 2,
+            "name" : "Souris Filaire Accrochee a un baton",
+            "atk" : 3,
+			"def" : 1,
+			"spa" : 0,
+			"spd" : 0,
+			"spe" : 5
+        },
+
+        {
+            "id" : 3,
+            "name" : "Manette de Nintendo 64",
+            "atk" : 2,
+			"def" : 1,
+			"spa" : 6,
+			"spd" : 0,
+			"spe" : 2
+        },
+
+
+        {
+            "id" : 4,
+            "name" : "Not Stonks",
+            "atk" : 1,
+			"def" : 5,
+			"spa" : 1,
+			"spd" : 5,
+			"spe" : 1
+        },
+
+
+        {
+            "id" : 5,
+            "name" : "Cure dent",
+            "atk" : 7,
+			"def" : 1,
+			"spa" : 0,
+			"spd" : 0,
+			"spe" : 7
+        },
+
+
+        {
+            "id" : 6,
+            "name" : "Java",
+            "atk" : 0,
+			"def" : 2,
+			"spa" : 10,
+			"spd" : 5,
+			"spe" : 0
+        },
+
+        {
+            "id" : 7,
+            "name" : "Pinte de biere",
+            "atk" : 10,
+			"def" : 5,
+			"spa" : 0,
+			"spd" : 4,
+			"spe" : 0
+        },
+
+        {
+            "id" : 8,
+            "name" : "L'argent des abonnés",
+            "atk" : 0,
+			"def" : 5,
+			"spa" : 5,
+			"spd" : 5,
+			"spe" : 4
+        },
+
+        {
+            "id" : 9,
+            "name" : "Framalogiciel",
+            "atk" : 0,
+			"def" : 11,
+			"spa" : 0,
+			"spd" : 10,
+			"spe" : 0
+        },
+
+        {
+            "id" : 10,
+            "name" : "C++",
+            "atk" : 0,
+			"def" : 0,
+			"spa" : 0,
+			"spd" : 0,
+			"spe" : 23
+        },
+
+        {
+            "id" : 11,
+            "name" : "sms32v50",
+            "atk" : 0,
+			"def" : 0,
+			"spa" : 25,
+			"spd" : 0,
+			"spe" : 0
+        },
+
+
+        {
+            "id" : 12,
+            "name" : "https://youtu.be/DLzxrzFCyOs",
+            "atk" : 0,
+			"def" : 3,
+			"spa" : 10,
+			"spd" : 4,
+			"spe" : 10
+        },
+
+
+        {
+            "id" : 13,
+            "name" : "Confused Stonks",
+            "atk" : 3,
+			"def" : 10,
+			"spa" : 3,
+			"spd" : 10,
+			"spe" : 4
+        },
+
+        {
+            "id" : 14,
+            "name" : "Nokia 3310",
+            "atk" : 13,
+			"def" : 10,
+			"spa" : 0,
+			"spd" : 0,
+			"spe" : 10
+        },
+
+
+        {
+            "id" : 15,
+            "name" : "Cahier des charges imprimé",
+            "atk" : 20,
+			"def" : 3,
+			"spa" : 0,
+			"spd" : 3,
+			"spe" : 10
+        },
+
+
+        {
+            "id" : 16,
+            "name" : "Mail flamme",
+            "atk" : 0,
+			"def" : 0,
+			"spa" : 40,
+			"spd" : 0,
+			"spe" : 0
+        },
+
+        
+        
+
+        {
+            "id" : 17,
+            "name" : "La Hash",
+            "atk" : 30,
+			"def" : 10,
+			"spa" : 0,
+			"spd" : 0,
+			"spe" : 5
+        },
+
+
+        {
+            "id" : 18,
+            "name" : "Grimoire Dichotomique",
+            "atk" : 0,
+			"def" : 0,
+			"spa" : 30,
+			"spd" : 10,
+			"spe" : 10
+        },
+
+        {
+            "id" : 19,
+            "name" : "Stonks",
+            "atk" : 5,
+			"def" : 20,
+			"spa" : 5,
+			"spd" : 20,
+			"spe" : 5
+        },
+
+        {
+            "id" : 20,
+            "name" : "Trivial",
+            "atk" : 10,
+			"def" : 0,
+			"spa" : 40,
+			"spd" : 0,
+			"spe" : 10
+        },
+
+
+        {
+            "id" : 21,
+            "name" : "Python",
+            "atk" : 0,
+			"def" : 0,
+			"spa" : 60,
+			"spd" : 0,
+			"spe" : 0
+        },
+
+
+        {
+            "id" : 22,
+            "name" : "Corde",
+            "atk" : 40,
+			"def" : 0,
+			"spa" : 0,
+			"spd" : 0,
+			"spe" : 20
+        },
+
+
+        {
+            "id" : 23,
+            "name" : "NordVPN",
+            "atk" : 0,
+			"def" : 0,
+			"spa" : 0,
+			"spd" : 40,
+			"spe" : 20
+        },
+
+        {
+            "id" : 24,
+            "name" : "Shield de support",
+            "atk" : 0,
+			"def" : 30,
+			"spa" : 0,
+			"spd" : 30,
+			"spe" : 0
+        },
+
+        {
+            "id" : 1001,
+            "name" : "Kick",
+            "atk" : 10,
+			"def" : 10,
+			"spa" : 10,
+			"spd" : 10,
+			"spe" : 10
+        },
+
+        {
+            "id" : 1002,
+            "name" : "Marteau et faucille",
+            "atk" : 30,
+			"def" : 30,
+			"spa" : 0,
+			"spd" : 0,
+			"spe" : 0
+        },
+
+        {
+            "id" : 1003,
+            "name" : "Chapeau de Noel",
+            "atk" : 5,
+			"def" : 5,
+			"spa" : 5,
+			"spd" : 5,
+			"spe" : 5
+        },
+
+        {
+            "id" : 1004,
+            "name" : "Chapeau de Noel en bronze",
+            "atk" : 7,
+			"def" : 7,
+			"spa" : 7,
+			"spd" : 7,
+			"spe" : 7
+        },
+
+        {
+            "id" : 1005,
+            "name" : "Chapeau de Noel en argent",
+            "atk" : 9,
+			"def" : 9,
+			"spa" : 9,
+			"spd" : 9,
+			"spe" : 9
+        },
+
+        {
+            "id" : 1006,
+            "name" : "Chapeau de Noel dore",
+            "atk" : 11,
+			"def" : 11,
+			"spa" : 11,
+			"spd" : 11,
+			"spe" : 11
+        }
+    ]
+}

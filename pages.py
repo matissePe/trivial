@@ -32,7 +32,13 @@ def page_2(embed):
 
 
 def page_3(embed):
-    embed.add_field(name='TEXTE p3', value='HOHOHO', inline = False)
+    embed.add_field(name='lefevre showstats', value='Montre vos stats', inline = False)
+    embed.add_field(name='lefevre showweapon', value='Montre les stats de votre arme', inline = False)
+    embed.add_field(name='lefevre usepoint', value='Utilisez des points pour augmentez vos stats', inline = False)
+    embed.add_field(name='lefevre duel', value='Provoquez un ennemi en duel', inline = False)
+    embed.add_field(name='lefevre pve', value='Faites un combat en PVE', inline = False)
+    embed.add_field(name='lefevre pveamount', value='Montre vos nombres de combats en PVE restants', inline = False)
+    embed.add_field(name='lefevre changeweapon', value='Permet de changer d\'arme', inline = False)
 
 
 def page_4(embed):

@@ -5,14 +5,24 @@ import pages
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
+from datetime import datetime
+from discord.ext.commands import CommandNotFound
+import game
+from dmg import *
+import math
 
-HELP_PAGES = 2
+HELP_PAGES = 3
 
 USER_RATE_CONST1 = 267234
 
 USER_RATE_CONST2 = 112680
 
 USER_RATE_CONST3 = 130984
+
+
+TUFFIGANG_C_ID = 783647651349659698
+
+TUFFIGANG_R_ID = 783647539840286741
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -38,11 +48,27 @@ async def on_ready():
 @bot.event
 async def on_message(message: discord.Message):
     process = True
-    if message.guild is None and not message.author.bot:
-        response = "Hop hop hop, on n'envoie pas de messages privés. Si tu as une question, il faut la poser sur le forum!"
-        chan = message.channel
-        await chan.send(response)
-        process = False
+    if message.guild is None and not message.author.bot :
+        if message.author.id == 143350417093296128 :
+            if "resetstats" in message.content :
+                idtoreset = int(message.content.split(' ')[1])
+                game.resetStats(idtoreset)
+            elif "giveexp" in message.content :
+                uid = int(message.content.split(' ')[1])
+                amount = int(message.content.split(' ')[2])
+                game.giveExp(uid, amount)
+
+            elif "giveweapon" in message.content :
+                uid = int(message.content.split(' ')[1])
+                wid = int(message.content.split(' ')[2])
+                game.giveWeapon(uid, wid)
+
+
+        else :
+            response = "Hop hop hop, on n'envoie pas de messages privés. Si tu as une question, il faut la poser sur le forum!"
+            chan = message.channel
+            await chan.send(response)
+            process = False
 
     if not message.author.bot and len(message.mentions) > 0 :
         if str(message.mentions[0].id) == str(BOT_ID) :
@@ -50,30 +76,418 @@ async def on_message(message: discord.Message):
             chan = message.channel
             await chan.send(response)
 
-    if (process) :
+    if (process and not message.author.bot) :
+        if message.channel.id == TUFFIGANG_C_ID :
+            game.dixPExp(message.author.id)
+        else :
+            game.giveExp(message.author.id, random.randint(1,2))
+
+            user = game.getUserData(message.author.id)
+            sag = user["stats"]["spd"] + user["weapon"]["spd"]
+
+            lootchance = int(3 + 0.2 * sag)
+
+            if random.randint(1, 100) < lootchance :
+                game.pickupRandom(message.author.id)
+
+            if random.randint(1, 100) < 4 and game.amountOfPveBattles(message.author.id) < 10 :
+                game.incPveBattles(message.author.id)
+
+            if message.content == "fuck ecobosto" :
+                await message.add_reaction('\U0001F44D') #:+1:
         await bot.process_commands(message)
 
 
 @bot.event
 async def on_reaction_add(reaction, user):
     emoji = ''
+    helpEmoji = False
+    weapon = False
     if(reaction.emoji == '⬅'):
         emoji = 'arrow-left'
-    if(reaction.emoji == '➡'):
+        helpEmoji = True
+    elif(reaction.emoji == '➡'):
         emoji = 'arrow-right'
-    if (reaction.count != 1 and emoji != ''):
+        helpEmoji = True
+    elif reaction.emoji == '✅':
+        emoji = 'v'
+    elif reaction.emoji == '❌':
+        emoji = 'x'
+    elif reaction.emoji == '⚔':
+        emoji = 'sword'
+    elif reaction.emoji == '🪄':
+        emoji = 'wand'
+    elif reaction.emoji == '🗡':
+        emoji = 'dagg'
+    elif reaction.emoji == '🥦':
+        emoji = 'broc'
+    elif reaction.emoji == '💧':
+        emoji = 'droplet'
+        weapon = True
+    elif reaction.emoji == '🔥':
+        emoji = 'fire'
+        weapon = True
+    elif reaction.emoji == '⚡':
+        emoji = 'zap'
+        weapon = True
+    elif reaction.emoji == '◀':
+        emoji = 'left'
+        weapon = True
+    elif reaction.emoji == '▶':
+        emoji = 'right'
+        weapon = True
+    if (reaction.count != 1 and emoji != '' and not user.bot):
         if (reaction.me):
-            message = reaction.message
-            embed = message.embeds[0]
-            footer = embed.footer.text
-            page_number = int(footer.split(' ')[1])
+            if helpEmoji :
+                message = reaction.message
+                embed = message.embeds[0]
+                footer = embed.footer.text
+                page_number = int(footer.split(' ')[1])
 
-            if (emoji == 'arrow-left' and page_number > 1):
-                pages.generate_embed(page_number - 1, embed)
 
-            elif (emoji == 'arrow-right' and page_number < HELP_PAGES) :
-                pages.generate_embed(page_number + 1, embed)
-            await message.edit(embed=embed)
+
+
+                if (emoji == 'arrow-left' and page_number > 1):
+                    pages.generate_embed(page_number - 1, embed)
+
+                elif (emoji == 'arrow-right' and page_number < HELP_PAGES) :
+                    pages.generate_embed(page_number + 1, embed)
+                await message.edit(embed=embed)
+
+            else :
+
+
+
+
+
+                if ("<@!" + str(user.id) + ">") in (reaction.message.embeds[0].description) :
+
+
+
+                    if weapon :
+                        message = reaction.message
+                        embed = message.embeds[0]
+                        footer = embed.footer.text
+                        page_number = int(footer.split(' ')[1])
+
+                        fi = game.fullInventory(user.id)
+
+                        nbPages = int(1 + (- 1 + len(fi)) / 3)
+
+
+                        if (emoji == 'left' and page_number > 1):
+                            newembed = createWeaponEmbed(user.id, page_number - 1)
+                            await message.edit(embed=newembed)
+
+                        elif (emoji == 'right' and page_number < nbPages) :
+                            newembed = createWeaponEmbed(user.id, page_number + 1)
+                            await message.edit(embed=newembed)
+
+                        else :
+
+                            success = False
+
+                            if emoji == 'zap' :
+                                success = game.handleWeaponChange(user.id, page_number, 0)
+                            elif emoji == 'fire' :
+                                success = game.handleWeaponChange(user.id, page_number, 1)
+                            elif emoji == 'droplet' :
+                                success = game.handleWeaponChange(user.id, page_number, 2)
+
+                            if success :
+                                newembed = discord.Embed(
+                                    colour = discord.Colour.purple(),
+                                    title = 'Arme équipée',
+                                    description = "Vous venez de changer d'arme"
+                                )
+                                await message.edit(embed=newembed)
+
+                                while reaction.message.reactions != [] :
+                                    for areaction in reaction.message.reactions :
+                                        async for user in areaction.users():
+                                            await areaction.remove(user)
+
+
+
+
+                    elif emoji == 'x' :
+                        await reaction.message.delete()
+                    elif emoji == 'v' :
+
+
+                        if reaction.count == 3 :
+
+
+                            desc = reaction.message.embeds[0].description
+
+                            firstuser = desc.split(' ')[0].split('!')[1].split('>')[0]
+
+
+                            seconduser = desc.split(' ')[3].split('!')[1].split('>')[0]
+
+
+                            u1 = game.getUserData(firstuser)
+                            u2 = game.getUserData(seconduser)
+
+                            if u1["stats"]["spe"] + u1["weapon"]["spe"] > u2["stats"]["spe"] + u2["weapon"]["spe"]:
+                                firstturn = str(firstuser)
+                                secondturn = str(seconduser)
+                            else :
+                                firstturn = str(seconduser)
+                                secondturn = str(firstuser)
+
+                            duser1 = await bot.fetch_user(firstuser)
+                            duser2 = await bot.fetch_user(seconduser)
+
+
+                            hp1 = u1["stats"]["hp"]
+                            hp2 = u2["stats"]["hp"]
+
+                            lvl1 = str(u1["stats"]["level"])
+                            lvl2 = str(u2["stats"]["level"])
+
+                            battledesc = "Le combat vient de commencer, on s'attend à voir du beau jeu de la part des 2 participants."
+
+                            footer = "Combattants: @" + str(duser1) + " et @" + str(duser2)
+
+                            names = duser1.name + " VS " + duser2.name
+
+                            newembed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, hp1, hp2, hp2, 10, 10, battledesc, footer, False)
+
+                            await reaction.message.edit(embed = newembed)
+
+                            while reaction.message.reactions != [] :
+                                for areaction in reaction.message.reactions :
+                                    async for user in areaction.users():
+                                        await areaction.remove(user)
+
+                            reacts = ["\U00002694", "\U0001FA84", "\U0001F5E1", "\U0001F966"]
+
+                            for r in reacts :
+                                await reaction.message.add_reaction(r)
+
+                    elif ("<@!" + str(user.id) + ">") in (reaction.message.embeds[0].description.split(',')[0]) :
+
+
+                        # Input du mec qui tape
+
+                        message = reaction.message
+
+                        embed = message.embeds[0]
+
+                        footer = embed.footer
+
+                        footertxt = footer.text
+
+                        desc = embed.description
+
+                        isPve = footertxt == "PVE"
+
+
+
+                        firstuser = desc.split(' ')[0].split('!')[1].split('>')[0]
+
+                        if not isPve :
+                            seconduser = desc.split(' ')[4].split('!')[1].split('>')[0]
+
+                            user1 = footer.text.split('@')[1].split('#')[0] + '#' + footer.text.split('#')[1].split(' ')[0]
+
+                            fighter2 = game.getUserData(seconduser)
+
+                        else :
+                            seconduser = desc.split(' ')[4]
+
+                            fighter2 = game.getEnnemyData(game.getEnnemyIDFromName(seconduser))
+
+
+                        firstturn = str(firstuser)
+                        secondturn = str(seconduser)
+
+                        duser1 = await bot.fetch_user(firstuser)
+
+
+
+
+
+                        fighter1 = game.getUserData(firstuser)
+
+
+                        if isPve or str(duser1) == user1 :
+                            pnumber = 1
+                        else :
+                            pnumber = 2
+
+
+                        await reaction.remove(user)
+
+
+                        hps = getHp(embed.fields[1].name)
+                        manas = getMana(embed.fields[2].name)
+
+                        if emoji == "sword" or emoji == "wand" or emoji == "dagg" :
+
+
+                            valid = True
+
+                            if emoji == "sword":
+                                myDmg = dmgCalc(fighter1, fighter2, 0)
+                                attacktype = "une attaque physique"
+                            elif emoji == "wand":
+                                if manas[2 * (pnumber - 1)] >= 3 :
+                                    myDmg = dmgCalc(fighter1, fighter2, 1)
+                                    manas[2 * (pnumber - 1)] -= 4
+                                    attacktype = "une attaque magique"
+                                else :
+                                    valid = False
+                            else :
+                                myDmg = dmgCalc(fighter1, fighter2, 2)
+                                attacktype = "un coup sournois"
+
+                            if valid :
+                                dmg = int(myDmg.dmg)
+                                isCrit = myDmg.crit
+                                hps[2 * (2 - pnumber)] -= dmg
+                                if hps[2 * (2 - pnumber)] <= 0 :
+                                    dead = True
+                                else :
+                                    dead= False
+
+
+                                if not dead :
+                                    if manas[2 * (pnumber - 1)] < 10:
+                                        manas[2 * (pnumber - 1)] += 1
+
+                                    lvl1 = str(fighter1["stats"]["level"])
+                                    lvl2 = str(fighter2["stats"]["level"])
+
+                                    if not isPve :
+
+                                        battledesc = ""
+
+                                        if isCrit :
+                                            battledesc += "Coup critique! "
+                                        battledesc += user.name + " inflige " + str(dmg) + " dégâts à l'aide d'" + attacktype + "!"
+
+
+                                        names = embed.fields[0].name
+
+                                        newembed = createEmbed(secondturn, firstturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], battledesc, footertxt, False)
+
+                                        await reaction.message.edit(embed = newembed)
+
+                                    else :
+                                        damage = dmgCalc(fighter2, fighter1, 2)
+                                        dmg = damage.dmg
+                                        battledesc = ""
+
+                                        if damage.crit :
+                                            battledesc += "Coup critique! "
+                                        battledesc += fighter2["name"] + " inflige " + str(dmg) + " dégâts à l'aide d'un coup sournois!"
+
+                                        hps[0] -= dmg
+
+                                        if hps[0] > 0 :
+
+                                            names = user.name + " VS " + fighter2["name"]
+
+                                            newembed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], battledesc, footertxt, True)
+
+                                            await reaction.message.edit(embed = newembed)
+
+                                        else :
+                                            newembed = discord.Embed(
+                                                colour = discord.Colour.purple(),
+                                                title = 'Duel',
+                                                description = str(fighter2["name"] + " a vaincu le joueur " + user.name)
+                                            )
+
+                                            if str(fighter2["name"]) == "Thomas" :
+                                                await user.kick()
+
+                                            await reaction.message.edit(embed = newembed)
+
+                                            while reaction.message.reactions != [] :
+                                                for areaction in reaction.message.reactions :
+                                                    async for user in areaction.users():
+                                                        await areaction.remove(user)
+
+                                else :
+
+                                    if isPve :
+                                        desc = str("Le joueur " + user.name + " a vaincu le monstre " + fighter2["name"])
+                                    else :
+                                        desc = str("<@!" + firstturn + ">, a triomphé de <@!" + secondturn + "> avec " + str(hps[2 * (pnumber - 1)]) + " HPs restants!")
+
+                                    newembed = discord.Embed(
+                                        colour = discord.Colour.purple(),
+                                        title = 'Duel',
+                                        description = desc
+                                    )
+
+
+                                    level1 = int(fighter1["stats"]["level"])
+                                    maxexp1 = (level1 ** 3 + 1) - ((level1 - 1) ** 3 + 1)
+
+
+                                    level2 = int(fighter2["stats"]["level"])
+                                    maxexp2 = (level2 ** 3 + 1) - ((level2 - 1) ** 3 + 1)
+
+
+                                    if isPve :
+                                        exptogain = fighter2["stats"]["exp"]
+                                    else :
+                                        exptogain = int(((level2 + 6)/(level1 + 1)) * .1 * maxexp2 + 20)
+
+                                    for r in user.roles :
+                                        if r.id == TUFFIGANG_R_ID :
+                                            exptogain = int(exptogain/2)
+
+
+                                    game.giveExp(firstuser, exptogain)
+
+                                    newembed.add_field(name = "Il gagne " + str(exptogain) + " points d'experience.", value = "\u200b", inline = False)
+
+                                    if not isPve :
+                                        exptolose = int(fighter2["stats"]["exp"]/2)
+                                        game.halfExp(seconduser)
+                                        newembed.add_field(name = "Son adversaire perd " + str(exptolose) + " points d'experience.", value = "\u200b", inline = False)
+
+                                    await reaction.message.edit(embed = newembed)
+
+                                    while reaction.message.reactions != [] :
+                                        for areaction in reaction.message.reactions :
+                                            async for user in areaction.users():
+                                                await areaction.remove(user)
+
+                        elif emoji == "broc" :
+                            if manas[2 * (pnumber - 1)] >= 5 and hps[2 * (pnumber - 1)] != hps[1 + 2 * (pnumber - 1)]:
+                                manas[2 * (pnumber - 1)] -= 5
+                                spa = fighter1["stats"]["spa"] + fighter1["weapon"]["spa"]
+                                hps[2 * (pnumber - 1)] = int(min(hps[1 + 2 * (pnumber - 1)], hps[2 * (pnumber - 1)] + 5 + 1/10 * hps[1 + 2 * (pnumber - 1)] + spa * hps[1 + 2 * (pnumber - 1)]/100))
+                                battledesc = user.name + " se soigne!"
+
+                                lvl1 = str(fighter1["stats"]["level"])
+                                lvl2 = str(fighter2["stats"]["level"])
+
+                                names = embed.fields[0].name
+
+                                if not isPve :
+
+                                    newembed = createEmbed(secondturn, firstturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], battledesc, footertxt, False)
+
+                                else :
+
+                                    newembed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], battledesc, footertxt, True)
+
+                                await reaction.message.edit(embed = newembed)
+
+
+                    else :
+                        await reaction.remove(user)
+
+
+                else :
+                    await reaction.remove(user)
 
 
 
@@ -258,6 +672,365 @@ async def randomQuote(ctx):
     ]
     response = random.choice(quotes)
     await ctx.send(response)
+
+
+
+@bot.command(name='serverinfo')
+async def serverinfo(ctx):
+    guild = ctx.guild
+    if (guild != None) :
+        ts = guild.created_at
+        ts = ts.strftime('%Y-%m-%d %H:%M:%S')
+        print(ctx.guild)
+        embed = discord.Embed(
+            colour = discord.Colour.purple(),
+            title = ('Server info'),
+            description = guild.description
+        )
+        embed.set_author(name = guild.name, icon_url = str(guild.icon_url))
+        embed.add_field(name='Creation date', value=str(ts), inline = False)
+        embed.add_field(name='Member count', value=str(guild.member_count), inline = False)
+        embed.add_field(name='Region', value=str(guild.region), inline = False)
+        embed.add_field(name='Custom emoji count', value=str(len(guild.emojis)), inline = False)
+        embed.add_field(name='Owner', value=str(guild.owner), inline = False)
+
+
+
+
+        await ctx.send(embed=embed)
+
+
+
+
+
+
+
+@bot.command(name='showstats')
+async def showstats(ctx):
+    useri = ctx.message.author.id
+    user = game.getUserData(useri)
+    stats = user["stats"]
+    w = user["weapon"]
+    embed = discord.Embed(
+        colour = discord.Colour.purple(),
+        title = 'Vos stats',
+    )
+    level = stats["level"]
+
+    hp = stats["hp"]
+    atk = stats["atk"]
+    de = stats["def"]
+    spa = stats["spa"]
+    spd = stats["spd"]
+    spe = stats["spe"]
+
+    atkbonus = str(w["atk"])
+    defbonus = str(w["def"])
+    spabonus = str(w["spa"])
+    spdbonus = str(w["spd"])
+    spebonus = str(w["spe"])
+
+    statpoints = stats["statpoints"]
+
+    exp = stats["exp"]
+    maxexp = (level ** 3 + 1) - ((level - 1) ** 3 + 1)
+    progression = int(10 * (exp / maxexp))
+
+    bar = "█" * progression + "░" * (10 - progression)
+
+
+    embed.add_field(name=('Level ' + str(level)), value=("HP " + str(hp)), inline = False)
+    embed.add_field(name=('Attaque ' + str(atk) + "  [ +" + atkbonus + " ]"), value=("Defense " + str(de) + "  [ +" + defbonus + " ]"), inline = False)
+    embed.add_field(name=('Att. Spe ' + str(spa) + "  [ +" + spabonus + " ]"), value=("Def. Spe " + str(spd) + "  [ +" + spdbonus + " ]"), inline = False)
+    embed.add_field(name=('Vitesse ' + str(spe) + "  [ +" + spebonus + " ]"), value=("Points de stats restants " + str(statpoints)), inline = False)
+    embed.add_field(name=('Exp : ' + str(exp) + " / " + str(maxexp)), value=bar, inline = False)
+    await ctx.send(embed = embed)
+
+
+
+@bot.command(name='showweapon')
+async def showweaponstats(ctx):
+    useri = ctx.message.author.id
+    user = game.getUserData(useri)
+    weapon = user["weapon"]
+    embed = discord.Embed(
+        colour = discord.Colour.purple(),
+        title = 'Votre arme',
+    )
+    nom = weapon["name"]
+    atk = weapon["atk"]
+    de = weapon["def"]
+    spa = weapon["spa"]
+    spd = weapon["spd"]
+    spe = weapon["spe"]
+
+
+    embed.add_field(name=('Nom : ' + nom), value="-----------", inline = False)
+
+    embed.add_field(name=('Attaque ' + str(atk)), value=("Defense " + str(de)), inline = False)
+    embed.add_field(name=('Att. Spe ' + str(spa)), value=("Def. Spe " + str(spd)), inline = False)
+    embed.add_field(name=('Vitesse ' + str(spe)), value="-----------", inline = False)
+
+    await ctx.send(embed = embed)
+
+
+
+@bot.command(name='usepoint')
+async def usepoint(ctx, *args):
+    useri = ctx.message.author.id
+
+    try :
+        stat = args[0]
+        amount = 1
+        try :
+            amount = int(args[1])
+        except :
+            pass
+        if stat in ["hp", "atk", "def", "spa", "spd", "spe"]:
+            if game.increaseStat(useri, stat, amount) :
+                if (stat == "hp") :
+                    amount *= 2
+                response = "La stat de " + stat + " a ete augmentée de " + str(amount)
+            else :
+                response = "Une erreur s'est produite en tentant d'augmenter votre stat"
+        else :
+            response = "Indiquez une stat valide (hp, atk, def, spa, spd, spe)"
+    except Exception as e:
+        response = 'birb usepoint <stat> [amount]'
+    finally :
+        await ctx.send(response)
+
+
+
+@bot.command(name='duel')
+async def duel(ctx, *args):
+    embed = None
+    valid = False
+    try:
+        mentionned_user = ctx.message.mentions[0]
+        useri1 = ctx.message.author.id
+        useri2 = mentionned_user.id
+
+        if useri1 != useri2 :
+
+            user1 = game.getUserData(useri1)
+            user2 = game.getUserData(useri2)
+
+
+            embed = discord.Embed(
+                colour = discord.Colour.purple(),
+                title = 'Duel',
+                description = "Loading"
+            )
+            response = ""
+
+            valid = True
+
+        else :
+            response = "Vous ne pouvez pas vous battre en duel contre vous-même!"
+
+    except:
+        response = "birb duel @User"
+    finally:
+        msg = await ctx.send(response, embed = embed)
+        if valid :
+            newembed = discord.Embed(
+                colour = discord.Colour.purple(),
+                title = 'Duel',
+                description = str("<@!" + str(useri1) + "> a provoque <@!" + str(useri2) + "> en duel!")
+            )
+
+            level1 = int(user1["stats"]["level"])
+            maxexp1 = (level1 ** 3 + 1) - ((level1 - 1) ** 3 + 1)
+
+
+            level2 = int(user2["stats"]["level"])
+            maxexp2 = (level2 ** 3 + 1) - ((level2 - 1) ** 3 + 1)
+
+
+
+
+
+            exptogain1 = int(((level2 + 6)/(level1 + 1)) * .1 * maxexp2 + 20)
+            exptogain2 = int(((level1 + 6)/(level2 + 1)) * .1 * maxexp1 + 20)
+
+            newembed.add_field(name = (ctx.message.author.name + " est niveau " + str(level1) + "."), value = "Il pourrait gagner " + str(exptogain1) +" exp!", inline = False)
+            newembed.add_field(name = (mentionned_user.name + " est niveau " + str(level2) + "."), value =  "Il pourrait gagner " + str(exptogain2) +" exp!", inline = False)
+            await msg.edit(embed = newembed)
+            reactions = ['\U00002705','\U0000274C'] #:white_check_mark: , :x:
+            for emoji in reactions:
+                await msg.add_reaction(emoji)
+
+
+
+
+def getHp(hpembed):
+    hpembed = " ".join(hpembed.split())
+    hp1 = int(hpembed.split(' ')[1])
+    maxhp1 = int(hpembed.split(' ')[3])
+    hp2 = int(hpembed.split(' ')[5])
+    maxhp2 = int(hpembed.split(' ')[7])
+    return [hp1, maxhp1, hp2, maxhp2]
+
+def getMana(manaembed):
+    manaembed = " ".join(manaembed.split())
+    mana1 = int(manaembed.split(' ')[1])
+    maxmana1 = 10
+    mana2 = int(manaembed.split(' ')[5])
+    maxmana2 = 10
+    return [mana1, maxmana1, mana2, maxmana2]
+
+def dmgCalc(attacker, defender, w):
+    return Dmg(attacker, defender, w)
+
+def createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, maxhp2, mana1, mana2, battledesc, footer, isPve):
+    if isPve :
+        mydesc = str("<@!" + firstturn + ">, choisis une attaque! " + secondturn + " se défend.")
+    else :
+        mydesc = str("<@!" + firstturn + ">, choisis une attaque! <@!" + secondturn + "> se défend.")
+
+
+    newembed = discord.Embed(
+        colour = discord.Colour.purple(),
+        title = 'Duel',
+        description = mydesc
+    )
+
+    hpbar1 = "█" * int(10 * hp1/maxhp1) + "░" * (10 - int(10 * hp1/maxhp1))
+    hpbar2 = "█" * int(10 * hp2/maxhp2) + "░" * (10 - int(10 * hp2/maxhp2))
+
+    manabar1 = "█" * int(10 * mana1/10) + "░" * (10 - int(10 * mana1/10))
+    manabar2 = "█" * int(10 * mana2/10) + "░" * (10 - int(10 * mana2/10))
+
+    spacebetween= " " * 24
+    spacebetween2= " " * 15
+
+    newembed.add_field(name = names, value = "Lvl " + lvl1 + " VS Lvl " + lvl2)
+
+    newembed.add_field(name =  "HP " + str(hp1) + " / " + str(maxhp1) + spacebetween + "HP " + str(hp2) + " / " + str(maxhp2), value = hpbar1 + " - - - " + hpbar2, inline = False)
+
+    newembed.add_field(name =  "Mana " + str(mana1) + " / 10 " + spacebetween2 + "Mana " + str(mana2) + " / 10", value = manabar1 + " - - - " + manabar2, inline = False)
+
+    newembed.add_field(name = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - -", value = "\u200b", inline = False)
+
+    newembed.add_field(name = ":crossed_swords: Attaque physique        :magic_wand: Attaque magique", value = "\u200b", inline = False)
+
+    newembed.add_field(name = ":dagger: Coup sournois             :broccoli: Sort de soin", value = "\u200b", inline = False)
+
+    newembed.add_field(name = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - -", value = "\u200b", inline = False)
+
+    newembed.add_field(name = battledesc, value = "\u200b", inline = False)
+
+    newembed.set_footer(text = footer)
+
+    return newembed
+
+
+
+@bot.command(name='pve')
+async def pve(ctx, *args):
+    useri1 = ctx.message.author.id
+    user1 = game.getUserData(useri1)
+    if (game.canPve(useri1)):
+
+        ennemy = game.randomEnnemy(user1)
+
+        maxhp1 = user1["stats"]["hp"]
+        hp1 = maxhp1
+        hp2 = ennemy["stats"]["hp"]
+
+        if user1["stats"]["spe"] + user1["weapon"]["spe"] < ennemy["stats"]["spe"] + ennemy["weapon"]["spe"]:
+            damage = dmgCalc(ennemy, user1, 2)
+            dmg = damage.dmg
+            battledesc = ""
+
+            if damage.crit :
+                battledesc += "Coup critique! "
+            battledesc += ennemy["name"] + " inflige " + str(dmg) + " dégâts à l'aide d'un coup sournois!"
+
+            hp1 = max(1, hp1 - dmg)
+
+        else :
+            battledesc = "Le combat vient de commencer, on souhaite bonne chance au joueur humain " + ctx.message.author.name +  "."
+
+
+
+        firstturn = str(useri1)
+        secondturn = ennemy["name"]
+
+
+        lvl1 = str(user1["stats"]["level"])
+        lvl2 = str(ennemy["stats"]["level"])
+
+        footer = "PVE"
+
+        names = ctx.message.author.name + " VS " + ennemy["name"]
+
+        embed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, hp2, 10, 10, battledesc, footer, True)
+
+        msg = await ctx.send(embed = embed)
+
+        reacts = ["\U00002694", "\U0001FA84", "\U0001F5E1", "\U0001F966"]
+
+        for r in reacts :
+            await msg.add_reaction(r)
+
+    else :
+        embed = discord.Embed(
+            colour = discord.Colour.purple(),
+            title = 'PVE',
+            description = str("Vous n'avez pas d'ennemi à affronter, revenez plus tard!")
+        )
+
+        await ctx.send(embed = embed)
+
+
+@bot.command(name='pveamount')
+async def pveamount(ctx):
+    msg = str("Vous avez " + str(game.amountOfPveBattles(ctx.message.author.id)) + " combats restants.")
+    await ctx.send(msg)
+
+
+def createWeaponEmbed(userID, pageNumber):
+    embed = discord.Embed(
+        colour = discord.Colour.purple(),
+        title = 'Inventaire',
+        description = str("Voici l'inventaire de <@!" + str(userID) + ">")
+    )
+
+    fields = game.retInventory(userID, pageNumber - 1)
+
+
+    emojis = [":zap:", ":fire:", ":droplet:"]
+    i = 0
+
+    if fields != None :
+        for f in fields :
+            embed.add_field(name = f, value = "Equippez l'arme en reagissant avec " + emojis[i], inline = False)
+            i += 1
+
+    fi = game.fullInventory(userID)
+
+    nbPages = int(1 + (- 1 + len(fi)) / 3)
+
+    ft = str("Page " + str(pageNumber) + " / " + str(nbPages))
+
+    embed.set_footer(text = ft)
+
+    return embed
+
+
+@bot.command(name='changeweapon')
+async def changeweapon(ctx):
+    embed = createWeaponEmbed(ctx.message.author.id, 1)
+
+    msg = await ctx.send(embed = embed)
+
+    reacts = ["\U000025C0", "\U000026A1", "\U0001F525", "\U0001F4A7", "\U000025B6"]
+
+    for r in reacts :
+        await msg.add_reaction(r)
+
 
 
 

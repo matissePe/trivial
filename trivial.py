@@ -1039,6 +1039,24 @@ async def changeweapon(ctx):
         await msg.add_reaction(r)
 
 
+@bot.command(name='leaderboard')
+async def leaderboard(ctx):
+    embed = discord.Embed(
+        colour = discord.Colour.purple(),
+        title = 'Leaderboard',
+        description = "Classement des joueurs les plus haut niveau"
+    )
+
+    lead = game.getBestPlayers()
+
+    i = 1
+
+    for u in lead :
+        duser = await bot.fetch_user(u[0])
+        embed.add_field(name = str(duser), value = str("#" + str(i)), inline = False)
+        i += 1
+
+    await ctx.send(embed = embed)
 
 
 bot.run(TOKEN)

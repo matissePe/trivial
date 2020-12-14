@@ -86,21 +86,23 @@ async def on_message(message: discord.Message):
         if message.channel.id == TUFFIGANG_C_ID :
             game.dixPExp(message.author.id)
         else :
-            game.giveExp(message.author.id, random.randint(1,2))
+            if len(message.content) >= 10 :
 
-            user = game.getUserData(message.author.id)
-            sag = user["stats"]["spd"] + user["weapon"]["spd"]
+                game.giveExp(message.author.id, random.randint(1,2))
 
-            lootchance = int(3 + 0.2 * sag)
+                user = game.getUserData(message.author.id)
+                sag = user["stats"]["spd"] + user["weapon"]["spd"]
 
-            if random.randint(1, 100) < lootchance :
-                game.pickupRandom(message.author.id)
+                lootchance = int(3 + 0.2 * sag)
 
-            if random.randint(1, 100) < 4 and game.amountOfPveBattles(message.author.id) < 10 :
-                game.incPveBattles(message.author.id)
+                if random.randint(1, 100) < lootchance :
+                    game.pickupRandom(message.author.id)
 
-            if message.content == "fuck ecobosto" :
-                await message.channel.send("Ecobosto est la meilleure entreprise du monde. Rejoignez-nous, ayez un avenir.")
+                if random.randint(1, 100) < 4 and game.amountOfPveBattles(message.author.id) < 10 :
+                    game.incPveBattles(message.author.id)
+
+                if message.content == "fuck ecobosto" :
+                    await message.channel.send("Ecobosto est la meilleure entreprise du monde. Rejoignez-nous, ayez un avenir.")
         await bot.process_commands(message)
 
 
@@ -1053,7 +1055,7 @@ async def leaderboard(ctx):
 
     for u in lead :
         duser = await bot.fetch_user(u[0])
-        embed.add_field(name = str(duser), value = str("#" + str(i)), inline = False)
+        embed.add_field(name = str(duser), value = str("#" + str(i) + " Level " + str(u[1])), inline = False)
         i += 1
 
     await ctx.send(embed = embed)

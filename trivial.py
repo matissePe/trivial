@@ -796,7 +796,7 @@ async def usepoint(ctx, *args):
         else :
             response = "Indiquez une stat valide (hp, atk, def, spa, spd, spe)"
     except Exception as e:
-        response = 'birb usepoint <stat> [amount]'
+        response = 'lefevre usepoint <stat> [amount]'
     finally :
         await ctx.send(response)
 
@@ -830,7 +830,7 @@ async def duel(ctx, *args):
             response = "Vous ne pouvez pas vous battre en duel contre vous-même!"
 
     except:
-        response = "birb duel @User"
+        response = "lefevre duel @User"
     finally:
         msg = await ctx.send(response, embed = embed)
         if valid :

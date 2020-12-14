@@ -24,6 +24,35 @@
             },
             "inventaire": [],
             "pvebattles": 0
+        },
+        {
+            "id": "143350417093296128",
+            "stats": {
+                "level": 3,
+                "hp": 5,
+                "atk": 1,
+                "def": 1,
+                "spa": 1,
+                "spd": 1,
+                "spe": 1,
+                "statpoints": 25,
+                "exp": 8
+            },
+            "weapon": {
+                "id": 0,
+                "name": "Mains",
+                "atk": 1,
+                "def": 1,
+                "spa": 0,
+                "spd": 0,
+                "spe": 2
+            },
+            "inventaire": [
+                {
+                    "id": 1
+                }
+            ],
+            "pvebattles": 0
         }
     ]
 }

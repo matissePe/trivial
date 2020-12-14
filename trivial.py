@@ -705,7 +705,7 @@ async def serverinfo(ctx):
 
 
 
-@bot.command(name='showstats')
+@bot.command(name='ss')
 async def showstats(ctx):
     useri = ctx.message.author.id
     user = game.getUserData(useri)
@@ -748,7 +748,7 @@ async def showstats(ctx):
 
 
 
-@bot.command(name='showweapon')
+@bot.command(name='sw')
 async def showweaponstats(ctx):
     useri = ctx.message.author.id
     user = game.getUserData(useri)
@@ -775,7 +775,8 @@ async def showweaponstats(ctx):
 
 
 
-@bot.command(name='usepoint')
+
+@bot.command(name='up')
 async def usepoint(ctx, *args):
     useri = ctx.message.author.id
 
@@ -1020,7 +1021,7 @@ def createWeaponEmbed(userID, pageNumber):
     return embed
 
 
-@bot.command(name='changeweapon')
+@bot.command(name='cw')
 async def changeweapon(ctx):
     embed = createWeaponEmbed(ctx.message.author.id, 1)
 

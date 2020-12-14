@@ -740,9 +740,9 @@ async def showstats(ctx):
 
 
     embed.add_field(name=('Level ' + str(level)), value=("HP " + str(hp)), inline = False)
-    embed.add_field(name=('Attaque ' + str(atk) + "  [ +" + atkbonus + " ]"), value=("Defense " + str(de) + "  [ +" + defbonus + " ]"), inline = False)
-    embed.add_field(name=('Att. Spe ' + str(spa) + "  [ +" + spabonus + " ]"), value=("Def. Spe " + str(spd) + "  [ +" + spdbonus + " ]"), inline = False)
-    embed.add_field(name=('Vitesse ' + str(spe) + "  [ +" + spebonus + " ]"), value=("Points de stats restants " + str(statpoints)), inline = False)
+    embed.add_field(name=('Attaque ' + str(atk) + "  [ +" + atkbonus + " ] (atk)"), value=("Defense " + str(de) + "  [ +" + defbonus + " ] (def)"), inline = False)
+    embed.add_field(name=('Att. Spe ' + str(spa) + "  [ +" + spabonus + " ] (spa)"), value=("Def. Spe " + str(spd) + "  [ +" + spdbonus + " ] (spd)"), inline = False)
+    embed.add_field(name=('Vitesse ' + str(spe) + "  [ +" + spebonus + " ] (spe)"), value=("Points de stats restants " + str(statpoints)), inline = False)
     embed.add_field(name=('Exp : ' + str(exp) + " / " + str(maxexp)), value=bar, inline = False)
     await ctx.send(embed = embed)
 

@@ -6,12 +6,12 @@ def retDefaultUser(userID, statpoints, level, exp):
     return {"id" : str(userID),
                 "stats" : {
                     "level" : level,
-                    "hp" : 5,
-                    "atk" : 1,
-                    "def" : 1,
-                    "spa" : 1,
-                    "spd" : 1,
-                    "spe" : 1,
+                    "hp" : 10,
+                    "atk" : 3,
+                    "def" : 3,
+                    "spa" : 3,
+                    "spd" : 3,
+                    "spe" : 3,
                     "statpoints": statpoints,
                     "exp" : exp
                     },

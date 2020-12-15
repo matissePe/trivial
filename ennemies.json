@@ -11,7 +11,7 @@
                 "spa": 1,
                 "spd": 6,
                 "spe": 1,
-                "exp": 30
+                "exp": 80
             }, "weapon": {
                 "id": 0,
                 "name": "Mains",
@@ -34,7 +34,7 @@
                 "spa": 9,
                 "spd": 1,
                 "spe": 9,
-                "exp": 30
+                "exp": 80
             }, "weapon": {
                 "id": 0,
                 "name": "Mains",
@@ -57,7 +57,7 @@
                 "spa": 4,
                 "spd": 4,
                 "spe": 4,
-                "exp": 30
+                "exp": 80
             }, "weapon": {
                 "id": 0,
                 "name": "Mains",
@@ -80,7 +80,7 @@
                 "spa": 9,
                 "spd": 9,
                 "spe": 9,
-                "exp": 60
+                "exp": 120
             }, "weapon": {
                 "id" : 1,
                 "name" : "Clavier",
@@ -103,7 +103,7 @@
                 "spa": 4,
                 "spd": 6,
                 "spe": 6,
-                "exp": 80
+                "exp": 140
             }, "weapon": {
                 "id" : 2,
                 "name" : "Souris Filaire Accrochee a un baton",
@@ -126,7 +126,7 @@
                 "spa": 12,
                 "spd": 12,
                 "spe": 12,
-                "exp": 100
+                "exp": 160
             }, "weapon": {
                 "id" : 5,
                 "name" : "Cure dent",
@@ -149,7 +149,7 @@
                 "spa": 12,
                 "spd": 20,
                 "spe": 1,
-                "exp": 140
+                "exp": 200
             }, "weapon": {
                 "id" : 4,
                 "name" : "Not Stonks",
@@ -172,7 +172,7 @@
                 "spa": 10,
                 "spd": 14,
                 "spe": 14,
-                "exp": 180
+                "exp": 220
             }, "weapon": {
                 "id" : 6,
                 "name" : "Java",
@@ -195,7 +195,7 @@
                 "spa": 30,
                 "spd": 10,
                 "spe": 15,
-                "exp": 220
+                "exp": 240
             }, "weapon": {
                 "id" : 6,
                 "name" : "Java",
@@ -219,7 +219,7 @@
                 "spa": 1,
                 "spd": 30,
                 "spe": 1,
-                "exp": 280
+                "exp": 300
             }, "weapon": {
                 "id" : 8,
                 "name" : "L'argent des abonnés",
@@ -243,7 +243,7 @@
                 "spa": 35,
                 "spd": 15,
                 "spe": 30,
-                "exp": 340
+                "exp": 330
             }, "weapon": {
                 "id" : 7,
                 "name" : "Pinte de biere",
@@ -267,7 +267,7 @@
                 "spa": 25,
                 "spd": 25,
                 "spe": 25,
-                "exp": 400
+                "exp": 360
             }, "weapon": {
                 "id" : 7,
                 "name" : "Pinte de biere",
@@ -291,7 +291,7 @@
                 "spa": 10,
                 "spd": 40,
                 "spe": 10,
-                "exp": 480
+                "exp": 450
             }, "weapon": {
                 "id" : 8,
                 "name" : "L'argent des abonnés",
@@ -315,7 +315,7 @@
                 "spa": 45,
                 "spd": 22,
                 "spe": 5,
-                "exp": 560
+                "exp": 480
             }, "weapon": {
                 "id" : 10,
                 "name" : "C++",
@@ -339,7 +339,7 @@
                 "spa": 30,
                 "spd": 25,
                 "spe": 150,
-                "exp": 640
+                "exp": 530
             }, "weapon": {
                 "id" : 11,
                 "name" : "sms32v50",
@@ -358,12 +358,12 @@
             "stats": {
                 "level": 27,
                 "hp": 3,
-                "atk": 55,
+                "atk": 85,
                 "def": 10000,
-                "spa": 55,
+                "spa": 85,
                 "spd": 10000,
                 "spe": 1,
-                "exp": 740
+                "exp": 600
             }, "weapon": {
                 "id" : 12,
                 "name" : "https://youtu.be/DLzxrzFCyOs",
@@ -387,7 +387,7 @@
                 "spa": 40,
                 "spd": 45,
                 "spe": 25,
-                "exp": 840
+                "exp": 630
             }, "weapon": {
                 "id" : 9,
                 "name" : "Framalogiciel",
@@ -411,7 +411,7 @@
                 "spa": 40,
                 "spd": 40,
                 "spe": 20,
-                "exp": 940
+                "exp": 660
             }, "weapon": {
                 "id" : 14,
                 "name" : "Nokia 3310",
@@ -436,7 +436,7 @@
                 "spa": 60,
                 "spd": 30,
                 "spe": 30,
-                "exp": 1020
+                "exp": 750
             }, "weapon": {
                 "id" : 14,
                 "name" : "Nokia 3310",
@@ -460,7 +460,7 @@
                 "spa": 40,
                 "spd": 40,
                 "spe": 10,
-                "exp": 1140
+                "exp": 790
             }, "weapon": {
                 "id" : 7,
                 "name" : "Pinte de biere",
@@ -484,7 +484,7 @@
                 "spa": 50,
                 "spd": 50,
                 "spe": 50,
-                "exp": 1260
+                "exp": 830
             }, "weapon": {
                 "id" : 15,
                 "name" : "Cahier des charges imprimé",
@@ -509,7 +509,7 @@
                 "spa": 50,
                 "spd": 60,
                 "spe": 30,
-                "exp": 1400
+                "exp": 900
             }, "weapon": {
                 "id" : 17,
                 "name" : "La Hash",
@@ -534,7 +534,7 @@
                 "spa": 80,
                 "spd": 80,
                 "spe": 50,
-                "exp": 1540
+                "exp": 950
             }, "weapon": {
                 "id" : 16,
                 "name" : "Mail flamme",
@@ -559,7 +559,7 @@
                 "spa": 70,
                 "spd": 10,
                 "spe": 70,
-                "exp": 2020
+                "exp": 1000
             }, "weapon": {
                 "id" : 18,
                 "name" : "Grimoire Dichotomique",

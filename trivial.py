@@ -35,9 +35,31 @@ BOT_ID = int(os.getenv('BOT_ID'))
 bot = commands.Bot(command_prefix='lefevre ')
 bot.remove_command('help')
 
+mindelay = 60
+maxdelay = 90
 
+users = []
+nerfeduser = 0
 
+def diffTime(id1, id2):
+    return int((id2 - id1)/4000000000)
 
+def canGain(userID, msgID, content):
+    for u in users :
+        if u[0] == userID :
+            print(u)
+            if content == u[2] :
+                return False
+            else :
+                d = diffTime(u[1], msgID)
+                u[1] = msgID
+                u[2] = content
+                if d - random.randint(0,maxdelay - mindelay) > mindelay :
+                    return True
+                else :
+                    return False
+    users.append([userID, msgID, content])
+    return True
 
 
 @bot.event
@@ -65,6 +87,10 @@ async def on_message(message: discord.Message):
                 wid = int(message.content.split(' ')[2])
                 game.giveWeapon(uid, wid)
 
+            elif "delay" in message.content :
+                mindelay = int(message.content.split(' ')[1])
+                maxdelay = int(message.content.split(' ')[2])
+
 
         else :
             response = "Hop hop hop, on n'envoie pas de messages privés. Si tu as une question, il faut la poser sur le forum!"
@@ -83,22 +109,20 @@ async def on_message(message: discord.Message):
             await chan.send(response)
 
     if (process and not message.author.bot) :
-        if message.channel.id == TUFFIGANG_C_ID :
-            game.dixPExp(message.author.id)
-        else :
-            if len(message.content) >= 10 :
+        if message.channel.id != TUFFIGANG_C_ID :
+            if len(message.content) >= 10 and 'lefevre' not in message.content and canGain(message.author.id, message.id, message.content) :
 
-                game.giveExp(message.author.id, random.randint(1,2))
+                game.giveExp(message.author.id, random.randint(30,55))
 
                 user = game.getUserData(message.author.id)
                 sag = user["stats"]["spd"] + user["weapon"]["spd"]
 
-                lootchance = int(3 + 0.2 * sag)
+                lootchance = int(10 + 0.6 * sag)
 
                 if random.randint(1, 100) < lootchance :
                     game.pickupRandom(message.author.id)
 
-                if random.randint(1, 100) < 4 and game.amountOfPveBattles(message.author.id) < 10 :
+                if random.randint(1, 100) < 21 and game.amountOfPveBattles(message.author.id) < 5 :
                     game.incPveBattles(message.author.id)
 
                 if message.content == "fuck ecobosto" :
@@ -260,7 +284,7 @@ async def on_reaction_add(reaction, user):
 
                             names = duser1.name + " VS " + duser2.name
 
-                            newembed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, hp1, hp2, hp2, 10, 10, battledesc, footer, False)
+                            newembed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, hp1, hp2, hp2, 10, 10, 10, 10, battledesc, footer, False)
 
                             await reaction.message.edit(embed = newembed)
 
@@ -362,7 +386,7 @@ async def on_reaction_add(reaction, user):
 
 
                                 if not dead :
-                                    if manas[2 * (pnumber - 1)] < 10:
+                                    if manas[2 * (pnumber - 1)] < manas[1 + 2 * (pnumber - 1)]:
                                         manas[2 * (pnumber - 1)] += 1
 
                                     lvl1 = str(fighter1["stats"]["level"])
@@ -379,7 +403,7 @@ async def on_reaction_add(reaction, user):
 
                                         names = embed.fields[0].name
 
-                                        newembed = createEmbed(secondturn, firstturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], battledesc, footertxt, False)
+                                        newembed = createEmbed(secondturn, firstturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], manas[1], manas[3], battledesc, footertxt, False)
 
                                         await reaction.message.edit(embed = newembed)
 
@@ -398,7 +422,7 @@ async def on_reaction_add(reaction, user):
 
                                             names = user.name + " VS " + fighter2["name"]
 
-                                            newembed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], battledesc, footertxt, True)
+                                            newembed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], manas[1], manas[3], battledesc, footertxt, True)
 
                                             await reaction.message.edit(embed = newembed)
 
@@ -448,7 +472,7 @@ async def on_reaction_add(reaction, user):
 
                                     for r in user.roles :
                                         if r.id == TUFFIGANG_R_ID :
-                                            exptogain = int(exptogain/2)
+                                            exptogain = int(exptogain * 0.8)
 
 
                                     game.giveExp(firstuser, exptogain)
@@ -470,6 +494,7 @@ async def on_reaction_add(reaction, user):
                         elif emoji == "broc" :
                             if manas[2 * (pnumber - 1)] >= 5 and hps[2 * (pnumber - 1)] != hps[1 + 2 * (pnumber - 1)]:
                                 manas[2 * (pnumber - 1)] -= 5
+                                manas[1 + 2 * (pnumber - 1)] -= 1
                                 spa = fighter1["stats"]["spa"] + fighter1["weapon"]["spa"]
                                 hps[2 * (pnumber - 1)] = int(min(hps[1 + 2 * (pnumber - 1)], hps[2 * (pnumber - 1)] + 5 + 1/10 * hps[1 + 2 * (pnumber - 1)] + spa * hps[1 + 2 * (pnumber - 1)]/100))
                                 battledesc = user.name + " se soigne!"
@@ -481,11 +506,11 @@ async def on_reaction_add(reaction, user):
 
                                 if not isPve :
 
-                                    newembed = createEmbed(secondturn, firstturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], battledesc, footertxt, False)
+                                    newembed = createEmbed(secondturn, firstturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], manas[1], manas[3], battledesc, footertxt, False)
 
                                 else :
 
-                                    newembed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], battledesc, footertxt, True)
+                                    newembed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], manas[1], manas[3], battledesc, footertxt, True)
 
                                 await reaction.message.edit(embed = newembed)
 
@@ -856,12 +881,18 @@ async def duel(ctx, *args):
             level2 = int(user2["stats"]["level"])
             maxexp2 = (level2 ** 3 + 1) - ((level2 - 1) ** 3 + 1)
 
-
-
+            difftropelevee = 0.8 * max(level1, level2) - min(level1, level2) - 5
 
 
             exptogain1 = int(((level2 + 6)/(level1 + 1)) * .1 * maxexp2 + 20)
             exptogain2 = int(((level1 + 6)/(level2 + 1)) * .1 * maxexp1 + 20)
+
+            if difftropelevee > 0 :
+                exptogain1 /= difftropelevee
+                exptogain2 /= difftropelevee
+
+                exptogain1 = max(20, int(exptogain1))
+                exptogain2 = max(20, int(exptogain2))
 
             newembed.add_field(name = (ctx.message.author.name + " est niveau " + str(level1) + "."), value = "Il pourrait gagner " + str(exptogain1) +" exp!", inline = False)
             newembed.add_field(name = (mentionned_user.name + " est niveau " + str(level2) + "."), value =  "Il pourrait gagner " + str(exptogain2) +" exp!", inline = False)
@@ -884,15 +915,15 @@ def getHp(hpembed):
 def getMana(manaembed):
     manaembed = " ".join(manaembed.split())
     mana1 = int(manaembed.split(' ')[1])
-    maxmana1 = 10
+    maxmana1 = int(manaembed.split(' ')[3])
     mana2 = int(manaembed.split(' ')[5])
-    maxmana2 = 10
+    maxmana2 = int(manaembed.split(' ')[7])
     return [mana1, maxmana1, mana2, maxmana2]
 
 def dmgCalc(attacker, defender, w):
     return Dmg(attacker, defender, w)
 
-def createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, maxhp2, mana1, mana2, battledesc, footer, isPve):
+def createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, maxhp2, mana1, mana2, maxmana1, maxmana2, battledesc, footer, isPve):
     if isPve :
         mydesc = str("<@!" + firstturn + ">, choisis une attaque! " + secondturn + " se défend.")
     else :
@@ -908,8 +939,8 @@ def createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, maxh
     hpbar1 = "█" * int(10 * hp1/maxhp1) + "░" * (10 - int(10 * hp1/maxhp1))
     hpbar2 = "█" * int(10 * hp2/maxhp2) + "░" * (10 - int(10 * hp2/maxhp2))
 
-    manabar1 = "█" * int(10 * mana1/10) + "░" * (10 - int(10 * mana1/10))
-    manabar2 = "█" * int(10 * mana2/10) + "░" * (10 - int(10 * mana2/10))
+    manabar1 = "█" * int(10 * mana1/10) + "░" * (10 - int(10 * mana1/maxmana1))
+    manabar2 = "█" * int(10 * mana2/10) + "░" * (10 - int(10 * mana2/maxmana2))
 
     spacebetween= " " * 24
     spacebetween2= " " * 15
@@ -918,7 +949,7 @@ def createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, maxh
 
     newembed.add_field(name =  "HP " + str(hp1) + " / " + str(maxhp1) + spacebetween + "HP " + str(hp2) + " / " + str(maxhp2), value = hpbar1 + " - - - " + hpbar2, inline = False)
 
-    newembed.add_field(name =  "Mana " + str(mana1) + " / 10 " + spacebetween2 + "Mana " + str(mana2) + " / 10", value = manabar1 + " - - - " + manabar2, inline = False)
+    newembed.add_field(name =  "Mana " + str(mana1) + " / " + str(maxmana1) + spacebetween2 + "Mana " + str(mana2) + " / " + str(maxmana2), value = manabar1 + " - - - " + manabar2, inline = False)
 
     newembed.add_field(name = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - -", value = "\u200b", inline = False)
 
@@ -975,7 +1006,7 @@ async def pve(ctx, *args):
 
         names = ctx.message.author.name + " VS " + ennemy["name"]
 
-        embed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, hp2, 10, 10, battledesc, footer, True)
+        embed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, hp2, 10, 10, 10, 10, battledesc, footer, True)
 
         msg = await ctx.send(embed = embed)
 

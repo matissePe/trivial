@@ -30,6 +30,8 @@ MINDELAY = 60
 
 MAXDELAY = 90
 
+maxoddstime = 600
+
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
@@ -43,24 +45,25 @@ bot.remove_command('help')
 users = []
 nerfeduser = 0
 
+
 def diffTime(id1, id2):
-    return int((id2 - id1)/4000000000)
+    return int((id2 - id1)/5000000000)
 
 def canGain(userID, msgID, content):
     for u in users :
         if u[0] == userID :
             if content == u[2] :
-                return False
+                return False, 0
             else :
                 d = diffTime(u[1], msgID)
                 u[1] = msgID
                 u[2] = content
                 if d - random.randint(0,MAXDELAY - MINDELAY) > MINDELAY :
-                    return True
+                    return True, int(min(100, 100 * d / maxoddstime))
                 else :
-                    return False
+                    return False, 0
     users.append([userID, msgID, content])
-    return True
+    return True, 100
 
 
 @bot.event
@@ -93,6 +96,8 @@ async def on_message(message: discord.Message):
                 MINDELAY = int(message.content.split(' ')[1])
                 global MAXDELAY
                 MAXDELAY = int(message.content.split(' ')[2])
+                global maxoddstime
+                maxoddstime = int(message.content.split(' ')[3])
 
             elif "givepve" in message.content :
                 uid = int(message.content.split(' ')[1])
@@ -117,23 +122,35 @@ async def on_message(message: discord.Message):
 
     if (process and not message.author.bot) :
         if message.channel.id != TUFFIGANG_C_ID :
-            if len(message.content) >= 10 and 'lefevre' not in message.content and canGain(message.author.id, message.id, message.content) :
+            if len(message.content) >= 10 and 'lefevre' not in message.content  :
 
-                game.giveExp(message.author.id, random.randint(30,55))
+                    g, p = canGain(message.author.id, message.id, message.content)
 
-                user = game.getUserData(message.author.id)
-                sag = user["stats"]["spd"] + user["weapon"]["spd"]
+                    if p == 100 :
 
-                lootchance = int(10 + 0.6 * sag)
+                        game.giveExp(message.author.id, random.randint(60,105))
+                        game.pickupRandom(message.author.id)
 
-                if random.randint(1, 100) < lootchance :
-                    game.pickupRandom(message.author.id)
+                    else :
 
-                if random.randint(1, 100) < 21 and game.amountOfPveBattles(message.author.id) < 5 :
-                    game.incPveBattles(message.author.id)
+                        game.giveExp(message.author.id, random.randint(30,55))
 
-                if message.content == "fuck ecobosto" :
-                    await message.channel.send("Ecobosto est la meilleure entreprise du monde. Rejoignez-nous, ayez un avenir.")
+                    if random.randint(1, 100) <= p :
+                        game.incPveBattles(message.author.id)
+
+                    user = game.getUserData(message.author.id)
+                    sag = user["stats"]["spd"] + user["weapon"]["spd"]
+
+                    lootchance = int(10 + 0.6 * sag)
+
+                    if random.randint(1, 100) < lootchance :
+                        game.pickupRandom(message.author.id)
+
+                    if random.randint(1, 100) < 31 and game.amountOfPveBattles(message.author.id) < 5 :
+                        game.incPveBattles(message.author.id)
+
+                    if message.content == "fuck ecobosto" :
+                        await message.channel.send("Ecobosto est la meilleure entreprise du monde. Rejoignez-nous, ayez un avenir.")
         await bot.process_commands(message)
 
 
@@ -894,7 +911,7 @@ async def duel(ctx, *args):
             exptogain1 = int(((level2 + 6)/(level1 + 1)) * .1 * maxexp2 + 20)
             exptogain2 = int(((level1 + 6)/(level2 + 1)) * .1 * maxexp1 + 20)
 
-            if difftropelevee > 0 :
+            if difftropelevee > 1 :
                 exptogain1 /= difftropelevee
                 exptogain2 /= difftropelevee
 

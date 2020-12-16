@@ -126,31 +126,33 @@ async def on_message(message: discord.Message):
 
                     g, p = canGain(message.author.id, message.id, message.content)
 
-                    if p == 100 :
+                    if g :
 
-                        game.giveExp(message.author.id, random.randint(60,105))
-                        game.pickupRandom(message.author.id)
+                        if p == 100 :
 
-                    else :
+                            game.giveExp(message.author.id, random.randint(60,105))
+                            game.pickupRandom(message.author.id)
 
-                        game.giveExp(message.author.id, random.randint(30,55))
+                        else :
 
-                    if random.randint(1, 100) <= p :
-                        game.incPveBattles(message.author.id)
+                            game.giveExp(message.author.id, random.randint(30,55))
 
-                    user = game.getUserData(message.author.id)
-                    sag = user["stats"]["spd"] + user["weapon"]["spd"]
+                        if random.randint(1, 100) <= p :
+                            game.incPveBattles(message.author.id)
 
-                    lootchance = int(10 + 0.6 * sag)
+                        user = game.getUserData(message.author.id)
+                        sag = user["stats"]["spd"] + user["weapon"]["spd"]
 
-                    if random.randint(1, 100) < lootchance :
-                        game.pickupRandom(message.author.id)
+                        lootchance = int(10 + 0.6 * sag)
 
-                    if random.randint(1, 100) < 31 and game.amountOfPveBattles(message.author.id) < 5 :
-                        game.incPveBattles(message.author.id)
+                        if random.randint(1, 100) < lootchance :
+                            game.pickupRandom(message.author.id)
 
-                    if message.content == "fuck ecobosto" :
-                        await message.channel.send("Ecobosto est la meilleure entreprise du monde. Rejoignez-nous, ayez un avenir.")
+                        if random.randint(1, 100) < 31 and game.amountOfPveBattles(message.author.id) < 5 :
+                            game.incPveBattles(message.author.id)
+
+                        if message.content == "fuck ecobosto" :
+                            await message.channel.send("Ecobosto est la meilleure entreprise du monde. Rejoignez-nous, ayez un avenir.")
         await bot.process_commands(message)
 
 

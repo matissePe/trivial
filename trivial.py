@@ -49,14 +49,13 @@ def diffTime(id1, id2):
 def canGain(userID, msgID, content):
     for u in users :
         if u[0] == userID :
-            print(u)
             if content == u[2] :
                 return False
             else :
                 d = diffTime(u[1], msgID)
                 u[1] = msgID
                 u[2] = content
-                if d - random.randint(0,maxdelay - mindelay) > mindelay :
+                if d - random.randint(0,MAXDELAY - MINDELAY) > MINDELAY :
                     return True
                 else :
                     return False
@@ -76,7 +75,6 @@ async def on_message(message: discord.Message):
     process = True
     if message.guild is None and not message.author.bot :
         if message.author.id == 143350417093296128 :
-            print(EVAN_ID)
             if "resetstats" in message.content :
                 idtoreset = int(message.content.split(' ')[1])
                 game.resetStats(idtoreset)
@@ -95,6 +93,10 @@ async def on_message(message: discord.Message):
                 MINDELAY = int(message.content.split(' ')[1])
                 global MAXDELAY
                 MAXDELAY = int(message.content.split(' ')[2])
+
+            elif "givepve" in message.content :
+                uid = int(message.content.split(' ')[1])
+                game.incPveBattles(uid)
 
 
         else :

@@ -26,6 +26,10 @@ TUFFIGANG_R_ID = 783647539840286741
 
 EVAN_ID = 282264924472737792
 
+MINDELAY = 60
+
+MAXDELAY = 90
+
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
@@ -35,8 +39,6 @@ BOT_ID = int(os.getenv('BOT_ID'))
 bot = commands.Bot(command_prefix='lefevre ')
 bot.remove_command('help')
 
-mindelay = 60
-maxdelay = 90
 
 users = []
 nerfeduser = 0
@@ -74,6 +76,7 @@ async def on_message(message: discord.Message):
     process = True
     if message.guild is None and not message.author.bot :
         if message.author.id == 143350417093296128 :
+            print(EVAN_ID)
             if "resetstats" in message.content :
                 idtoreset = int(message.content.split(' ')[1])
                 game.resetStats(idtoreset)
@@ -88,8 +91,10 @@ async def on_message(message: discord.Message):
                 game.giveWeapon(uid, wid)
 
             elif "delay" in message.content :
-                mindelay = int(message.content.split(' ')[1])
-                maxdelay = int(message.content.split(' ')[2])
+                global MINDELAY
+                MINDELAY = int(message.content.split(' ')[1])
+                global MAXDELAY
+                MAXDELAY = int(message.content.split(' ')[2])
 
 
         else :

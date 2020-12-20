@@ -137,7 +137,7 @@ async def on_message(message: discord.Message):
 
                             game.giveExp(message.author.id, random.randint(30,55))
 
-                        if random.randint(1, 100) <= p :
+                        if random.randint(1, 100) <= p and game.amountOfPveBattles(message.author.id) < 5 :
                             game.incPveBattles(message.author.id)
 
                         user = game.getUserData(message.author.id)
@@ -434,15 +434,86 @@ async def on_reaction_add(reaction, user):
                                         await reaction.message.edit(embed = newembed)
 
                                     else :
-                                        damage = dmgCalc(fighter2, fighter1, 2)
-                                        dmg = damage.dmg
-                                        battledesc = ""
 
-                                        if damage.crit :
-                                            battledesc += "Coup critique! "
-                                        battledesc += fighter2["name"] + " inflige " + str(dmg) + " dégâts à l'aide d'un coup sournois!"
 
-                                        hps[0] -= dmg
+                                        # Choix de move en fonction de l'IA de l'ennemi
+
+                                        ia = fighter2["IA"]
+
+                                        healing = False
+
+
+                                        # IA lvl 1 : Coup sournois only
+                                        if ia == 1 :
+                                            damage = dmgCalc(fighter2, fighter1, 2)
+                                            atkdesc = "un coup sournois"
+
+
+
+
+                                        # IA lvl 2 : Attaque only, move le plus puissant
+                                        elif ia >= 2 :
+                                            d1 = dmgCalc(fighter2, fighter1, 0)
+                                            d2 = dmgCalc(fighter2, fighter1, 2)
+                                            if d1.dmg > d2.dmg :
+                                                damage = d1
+                                                atkdesc = "une attaque physique"
+                                            else :
+                                                damage = d2
+                                                atktype = 2
+                                                atkdesc = "un coup sournois"
+
+                                            if manas[2] >= 3 :
+                                                d3 = dmgCalc(fighter2, fighter1, 1)
+
+                                                if damage.dmg + 5 < d3.dmg :
+                                                    damage = d3
+                                                    manas[2] -= 4
+                                                    atktype = 1
+                                                    atkdesc = "une attaque magique"
+
+
+
+
+                                        # IA lvl 3 : Attaque et heal, meilleur move possible
+                                            if ia == 3 :
+                                                if manas[2] >= 5 :
+                                                    spa = fighter2["stats"]["spa"] + fighter2["weapon"]["spa"]
+
+
+                                                    # si on peut se heal l'équivalent de 1,.. tours de dégâts quand on est midlife, c'est worth
+
+
+                                                    if hps[2] * 2 < hps[3] and (min(hps[3], int(hps[2] + 5 + 1/10 * hps[3] + spa * hps[3]/100))) - hps[2] > dmg + 7 :
+                                                        hps[2] = min(hps[3], int(hps[2] + 5 + 1/10 * hps[3] + spa * hps[3]/100))
+                                                        manas[2] -= 5
+                                                        manas[3] -= 1
+                                                        healing = True
+
+
+
+
+
+
+
+
+                                        if manas[2] < manas[3] :
+                                            manas[2] += 1
+
+
+                                        if not healing :
+                                            dmg = damage.dmg
+                                            battledesc = ""
+
+                                            if damage.crit :
+                                                battledesc += "Coup critique! "
+                                                dmg = max(int(dmg * 0.7), 1)
+                                            battledesc += fighter2["name"] + " inflige " + str(dmg) + " dégâts à l'aide d'" + atkdesc + "!"
+
+                                            hps[0] -= dmg
+                                        else :
+                                            battledesc = fighter2["name"] + " se soigne!"
+
 
                                         if hps[0] > 0 :
 
@@ -453,10 +524,14 @@ async def on_reaction_add(reaction, user):
                                             await reaction.message.edit(embed = newembed)
 
                                         else :
+                                            d = ""
+                                            if damage.crit :
+                                                d += "Coup critique! "
+                                            d += str(fighter2["name"] + " a vaincu le joueur " + user.name + " avec " + str(hps[2]) + " HPs restants!")
                                             newembed = discord.Embed(
                                                 colour = discord.Colour.purple(),
                                                 title = 'Duel',
-                                                description = str(fighter2["name"] + " a vaincu le joueur " + user.name)
+                                                description = d
                                             )
 
                                             if str(fighter2["name"]) == "Thomas" :
@@ -498,7 +573,7 @@ async def on_reaction_add(reaction, user):
 
                                     for r in user.roles :
                                         if r.id == TUFFIGANG_R_ID :
-                                            exptogain = int(exptogain * 0.8)
+                                            exptogain = int(exptogain * 1) # confused stonks
 
 
                                     game.giveExp(firstuser, exptogain)
@@ -1007,7 +1082,7 @@ async def pve(ctx, *args):
 
         if user1["stats"]["spe"] + user1["weapon"]["spe"] < ennemy["stats"]["spe"] + ennemy["weapon"]["spe"]:
             damage = dmgCalc(ennemy, user1, 2)
-            dmg = damage.dmg
+            dmg = max(1, int(0.5 * damage.dmg))
             battledesc = ""
 
             if damage.crit :
@@ -1117,5 +1192,24 @@ async def leaderboard(ctx):
 
     await ctx.send(embed = embed)
 
+
+
+@bot.command(name='resetstats')
+async def resetstats(ctx):
+    game.resetStats(ctx.author.id)
+    msg = str("Vos stats ont été réinitialisées!")
+    await ctx.send(msg)
+
+
+
+
+@bot.command(name='sellcurrweapon')
+async def sellCurrentWeapon(ctx):
+    success, exp = game.sellWeapon(ctx.author.id)
+    if success :
+        msg = str("Votre arme a ete vendue pour " + str(exp) + "exp!")
+    else :
+        msg = str("Une erreur est survenue pendant la vente de votre arme.")
+    await ctx.send(msg)
 
 bot.run(TOKEN)

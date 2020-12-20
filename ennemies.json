@@ -3,6 +3,7 @@
         {
             "id": "1",
             "name" : "Paint",
+            "IA" : 1,
             "stats": {
                 "level": 3,
                 "hp": 15,
@@ -26,6 +27,7 @@
         {
             "id": "2",
             "name" : "Swing",
+            "IA" : 1,
             "stats": {
                 "level": 3,
                 "hp": 15,
@@ -49,6 +51,7 @@
         {
             "id": "3",
             "name" : "Le-Forum",
+            "IA" : 1,
             "stats": {
                 "level": 3,
                 "hp": 15,
@@ -72,6 +75,7 @@
         {
             "id": "4",
             "name" : "Le-Tuffigang",
+            "IA" : 1,
             "stats": {
                 "level": 7,
                 "hp": 25,
@@ -95,6 +99,7 @@
         {
             "id": "5",
             "name" : "Ant",
+            "IA" : 1,
             "stats": {
                 "level": 8,
                 "hp": 30,
@@ -118,6 +123,7 @@
         {
             "id": "6",
             "name" : "RadioBonheur",
+            "IA" : 1,
             "stats": {
                 "level": 9,
                 "hp": 35,
@@ -141,6 +147,7 @@
         {
             "id": "7",
             "name" : "Via",
+            "IA" : 1,
             "stats": {
                 "level": 12,
                 "hp": 40,
@@ -164,14 +171,15 @@
         {
             "id": "8",
             "name" : "Momo",
+            "IA" : 1,
             "stats": {
                 "level": 13,
                 "hp": 45,
                 "atk": 20,
                 "def": 14,
-                "spa": 10,
+                "spa": 1,
                 "spd": 14,
-                "spe": 14,
+                "spe": 23,
                 "exp": 220
             }, "weapon": {
                 "id" : 6,
@@ -187,14 +195,15 @@
         {
             "id": "9",
             "name" : "JFK",
+            "IA" : 1,
             "stats": {
                 "level": 14,
                 "hp": 50,
-                "atk": 15,
-                "def": 10,
-                "spa": 30,
-                "spd": 10,
-                "spe": 15,
+                "atk": 1,
+                "def": 14,
+                "spa": 31,
+                "spd": 14,
+                "spe": 1,
                 "exp": 240
             }, "weapon": {
                 "id" : 6,
@@ -211,12 +220,13 @@
         {
             "id": "10",
             "name" : "Bannevy",
+            "IA" : 2,
             "stats": {
                 "level": 17,
-                "hp": 70,
-                "atk": 20,
+                "hp": 60,
+                "atk": 1,
                 "def": 30,
-                "spa": 1,
+                "spa": 14,
                 "spd": 30,
                 "spe": 1,
                 "exp": 300
@@ -235,13 +245,14 @@
         {
             "id": "11",
             "name" : "Kerbulluc",
+            "IA" : 2,
             "stats": {
                 "level": 18,
-                "hp": 75,
-                "atk": 15,
-                "def": 15,
-                "spa": 35,
-                "spd": 15,
+                "hp": 65,
+                "atk": 24,
+                "def": 13,
+                "spa": 1,
+                "spd": 13,
                 "spe": 30,
                 "exp": 330
             }, "weapon": {
@@ -259,14 +270,15 @@
         {
             "id": "12",
             "name" : "Ricard",
+            "IA" : 2,
             "stats": {
                 "level": 19,
-                "hp": 80,
-                "atk": 25,
-                "def": 25,
-                "spa": 25,
-                "spd": 25,
-                "spe": 25,
+                "hp": 70,
+                "atk": 16,
+                "def": 19,
+                "spa": 14,
+                "spd": 19,
+                "spe": 16,
                 "exp": 360
             }, "weapon": {
                 "id" : 7,
@@ -283,13 +295,14 @@
         {
             "id": "13",
             "name" : "Brodont",
+            "IA" : 2,
             "stats": {
                 "level": 22,
-                "hp": 85,
-                "atk": 25,
-                "def": 40,
-                "spa": 10,
-                "spd": 40,
+                "hp": 75,
+                "atk": 22,
+                "def": 32,
+                "spa": 1,
+                "spd": 32,
                 "spe": 10,
                 "exp": 450
             }, "weapon": {
@@ -307,12 +320,13 @@
         {
             "id": "14",
             "name" : "Florquaing",
+            "IA" : 2,
             "stats": {
                 "level": 23,
-                "hp": 90,
-                "atk": 25,
+                "hp": 80,
+                "atk": 15,
                 "def": 22,
-                "spa": 45,
+                "spa": 35,
                 "spd": 22,
                 "spe": 5,
                 "exp": 480
@@ -331,13 +345,14 @@
         {
             "id": "15",
             "name" : "PwitBDD",
+            "IA" : 2,
             "stats": {
                 "level": 24,
-                "hp": 95,
+                "hp": 85,
                 "atk": 1,
-                "def": 25,
-                "spa": 30,
-                "spd": 25,
+                "def": 18,
+                "spa": 25,
+                "spd": 18,
                 "spe": 150,
                 "exp": 530
             }, "weapon": {
@@ -355,6 +370,7 @@
         {
             "id": "16",
             "name" : "Seigneur-Rand",
+            "IA" : 2,
             "stats": {
                 "level": 27,
                 "hp": 3,
@@ -379,13 +395,14 @@
         {
             "id": "17",
             "name" : "JFM",
+            "IA" : 2,
             "stats": {
                 "level": 28,
-                "hp": 105,
-                "atk": 25,
-                "def": 10,
-                "spa": 40,
-                "spd": 45,
+                "hp": 95,
+                "atk": 15,
+                "def": 25,
+                "spa": 30,
+                "spd": 42,
                 "spe": 25,
                 "exp": 630
             }, "weapon": {
@@ -403,14 +420,15 @@
         {
             "id": "18",
             "name" : "Jouclavier",
+            "IA" : 2,
             "stats": {
                 "level": 29,
-                "hp": 110,
-                "atk": 40,
-                "def": 40,
-                "spa": 40,
-                "spd": 40,
-                "spe": 20,
+                "hp": 100,
+                "atk": 30,
+                "def": 30,
+                "spa": 30,
+                "spd": 19,
+                "spe": 10,
                 "exp": 660
             }, "weapon": {
                 "id" : 14,
@@ -428,14 +446,15 @@
         {
             "id": "19",
             "name" : "Evan(le-trolleur)",
+            "IA" : 3,
             "stats": {
                 "level": 32,
-                "hp": 115,
-                "atk": 10,
-                "def": 30,
-                "spa": 60,
+                "hp": 105,
+                "atk": 20,
+                "def": 19,
+                "spa": 70,
                 "spd": 30,
-                "spe": 30,
+                "spe": 48,
                 "exp": 750
             }, "weapon": {
                 "id" : 14,
@@ -452,13 +471,14 @@
         {
             "id": "20",
             "name" : "Roi-de-la-conception-objet",
+            "IA" : 3,
             "stats": {
                 "level": 33,
-                "hp": 120,
-                "atk": 40,
-                "def": 80,
-                "spa": 40,
-                "spd": 40,
+                "hp": 110,
+                "atk": 38,
+                "def": 34,
+                "spa": 30,
+                "spd": 45,
                 "spe": 10,
                 "exp": 790
             }, "weapon": {
@@ -476,14 +496,15 @@
         {
             "id": "21",
             "name" : "L'Anti-Tuffigang",
+            "IA" : 3,
             "stats": {
                 "level": 34,
-                "hp": 125,
-                "atk": 50,
-                "def": 50,
-                "spa": 50,
-                "spd": 50,
-                "spe": 50,
+                "hp": 115,
+                "atk": 35,
+                "def": 34,
+                "spa": 35,
+                "spd": 43,
+                "spe": 60,
                 "exp": 830
             }, "weapon": {
                 "id" : 15,
@@ -498,17 +519,21 @@
 
 
 
+
+        
+
         {
             "id": "22",
             "name" : ":Bornetrigger:",
+            "IA" : 3,
             "stats": {
                 "level": 37,
-                "hp": 130,
-                "atk": 60,
-                "def": 60,
-                "spa": 50,
-                "spd": 60,
-                "spe": 30,
+                "hp": 120,
+                "atk": 48,
+                "def": 37,
+                "spa": 35,
+                "spd": 57,
+                "spe": 20,
                 "exp": 900
             }, "weapon": {
                 "id" : 17,
@@ -526,14 +551,15 @@
         {
             "id": "23",
             "name" : "Tuff",
+            "IA" : 3,
             "stats": {
                 "level": 38,
-                "hp": 135,
-                "atk": 50,
-                "def": 30,
-                "spa": 80,
-                "spd": 80,
-                "spe": 50,
+                "hp": 125,
+                "atk": 20,
+                "def": 23,
+                "spa": 63,
+                "spd": 60,
+                "spe": 30,
                 "exp": 950
             }, "weapon": {
                 "id" : 16,
@@ -551,14 +577,15 @@
         {
             "id": "24",
             "name" : "2020",
+            "IA" : 3,
             "stats": {
                 "level": 39,
                 "hp": 366,
-                "atk": 60,
-                "def": 10,
-                "spa": 70,
-                "spd": 10,
-                "spe": 70,
+                "atk": 45,
+                "def": 5,
+                "spa": 50,
+                "spd": 5,
+                "spe": 30,
                 "exp": 1000
             }, "weapon": {
                 "id" : 18,
@@ -572,10 +599,184 @@
         },
 
 
+
+
+
+
+
+
+
+
+
+
+        {
+            "id": "25",
+            "name" : "Le-Sommaire",
+            "IA" : 3,
+            "stats": {
+                "level": 36,
+                "hp": 120,
+                "atk": 1,
+                "def": 45,
+                "spa": 46,
+                "spd": 45,
+                "spe": 1,
+                "exp": 870
+            }, "weapon": {
+                "id" : 18,
+                "name" : "Grimoire Dichotomique",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 30,
+                "spd" : 10,
+                "spe" : 10
+            }
+        },
+
+
         
+
+        {
+            "id": "26",
+            "name" : ";",
+            "IA" : 3,
+            "stats": {
+                "level": 21,
+                "hp": 70,
+                "atk": 44,
+                "def": 21,
+                "spa": 1,
+                "spd": 21,
+                "spe": 1,
+                "exp": 430
+            }, "weapon": {
+                "id" : 11,
+                "name" : "sms32v50",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 25,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+
+
+
+
+        {
+            "id": "27",
+            "name" : "Petite-RNG",
+            "IA" : 3,
+            "stats": {
+                "level": 1,
+                "hp": 2000,
+                "atk": 1,
+                "def": 1,
+                "spa": 1,
+                "spd": 1,
+                "spe": 1,
+                "exp": 1000
+            }, "weapon": {
+                "id" : 1,
+                "name" : "Mains",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 0,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+
+        {
+            "id": "28",
+            "name" : "RNG",
+            "IA" : 3,
+            "stats": {
+                "level": 2,
+                "hp": 6000,
+                "atk": 1,
+                "def": 1,
+                "spa": 1,
+                "spd": 1,
+                "spe": 1,
+                "exp": 3000
+            }, "weapon": {
+                "id" : 1,
+                "name" : "Mains",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 0,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+
+
+        {
+            "id": "29",
+            "name" : "Grosse-RNG",
+            "IA" : 3,
+            "stats": {
+                "level": 3,
+                "hp": 16000,
+                "atk": 1,
+                "def": 1,
+                "spa": 1,
+                "spd": 1,
+                "spe": 1,
+                "exp": 8000
+            }, "weapon": {
+                "id" : 1,
+                "name" : "Mains",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 0,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+
+
+
+        {
+            "id": "29",
+            "name" : "Grosse-RNG",
+            "IA" : 3,
+            "stats": {
+                "level": 3,
+                "hp": 16000,
+                "atk": 1,
+                "def": 1,
+                "spa": 1,
+                "spd": 1,
+                "spe": 1,
+                "exp": 8000
+            }, "weapon": {
+                "id" : 1,
+                "name" : "Mains",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 0,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+
+
+        
+
+
+        
+
         {
             "id": "1001",
             "name" : "Ecobosto",
+            "IA" : 3,
             "stats": {
                 "level": 50,
                 "hp": 150,
@@ -584,7 +785,7 @@
                 "spa": 70,
                 "spd": 70,
                 "spe": 70,
-                "exp": 10000
+                "exp": 15000
             }, "weapon": {
                 "id" : 49,
                 "name" : "Stonks",
@@ -601,6 +802,7 @@
         {
             "id": "1002",
             "name" : "Thomas",
+            "IA" : 3,
             "stats": {
                 "level": 60,
                 "hp": 200,
@@ -609,7 +811,7 @@
                 "spa": 85,
                 "spd": 85,
                 "spe": 85,
-                "exp": 15000
+                "exp": 22500
             }, "weapon": {
                 "id" : 1001,
                 "name" : "Kick",
@@ -625,6 +827,7 @@
         {
             "id": "1003",
             "name" : "Lefevre",
+            "IA" : 3,
             "stats": {
                 "level": 70,
                 "hp": 250,
@@ -633,7 +836,7 @@
                 "spa": 100,
                 "spd": 100,
                 "spe": 100,
-                "exp": 20000
+                "exp": 30000
             }, "weapon": {
                 "id": 50,
                 "name": "Trivial",

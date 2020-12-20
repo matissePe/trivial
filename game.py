@@ -652,5 +652,44 @@ def getBestPlayers():
 
 
 
+
+
+def removeFromInventory(userID, itemID):
+    user = getUserData(userID)
+
+    inventaire = user["inventaire"]
+
+    w = {"id" : itemID}
+
+    inventaire.remove(w)
+
+    updateUser(user)
+
+
+
+
+def sellWeapon(userID):
+    user = getUserData(userID)
+
+    try :
+        weaponExp = user["weapon"]["exp"]
+        weaponId = user["weapon"]["id"]
+        if weaponExp == 0 :
+            return False, 0
+        else :
+            changeWeapon(userID, 0)
+            removeFromInventory(userID, weaponId)
+            giveExp(userID, weaponExp)
+            return True, weaponExp
+    except :
+        return False, 0
+
+
+
+
+
+
+
+
 #resetStats(143350417093296128)
 #getBestPlayers()

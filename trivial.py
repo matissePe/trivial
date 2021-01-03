@@ -1201,6 +1201,12 @@ async def resetstats(ctx):
     await ctx.send(msg)
 
 
+@bot.command(name='secret')
+async def secret(ctx):
+    msg = str("Cette commande ne sera disponible qu'à partir du 29 Janvier.")
+    await ctx.send(msg)
+
+
 
 
 @bot.command(name='sellcurrweapon')

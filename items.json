@@ -359,12 +359,12 @@
         {
             "id" : 30,
             "name" : "Lame démoniaque scellee du javax.swing",
-            "atk" : 45,
+            "atk" : 50,
 			"def" : 0,
-			"spa" : 45,
+			"spa" : 50,
 			"spd" : 0,
 			"spe" : 0,
-            "exp" : 7000
+            "exp" : 8000
         },
 
 
@@ -378,6 +378,31 @@
 			"spd" : 0,
 			"spe" : 100,
             "exp" : 8000
+        },
+
+
+        
+        {
+            "id" : 32,
+            "name" : "OMEGA Stonks",
+            "atk" : 10,
+			"def" : 40,
+			"spa" : 10,
+			"spd" : 40,
+			"spe" : 10,
+            "exp" : 8000
+        },
+
+
+        {
+            "id" : 33,
+            "name" : "StackOverflow",
+            "atk" : 0,
+			"def" : 10,
+			"spa" : 40,
+			"spd" : 10,
+			"spe" : 40,
+            "exp" : 7000
         },
 
 

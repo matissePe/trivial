@@ -2,7 +2,7 @@ import json
 import random
 
 
-def retDefaultUser(userID, statpoints, level, exp):
+def retDefaultUser(userID, statpoints, level, exp, wep):
     return {"id" : str(userID),
                 "stats" : {
                     "level" : level,
@@ -15,15 +15,7 @@ def retDefaultUser(userID, statpoints, level, exp):
                     "statpoints": statpoints,
                     "exp" : exp
                     },
-                "weapon": {
-                    "id" : 0,
-    				"name" : "Mains",
-    				"atk" : 1,
-    				"def" : 1,
-    				"spa" : 0,
-    				"spd" : 0,
-    				"spe" : 2
-			     },
+                "weapon": wep,
 			     "inventaire": [
 
 			     ],
@@ -47,7 +39,17 @@ def getUserData(userID):
             if userID == user['id']:
                 return user
 
-        user = retDefaultUser(userID, 10, 0, 0)
+        wep = {
+                    "id" : 0,
+    				"name" : "Mains",
+    				"atk" : 1,
+    				"def" : 1,
+    				"spa" : 0,
+    				"spd" : 0,
+    				"spe" : 2
+			     },
+
+        user = retDefaultUser(userID, 10, 0, 0, wep)
         users.append(user)
         write_json(data)
         return user
@@ -322,7 +324,7 @@ import json
 import random
 
 
-def retDefaultUser(userID, statpoints, level, exp):
+def retDefaultUser(userID, statpoints, level, exp, wep):
     return {"id" : str(userID),
                 "stats" : {
                     "level" : level,
@@ -335,15 +337,7 @@ def retDefaultUser(userID, statpoints, level, exp):
                     "statpoints": statpoints,
                     "exp" : exp
                     },
-                "weapon": {
-                    "id" : 0,
-    				"name" : "Mains",
-    				"atk" : 1,
-    				"def" : 1,
-    				"spa" : 0,
-    				"spd" : 0,
-    				"spe" : 2
-			     },
+                "weapon": wep,
 			     "inventaire": [
 
 			     ],
@@ -367,7 +361,17 @@ def getUserData(userID):
             if userID == user['id']:
                 return user
 
-        user = retDefaultUser(userID, 10, 0, 0)
+        wep = {
+                    "id" : 0,
+    				"name" : "Mains",
+    				"atk" : 1,
+    				"def" : 1,
+    				"spa" : 0,
+    				"spd" : 0,
+    				"spe" : 2
+			     }
+
+        user = retDefaultUser(userID, 10, 0, 0, wep)
         users.append(user)
         write_json(data)
         return user
@@ -467,8 +471,9 @@ def changeWeapon(userID, weaponID):
 def resetStats(userID):
 
     user = getUserData(userID)
+    wep = user["weapon"]
     totalstatpoints = user["stats"]["level"] * 5 + 10
-    user = retDefaultUser(userID, totalstatpoints, user["stats"]["level"], user["stats"]["exp"])
+    user = retDefaultUser(userID, totalstatpoints, user["stats"]["level"], user["stats"]["exp"], wep)
 
 
     updateUser(user)

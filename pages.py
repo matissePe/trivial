@@ -39,6 +39,8 @@ def page_3(embed):
     embed.add_field(name='lefevre pve', value='Faites un combat en PVE', inline = False)
     embed.add_field(name='lefevre pveamount', value='Montre vos nombres de combats en PVE restants', inline = False)
     embed.add_field(name='lefevre cw', value='Permet de changer d\'arme', inline = False)
+    embed.add_field(name='lefevre resetstats', value='Permet de reset vos stats', inline = False)
+    embed.add_field(name='lefevre sellcurrweapon', value='Permet de vendre votre arme contre de l\'exp', inline = False)
 
 
 def page_4(embed):

@@ -743,26 +743,579 @@
 
 
         {
-            "id": "29",
-            "name" : "Grosse-RNG",
+            "id": "30",
+            "name" : "42",
             "IA" : 3,
             "stats": {
-                "level": 3,
-                "hp": 16000,
-                "atk": 1,
-                "def": 1,
-                "spa": 1,
-                "spd": 1,
-                "spe": 1,
-                "exp": 8000
+                "level": 42,
+                "hp": 135,
+                "atk": 20,
+                "def": 43,
+                "spa": 63,
+                "spd": 55,
+                "spe": 30,
+                "exp": 1100
             }, "weapon": {
-                "id" : 1,
-                "name" : "Mains",
+                "id" : 21,
+                "name" : "Python",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 60,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+        {
+            "id": "31",
+            "name" : "Licence-Winrar",
+            "IA" : 3,
+            "stats": {
+                "level": 43,
+                "hp": 140,
+                "atk": 45,
+                "def": 45,
+                "spa": 45,
+                "spd": 45,
+                "spe": 45,
+                "exp": 1150
+            }, "weapon": {
+                "id" : 16,
+                "name" : "SimpleTableau.java",
+                "atk" : 12,
+                "def" : 12,
+                "spa" : 12,
+                "spd" : 12,
+                "spe" : 12
+            }
+        },
+
+        {
+            "id": "32",
+            "name" : "Confi-Bannevy",
+            "IA" : 3,
+            "stats": {
+                "level": 44,
+                "hp": 145,
+                "atk": 1,
+                "def": 80,
+                "spa": 40,
+                "spd": 80,
+                "spe": 5,
+                "exp": 1200
+            }, "weapon": {
+                "id" : 8,
+                "name" : "L'argent des abonnés+",
+                "atk" : 0,
+                "def" : 15,
+                "spa" : 15,
+                "spd" : 15,
+                "spe" : 5
+            }
+        },
+
+        {
+            "id": "33",
+            "name" : "Confi-Kerbulluc",
+            "IA" : 3,
+            "stats": {
+                "level": 47,
+                "hp": 150,
+                "atk": 70,
+                "def": 40,
+                "spa": 1,
+                "spd": 40,
+                "spe": 80,
+                "exp": 1300
+            }, "weapon": {
+                "id" : 7,
+                "name" : "Pinte de biere+",
+                "atk" : 30,
+                "def" : 20,
+                "spa" : 0,
+                "spd" : 10,
+                "spe" : 0
+            }
+        },
+
+        {
+            "id": "34",
+            "name" : "Confi-Ricard",
+            "IA" : 3,
+            "stats": {
+                "level": 48,
+                "hp": 155,
+                "atk": 45,
+                "def": 55,
+                "spa": 35,
+                "spd": 55,
+                "spe": 45,
+                "exp": 1350
+            }, "weapon": {
+                "id" : 7,
+                "name" : "Pinte de biere+",
+                "atk" : 30,
+                "def" : 20,
+                "spa" : 0,
+                "spd" : 10,
+                "spe" : 0
+            }
+        },
+
+        {
+            "id": "35",
+            "name" : "Confi-Brodont",
+            "IA" : 3,
+            "stats": {
+                "level": 49,
+                "hp": 160,
+                "atk": 60,
+                "def": 80,
+                "spa": 1,
+                "spd": 80,
+                "spe": 20,
+                "exp": 1400
+            }, "weapon": {
+                "id" : 8,
+                "name" : "L'argent des abonnés+",
+                "atk" : 0,
+                "def" : 15,
+                "spa" : 15,
+                "spd" : 15,
+                "spe" : 5
+            }
+        },
+
+
+        {
+            "id": "36",
+            "name" : "Confi-Florquaing",
+            "IA" : 3,
+            "stats": {
+                "level": 52,
+                "hp": 165,
+                "atk": 40,
+                "def": 55,
+                "spa": 80,
+                "spd": 55,
+                "spe": 15,
+                "exp": 1500
+            }, "weapon": {
+                "id" : 10,
+                "name" : "C+++",
                 "atk" : 0,
                 "def" : 0,
                 "spa" : 0,
                 "spd" : 0,
+                "spe" : 60
+            }
+        },
+
+        {
+            "id": "37",
+            "name" : "Confi-PwitBDD",
+            "IA" : 3,
+            "stats": {
+                "level": 53,
+                "hp": 170,
+                "atk": 1,
+                "def": 40,
+                "spa": 75,
+                "spd": 40,
+                "spe": 300,
+                "exp": 1550
+            }, "weapon": {
+                "id" : 11,
+                "name" : "sms32v50+",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 60,
+                "spd" : 0,
                 "spe" : 0
+            }
+        },
+
+        {
+            "id": "38",
+            "name" : "Confi-Seigneur-Rand",
+            "IA" : 3,
+            "stats": {
+                "level": 54,
+                "hp": 6,
+                "atk": 100,
+                "def": 20000,
+                "spa": 100,
+                "spd": 20000,
+                "spe": 1,
+                "exp": 1600
+            }, "weapon": {
+                "id" : 12,
+                "name" : "https://youtu.be/DLzxrzFCyOs+",
+                "atk" : 0,
+                "def" : 10,
+                "spa" : 20,
+                "spd" : 10,
+                "spe" : 20
+            }
+        },
+
+        {
+            "id": "39",
+            "name" : "Confi-Jouclavier",
+            "IA" : 3,
+            "stats": {
+                "level": 57,
+                "hp": 180,
+                "atk": 60,
+                "def": 60,
+                "spa": 60,
+                "spd": 45,
+                "spe": 30,
+                "exp": 1700
+            }, "weapon": {
+                "id" : 14,
+                "name" : "Nokia 3310+",
+                "atk" : 28,
+                "def" : 16,
+                "spa" : 0,
+                "spd" : 0,
+                "spe" : 16
+            }
+        },
+
+        {
+            "id": "40",
+            "name" : "Confi-:Bornetrigger:",
+            "IA" : 3,
+            "stats": {
+                "level": 58,
+                "hp": 185,
+                "atk": 60,
+                "def": 50,
+                "spa": 45,
+                "spd": 70,
+                "spe": 35,
+                "exp": 1750
+            }, "weapon": {
+                "id" : 17,
+                "name" : "La Hash+",
+                "atk" : 40,
+                "def" : 13,
+                "spa" : 0,
+                "spd" : 0,
+                "spe" : 7
+            }
+        },
+
+        {
+            "id": "41",
+            "name" : "Confi-Tuff",
+            "IA" : 3,
+            "stats": {
+                "level": 59,
+                "hp": 190,
+                "atk": 30,
+                "def": 45,
+                "spa": 80,
+                "spd": 70,
+                "spe": 40,
+                "exp": 1800
+            }, "weapon": {
+                "id" : 16,
+                "name" : "Mail flamme+",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 80,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+        {
+            "id": "42",
+            "name" : "WatchMojo",
+            "IA" : 3,
+            "stats": {
+                "level": 62,
+                "hp": 195,
+                "atk": 54,
+                "def": 54,
+                "spa": 54,
+                "spd": 54,
+                "spe": 54,
+                "exp": 1900
+            }, "weapon": {
+                "id" : 16,
+                "name" : "Mail flamme",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 40,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+        {
+            "id": "43",
+            "name" : "CTF-Master",
+            "IA" : 3,
+            "stats": {
+                "level": 63,
+                "hp": 200,
+                "atk": 20,
+                "def": 40,
+                "spa": 90,
+                "spd": 80,
+                "spe": 45,
+                "exp": 1950
+            }, "weapon": {
+                "id" : 16,
+                "name" : "Mail flamme",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 40,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+        {
+            "id": "44",
+            "name" : "RONALDINHO-SOCCER",
+            "IA" : 3,
+            "stats": {
+                "level": 64,
+                "hp": 205,
+                "atk": 90,
+                "def": 80,
+                "spa": 20,
+                "spd": 40,
+                "spe": 50,
+                "exp": 2000
+            }, "weapon": {
+                "id" : 17,
+                "name" : "La Hash",
+                "atk" : 30,
+                "def" : 10,
+                "spa" : 0,
+                "spd" : 0,
+                "spe" : 5
+            }
+        },
+
+        {
+            "id": "45",
+            "name" : "Liber-Primus",
+            "IA" : 3,
+            "stats": {
+                "level": 67,
+                "hp": 210,
+                "atk": 1,
+                "def": 60,
+                "spa": 100,
+                "spd": 120,
+                "spe": 1,
+                "exp": 2100
+            }, "weapon": {
+                "id" : 16,
+                "name" : "Python",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 60,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+        {
+            "id": "46",
+            "name" : "Captain-DMCA",
+            "IA" : 3,
+            "stats": {
+                "level": 68,
+                "hp": 215,
+                "atk": 100,
+                "def": 40,
+                "spa": 5,
+                "spd": 40,
+                "spe": 100,
+                "exp": 2150
+            }, "weapon": {
+                "id" : 16,
+                "name" : "Mail flamme",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 40,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+        {
+            "id": "47",
+            "name" : "69",
+            "IA" : 3,
+            "stats": {
+                "level": 69,
+                "hp": 220,
+                "atk": 69,
+                "def": 69,
+                "spa": 14,
+                "spd": 69,
+                "spe": 69,
+                "exp": 2200
+            }, "weapon": {
+                "id" : 16,
+                "name" : "Mail flamme",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 40,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+        {
+            "id": "48",
+            "name" : "COVID",
+            "IA" : 3,
+            "stats": {
+                "level": 72,
+                "hp": 225,
+                "atk": 1,
+                "def": 98,
+                "spa": 99,
+                "spd": 97,
+                "spe": 1,
+                "exp": 2300
+            }, "weapon": {
+                "id" : 16,
+                "name" : "Mail flamme",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 40,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+        {
+            "id": "49",
+            "name" : "Le-Tuffispam",
+            "IA" : 3,
+            "stats": {
+                "level": 73,
+                "hp": 230,
+                "atk": 60,
+                "def": 60,
+                "spa": 60,
+                "spd": 60,
+                "spe": 60,
+                "exp": 2350
+            }, "weapon": {
+                "id" : 16,
+                "name" : "Mail flamme",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 40,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+        {
+            "id": "50",
+            "name" : "lf-secret",
+            "IA" : 3,
+            "stats": {
+                "level": 74,
+                "hp": 2,
+                "atk": 1,
+                "def": 20000,
+                "spa": 420,
+                "spd": 20000,
+                "spe": 1,
+                "exp": 2400
+            }, "weapon": {
+                "id" : 16,
+                "name" : "Mail flamme",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 69,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+        {
+            "id": "51",
+            "name" : "h4ck3r",
+            "IA" : 3,
+            "stats": {
+                "level": 77,
+                "hp": 240,
+                "atk": 1,
+                "def": 40,
+                "spa": 100,
+                "spd": 110,
+                "spe": 60,
+                "exp": 2500
+            }, "weapon": {
+                "id" : 16,
+                "name" : "Mail flamme",
+                "atk" : 0,
+                "def" : 0,
+                "spa" : 69,
+                "spd" : 0,
+                "spe" : 0
+            }
+        },
+
+        {
+            "id": "52",
+            "name" : "Skyrim",
+            "IA" : 3,
+            "stats": {
+                "level": 78,
+                "hp": 245,
+                "atk": 63,
+                "def": 63,
+                "spa": 63,
+                "spd": 63,
+                "spe": 63,
+                "exp": 2550
+            }, "weapon": {
+                "id" : 16,
+                "name" : "Mail flamme",
+                "atk" : 12,
+                "def" : 12,
+                "spa" : 12,
+                "spd" : 12,
+                "spe" : 12
+            }
+        },
+
+        {
+            "id": "53",
+            "name" : "StonksMaster",
+            "IA" : 3,
+            "stats": {
+                "level": 79,
+                "hp": 250,
+                "atk": 76,
+                "def": 46,
+                "spa": 76,
+                "spd": 46,
+                "spe": 76,
+                "exp": 2600
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 10,
+                "spd" : 40,
+                "spe" : 10
             }
         },
 
@@ -778,8 +1331,8 @@
             "name" : "Ecobosto",
             "IA" : 3,
             "stats": {
-                "level": 50,
-                "hp": 150,
+                "level": 60,
+                "hp": 200,
                 "atk": 70,
                 "def": 70,
                 "spa": 70,
@@ -804,8 +1357,8 @@
             "name" : "Thomas",
             "IA" : 3,
             "stats": {
-                "level": 60,
-                "hp": 200,
+                "level": 70,
+                "hp": 250,
                 "atk": 85,
                 "def": 85,
                 "spa": 85,
@@ -829,8 +1382,8 @@
             "name" : "Lefevre",
             "IA" : 3,
             "stats": {
-                "level": 70,
-                "hp": 250,
+                "level": 80,
+                "hp": 300,
                 "atk": 100,
                 "def": 100,
                 "spa": 100,

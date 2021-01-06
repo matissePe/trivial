@@ -41,6 +41,8 @@ def page_3(embed):
     embed.add_field(name='lefevre cw', value='Permet de changer d\'arme', inline = False)
     embed.add_field(name='lefevre resetstats', value='Permet de reset vos stats', inline = False)
     embed.add_field(name='lefevre sellcurrweapon', value='Permet de vendre votre arme contre de l\'exp', inline = False)
+    embed.add_field(name='lefevre sp', value='Montre les stats de votre spécialité', inline = False)
+    embed.add_field(name='lefevre spec', value='Permet de changer de spécialité', inline = False)
 
 
 def page_4(embed):

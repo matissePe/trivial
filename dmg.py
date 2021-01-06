@@ -2,17 +2,48 @@ import game
 import random
 
 class Dmg:
-    def __init__(self, attacker, defender, atkmethod):
+    def __init__(self, attacker, defender, atkmethod, hpAtk):
+
+
 
         atklevel = attacker["stats"]["level"]
 
-        critchance = 5 + attacker["stats"]["spe"] + attacker["weapon"]["spe"] - 0.5 * (defender["stats"]["def"] + defender["weapon"]["def"])
+        sp1 = game.getSP(attacker["sp"])
+        sp2 = game.getSP(defender["sp"])
 
-        critdmg = max(2, 2 + 0.05 * (attacker["stats"]["atk"] + attacker["weapon"]["atk"]) - 0.025 *(defender["stats"]["def"] + defender["weapon"]["def"]))
+        atkspeed = attacker["stats"]["spe"] + attacker["weapon"]["spe"] + sp1["stats"]["spe"]
+
+        atkatk = attacker["stats"]["atk"] + attacker["weapon"]["atk"] + sp1["stats"]["atk"]
+
+        if sp1["name"] == "Berserker" :
+            atkatk += int( 0.5 * ( attacker["stats"]["hp"] - hpAtk ) )
+
+        atkspa = attacker["stats"]["spa"] + attacker["weapon"]["spa"] + sp1["stats"]["spa"]
+
+        if sp1["name"] == "Bloodmage" :
+            atkspa += int( 0.5 * ( attacker["stats"]["hp"] - hpAtk ) )
+
+        defdef = defender["stats"]["def"] + defender["weapon"]["def"] + sp2["stats"]["def"]
+
+        defspd = defender["stats"]["spd"] + defender["weapon"]["spd"] + sp2["stats"]["spd"]
+
+
+
+
+        critchance = 5 + atkspeed - 0.5 * defdef
+
+        critdmg = max(2, 2 + 0.05 * atkatk - 0.05 * defdef)
+
+
+
+        if sp1["name"] == "Battlemage":
+            atkatk += atkspa
+            atkspa = atkatk
+
 
         if atkmethod == 0 :
-            atkstat = attacker["stats"]["atk"] + attacker["weapon"]["atk"]
-            defstat = defender["stats"]["def"] + defender["weapon"]["def"]
+            atkstat = atkatk
+            defstat = defdef
 
 
             rd = random.randint(0, 100)
@@ -20,6 +51,11 @@ class Dmg:
             if rd <= critchance :
                 self.crit = True
                 mult = critdmg
+
+                if sp1["name"] == "Assassin" :
+                    defstat = int(max(1, 0.7 * defstat))
+
+
             else :
                 self.crit = False
                 mult = 1
@@ -32,8 +68,8 @@ class Dmg:
 
 
         elif atkmethod == 1 :
-            atkstat = attacker["stats"]["spa"] + attacker["weapon"]["spa"]
-            defstat = defender["stats"]["spd"] + defender["weapon"]["spd"]
+            atkstat = atkspa
+            defstat = defspd
 
 
             rd = random.randint(0, 100)
@@ -45,13 +81,16 @@ class Dmg:
                 self.crit = False
                 mult = 1
 
+                if sp1["name"] == "Assassin" :
+                    defstat = int(max(1, 0.7 * defstat))
+
             calcdmg = mult * ((((atklevel)/5 + 2) * 3 * (atkstat + 2) + atklevel * 2) / (defstat + 2))
 
             self.dmg = int(random.randint(88, 100) * calcdmg / 100)
 
         else :
-            atkstat = max(attacker["stats"]["spa"] + attacker["weapon"]["spa"], attacker["stats"]["atk"] + attacker["weapon"]["atk"])
-            defstat = min(defender["stats"]["spd"] + defender["weapon"]["spd"], defender["stats"]["def"] + defender["weapon"]["def"])
+            atkstat = max(atkatk, atkspa)
+            defstat = min(defdef, defspd)
 
             critchance += 10
 
@@ -63,6 +102,9 @@ class Dmg:
             else :
                 self.crit = False
                 mult = 1
+
+                if sp1["name"] == "Assassin" :
+                    defstat = int(max(1, 0.7 * defstat))
 
             calcdmg = mult * ((((atklevel)/5 + 2) * 2 * (atkstat + 2) + atklevel * 2) / (defstat + 2))
 

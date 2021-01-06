@@ -141,7 +141,7 @@ async def on_message(message: discord.Message):
                             game.incPveBattles(message.author.id)
 
                         user = game.getUserData(message.author.id)
-                        sag = user["stats"]["spd"] + user["weapon"]["spd"]
+                        sag = user["stats"]["spd"] + user["weapon"]["spd"] + game.getSP(user["sp"])["stats"]["spd"]
 
                         lootchance = int(10 + 0.6 * sag)
 
@@ -310,7 +310,7 @@ async def on_reaction_add(reaction, user):
 
                             names = duser1.name + " VS " + duser2.name
 
-                            newembed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, hp1, hp2, hp2, 10, 10, 10, 10, battledesc, footer, False)
+                            newembed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, hp1, hp2, hp2, 10, 10, 10, 10, battledesc, footer, False, 0, 0)
 
                             await reaction.message.edit(embed = newembed)
 
@@ -380,6 +380,11 @@ async def on_reaction_add(reaction, user):
 
 
                         hps = getHp(embed.fields[1].name)
+
+                        p1Psn = int(embed.fields[1].name.split('[')[1].split(']')[0])
+
+                        p2Psn = int(embed.fields[1].name.split('[')[2].split(']')[0])
+
                         manas = getMana(embed.fields[2].name)
 
                         if emoji == "sword" or emoji == "wand" or emoji == "dagg" :
@@ -387,29 +392,79 @@ async def on_reaction_add(reaction, user):
 
                             valid = True
 
+                            vmpHeal = False
+
+                            addPoison = False
+
                             if emoji == "sword":
-                                myDmg = dmgCalc(fighter1, fighter2, 0)
+                                myDmg = dmgCalc(fighter1, fighter2, 0, hps[2 * (pnumber - 1)])
                                 attacktype = "une attaque physique"
+                                if fighter1["sp"] == "Vampire" :
+                                    vmpHeal = True
+
+
                             elif emoji == "wand":
-                                if manas[2 * (pnumber - 1)] >= 3 :
-                                    myDmg = dmgCalc(fighter1, fighter2, 1)
+                                if manas[2 * (pnumber - 1)] >= 3 or (manas[2 * (pnumber - 1)] >= 2 and fighter1["sp"] == "Sorcier") :
+                                    myDmg = dmgCalc(fighter1, fighter2, 1, hps[2 * (pnumber - 1)])
                                     manas[2 * (pnumber - 1)] -= 4
+
+                                    if fighter1["sp"] == "Sorcier" :
+                                        manas[2 * (pnumber - 1)] += 1
+                                    elif fighter1["sp"] == "Alchimiste" :
+                                        if pnumber == 1:
+                                            p2Psn += 1
+                                        else :
+                                            p1Psn += 1
+
                                     attacktype = "une attaque magique"
+
                                 else :
                                     valid = False
+
+
                             else :
-                                myDmg = dmgCalc(fighter1, fighter2, 2)
+                                myDmg = dmgCalc(fighter1, fighter2, 2, hps[2 * (pnumber - 1)])
                                 attacktype = "un coup sournois"
 
                             if valid :
                                 dmg = int(myDmg.dmg)
                                 isCrit = myDmg.crit
                                 hps[2 * (2 - pnumber)] -= dmg
+
+
+
+                                if vmpHeal :
+                                    hps[2 * (pnumber - 1)] = min(hps[2 * (pnumber - 1) + 1], int(hps[2 * (pnumber - 1)] + 0.5 * dmg))
+
+                                battledesc = ""
+                                if isCrit :
+                                    battledesc += "Coup critique! "
+                                    battledesc += user.name + " inflige " + str(dmg) + " dégâts à l'aide d'" + attacktype + "!"
+
+
+                                if p1Psn > 0 and pnumber == 2 or p2Psn > 0 and pnumber == 1 :
+                                    if not isPve :
+                                        if pnumber == 1 :
+                                            pPsn = p2Psn
+                                            username = await bot.fetch_user(seconduser).name
+                                        else :
+                                            pPsn = p1Psn
+                                            username = await bot.fetch_user(firstuser).name
+                                    else :
+                                        username = fighter2["name"]
+                                        pPsn = p2Psn
+
+                                    psnDmg = int(hps[1 + 2 * (2 - pnumber)] * 5 * pPsn / 100)
+
+
+                                    battledesc += username + " subit " + str(psnDmg) + " dégâts de poison!"
+                                    hps[2 * (2 - pnumber)] -= psnDmg
+
+
                                 if hps[2 * (2 - pnumber)] <= 0 :
                                     dead = True
                                 else :
                                     dead= False
-
 
                                 if not dead :
                                     if manas[2 * (pnumber - 1)] < manas[1 + 2 * (pnumber - 1)]:
@@ -420,20 +475,18 @@ async def on_reaction_add(reaction, user):
 
                                     if not isPve :
 
-                                        battledesc = ""
 
-                                        if isCrit :
-                                            battledesc += "Coup critique! "
-                                        battledesc += user.name + " inflige " + str(dmg) + " dégâts à l'aide d'" + attacktype + "!"
 
 
                                         names = embed.fields[0].name
 
-                                        newembed = createEmbed(secondturn, firstturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], manas[1], manas[3], battledesc, footertxt, False)
+                                        newembed = createEmbed(secondturn, firstturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], manas[1], manas[3], battledesc, footertxt, False, p1Psn, p2Psn)
 
                                         await reaction.message.edit(embed = newembed)
 
                                     else :
+
+                                        manacost = 0
 
 
                                         # Choix de move en fonction de l'IA de l'ennemi
@@ -442,33 +495,42 @@ async def on_reaction_add(reaction, user):
 
                                         healing = False
 
+                                        vmpHeal = False
+
 
                                         # IA lvl 1 : Coup sournois only
                                         if ia == 1 :
-                                            damage = dmgCalc(fighter2, fighter1, 2)
+                                            damage = dmgCalc(fighter2, fighter1, 2, hps[2])
                                             atkdesc = "un coup sournois"
+                                            atktype = 2
 
 
 
 
                                         # IA lvl 2 : Attaque only, move le plus puissant
                                         elif ia >= 2 :
-                                            d1 = dmgCalc(fighter2, fighter1, 0)
-                                            d2 = dmgCalc(fighter2, fighter1, 2)
+                                            d1 = dmgCalc(fighter2, fighter1, 0, hps[2])
+                                            d2 = dmgCalc(fighter2, fighter1, 2, hps[2])
                                             if d1.dmg > d2.dmg :
                                                 damage = d1
+                                                atktype = 0
                                                 atkdesc = "une attaque physique"
+
+                                                if fighter2["sp"] == "Vampire" :
+                                                    vmpHeal = True
                                             else :
                                                 damage = d2
                                                 atktype = 2
                                                 atkdesc = "un coup sournois"
 
-                                            if manas[2] >= 3 :
-                                                d3 = dmgCalc(fighter2, fighter1, 1)
+                                            if manas[2] >= 3 or (manas[2] >= 2 and fighter2["sp"] == "Sorcier") :
+                                                d3 = dmgCalc(fighter2, fighter1, 1, hps[2])
 
                                                 if damage.dmg + 5 < d3.dmg :
                                                     damage = d3
-                                                    manas[2] -= 4
+                                                    manacost = 4
+                                                    if fighter2["sp"] == "Sorcier" :
+                                                        manacost -= 1
                                                     atktype = 1
                                                     atkdesc = "une attaque magique"
 
@@ -477,8 +539,10 @@ async def on_reaction_add(reaction, user):
 
                                         # IA lvl 3 : Attaque et heal, meilleur move possible
                                             if ia == 3 :
-                                                if manas[2] >= 5 :
-                                                    spa = fighter2["stats"]["spa"] + fighter2["weapon"]["spa"]
+                                                if manas[2] >= 5 or (manas[2] >= 4 and fighter2["sp"] == "Sorcier"):
+                                                    spa = fighter2["stats"]["spa"] + fighter2["weapon"]["spa"] + game.getSP(fighter2["sp"])["stats"]["spa"]
+                                                    if fighter2["sp"] == "Bloodmage" :
+                                                        spa += int( 0.5 * (hps[3] - hps[2] ) )
 
 
                                                     # si on peut se heal l'équivalent de 1,.. tours de dégâts quand on est midlife, c'est worth
@@ -486,14 +550,16 @@ async def on_reaction_add(reaction, user):
 
                                                     if hps[2] * 2 < hps[3] and (min(hps[3], int(hps[2] + 5 + 1/10 * hps[3] + spa * hps[3]/100))) - hps[2] > dmg + 7 :
                                                         hps[2] = min(hps[3], int(hps[2] + 5 + 1/10 * hps[3] + spa * hps[3]/100))
-                                                        manas[2] -= 5
+                                                        manacost = 5
+                                                        if fighter2["sp"] == "Sorcier" :
+                                                            manacost -= 1
                                                         manas[3] -= 1
                                                         healing = True
 
 
 
 
-
+                                        manas[2] -= manacost
 
 
 
@@ -502,15 +568,25 @@ async def on_reaction_add(reaction, user):
 
 
                                         if not healing :
+                                            if atktype == 1 and fighter2["sp"] == "Alchimiste":
+                                                p1Psn += 1
                                             dmg = damage.dmg
                                             battledesc = ""
 
                                             if damage.crit :
                                                 battledesc += "Coup critique! "
                                                 dmg = max(int(dmg * 0.7), 1)
-                                            battledesc += fighter2["name"] + " inflige " + str(dmg) + " dégâts à l'aide d'" + atkdesc + "!"
+                                            battledesc += fighter2["name"] + " inflige " + str(dmg) + " dégâts à l'aide d'" + atkdesc + "! "
+
+                                            if p1Psn > 0 :
+                                                psnDmg = int(hps[1] * 5 * p1Psn / 100)
+                                                battledesc += user.name + " subit " + str(psnDmg) + " dégâts de poison!"
+                                                hps[0] -= psnDmg
 
                                             hps[0] -= dmg
+
+                                            if vmpHeal :
+                                                hps[2] = min(hps[3], int(hps[2] + 0.5 * dmg))
                                         else :
                                             battledesc = fighter2["name"] + " se soigne!"
 
@@ -519,7 +595,7 @@ async def on_reaction_add(reaction, user):
 
                                             names = user.name + " VS " + fighter2["name"]
 
-                                            newembed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], manas[1], manas[3], battledesc, footertxt, True)
+                                            newembed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], manas[1], manas[3], battledesc, footertxt, True, p1Psn, p2Psn)
 
                                             await reaction.message.edit(embed = newembed)
 
@@ -593,10 +669,14 @@ async def on_reaction_add(reaction, user):
                                                 await areaction.remove(user)
 
                         elif emoji == "broc" :
-                            if manas[2 * (pnumber - 1)] >= 5 and hps[2 * (pnumber - 1)] != hps[1 + 2 * (pnumber - 1)]:
+                            if (manas[2 * (pnumber - 1)] >= 5 or (manas[2 * (pnumber - 1)] >= 4 and fighter1["sp"] == "Sorcier"))and hps[2 * (pnumber - 1)] != hps[1 + 2 * (pnumber - 1)]:
                                 manas[2 * (pnumber - 1)] -= 5
+                                if fighter1["sp"] == "Sorcier":
+                                    manas[2 * (pnumber - 1)] += 1
                                 manas[1 + 2 * (pnumber - 1)] -= 1
-                                spa = fighter1["stats"]["spa"] + fighter1["weapon"]["spa"]
+                                spa = fighter1["stats"]["spa"] + fighter1["weapon"]["spa"] + game.getSP(fighter1["sp"])["stats"]["spa"]
+                                if fighter1["sp"] == "Bloodmage" :
+                                    spa += int( 0.5 * (hps[1 + 2 * (pnumber - 1)] - hps[2 * (pnumber - 1)] ) )
                                 hps[2 * (pnumber - 1)] = int(min(hps[1 + 2 * (pnumber - 1)], hps[2 * (pnumber - 1)] + 5 + 1/10 * hps[1 + 2 * (pnumber - 1)] + spa * hps[1 + 2 * (pnumber - 1)]/100))
                                 battledesc = user.name + " se soigne!"
 
@@ -607,11 +687,11 @@ async def on_reaction_add(reaction, user):
 
                                 if not isPve :
 
-                                    newembed = createEmbed(secondturn, firstturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], manas[1], manas[3], battledesc, footertxt, False)
+                                    newembed = createEmbed(secondturn, firstturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], manas[1], manas[3], battledesc, footertxt, False, p1Psn, p2Psn)
 
                                 else :
 
-                                    newembed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], manas[1], manas[3], battledesc, footertxt, True)
+                                    newembed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hps[0], hps[1], hps[2], hps[3], manas[0], manas[2], manas[1], manas[3], battledesc, footertxt, True, p1Psn, p2Psn)
 
                                 await reaction.message.edit(embed = newembed)
 
@@ -1021,10 +1101,10 @@ def getMana(manaembed):
     maxmana2 = int(manaembed.split(' ')[7])
     return [mana1, maxmana1, mana2, maxmana2]
 
-def dmgCalc(attacker, defender, w):
-    return Dmg(attacker, defender, w)
+def dmgCalc(attacker, defender, w, hpAtk):
+    return Dmg(attacker, defender, w, hpAtk)
 
-def createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, maxhp2, mana1, mana2, maxmana1, maxmana2, battledesc, footer, isPve):
+def createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, maxhp2, mana1, mana2, maxmana1, maxmana2, battledesc, footer, isPve, p1Psn, p2Psn):
     if isPve :
         mydesc = str("<@!" + firstturn + ">, choisis une attaque! " + secondturn + " se défend.")
     else :
@@ -1044,11 +1124,11 @@ def createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, maxh
     manabar2 = "█" * int(10 * mana2/10) + "░" * (10 - int(10 * mana2/maxmana2))
 
     spacebetween= " " * 24
-    spacebetween2= " " * 15
+    spacebetween2= " " * 12
 
     newembed.add_field(name = names, value = "Lvl " + lvl1 + " VS Lvl " + lvl2)
 
-    newembed.add_field(name =  "HP " + str(hp1) + " / " + str(maxhp1) + spacebetween + "HP " + str(hp2) + " / " + str(maxhp2), value = hpbar1 + " - - - " + hpbar2, inline = False)
+    newembed.add_field(name =  "HP[" + str(p1Psn) + "] " + str(hp1) + " / " + str(maxhp1) + spacebetween + "HP[" + str(p2Psn) + "] " + str(hp2) + " / " + str(maxhp2), value = hpbar1 + " - - - " + hpbar2, inline = False)
 
     newembed.add_field(name =  "Mana " + str(mana1) + " / " + str(maxmana1) + spacebetween2 + "Mana " + str(mana2) + " / " + str(maxmana2), value = manabar1 + " - - - " + manabar2, inline = False)
 
@@ -1076,12 +1156,19 @@ async def pve(ctx, *args):
 
         ennemy = game.randomEnnemy(user1)
 
-        maxhp1 = user1["stats"]["hp"]
-        hp1 = maxhp1
-        hp2 = ennemy["stats"]["hp"]
+        sp1 = game.getSP(user1["sp"])
+        sp2 = game.getSP(ennemy["sp"])
 
-        if user1["stats"]["spe"] + user1["weapon"]["spe"] < ennemy["stats"]["spe"] + ennemy["weapon"]["spe"]:
-            damage = dmgCalc(ennemy, user1, 2)
+        maxhp1 = user1["stats"]["hp"] + sp1["stats"]["hp"]
+
+        hp1 = maxhp1
+        hp2 = ennemy["stats"]["hp"] + sp2["stats"]["hp"]
+
+        speed1 = user1["stats"]["spe"] + user1["weapon"]["spe"] + sp1["stats"]["spe"]
+        speed2 = ennemy["stats"]["spe"] + ennemy["weapon"]["spe"] + sp2["stats"]["spe"]
+
+        if  speed1 < speed2 :
+            damage = dmgCalc(ennemy, user1, 2, hp2)
             dmg = max(1, int(0.5 * damage.dmg))
             battledesc = ""
 
@@ -1107,7 +1194,7 @@ async def pve(ctx, *args):
 
         names = ctx.message.author.name + " VS " + ennemy["name"]
 
-        embed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, hp2, 10, 10, 10, 10, battledesc, footer, True)
+        embed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, hp2, 10, 10, 10, 10, battledesc, footer, True, 0, 0)
 
         msg = await ctx.send(embed = embed)
 
@@ -1217,5 +1304,57 @@ async def sellCurrentWeapon(ctx):
     else :
         msg = str("Une erreur est survenue pendant la vente de votre arme.")
     await ctx.send(msg)
+
+
+splist = "Assassin, Alchimiste, Battlemage, Berserker, Bloodmage, Sorcier, Vampire"
+
+@bot.command(name='sp')
+async def sp(ctx):
+    useri1 = ctx.message.author.id
+    user1 = game.getUserData(useri1)
+    embed = discord.Embed(
+        colour = discord.Colour.purple(),
+        title = 'Spécialité'
+    )
+    sp = user1["sp"]
+    if user1["stats"]["level"] < 30 :
+        embed.add_field(name = "Vous n'avez pas accès à cette fonctionnalité pour l'instant!", value = "Montez d'abord niveau 30.", inline = False)
+    elif sp == "None" :
+        embed.add_field(name = "Vous n'avez pas de spécialité! Tapez lefevre spec <nom de la specialité> pour vous spécialiser!", value = "Liste des sps actuelles : " + splist, inline = False)
+    else :
+        embed.add_field(name = "Spécialité : " + sp, value = "- - - - - - - - - -", inline = False)
+
+        spstats = game.getSP(sp)["stats"]
+        spdesc = game.getSP(sp)["desc"]
+        hp = spstats["hp"]
+        atk = spstats["atk"]
+        de = spstats["def"]
+        spa = spstats["spa"]
+        spd = spstats["spd"]
+        spe = spstats["spe"]
+        embed.add_field(name=('HP ' + str(hp)), value=("Attaque " + str(atk)), inline = False)
+        embed.add_field(name='Defense ' + str(de), value="Att. Spe " + str(spa), inline = False)
+        embed.add_field(name='Def. Spe ' + str(spd), value="Vitesse " + str(spe), inline = False)
+        embed.add_field(name = "- - - - - - - - - -", value = "\u200b", inline = False)
+        embed.add_field(name = spdesc, value = "\u200b", inline = False)
+
+    await ctx.send(embed = embed)
+
+
+@bot.command(name='spec')
+async def spec(ctx, *args):
+    try :
+        spname = args[0]
+        if spname in splist.split(", "):
+            if game.chgSpec(ctx.message.author.id, spname) :
+                msg = "Vous avez changé de specialité!"
+            else :
+                msg = "Vous ne pouvez pas changer de spécialité car vous n'êtes pas niveau 30!"
+        else :
+            msg = "Une erreur est survenue lors de la séléction de votre spécialité. Veuillez utiliser la commande `lefevre spec <specialite>` avec une des spécialités suivantes : " + splist
+    except :
+        msg = "Une erreur est survenue lors de la séléction de votre spécialité. Veuillez utiliser la commande `lefevre spec <specialite>` avec une des spécialités suivantes : " + splist
+    finally :
+        await ctx.send(msg)
 
 bot.run(TOKEN)

@@ -31,7 +31,7 @@
         {
             "id" : 2,
             "name" : "Alchimiste",
-            "desc" : "Les attaques magiques infligent un effet Poison qui se cumule. Chaque effet Poison inflige des dégâts à hauteur de 5% des PVs max de l'adversaire à chaque tour d'attaque.",
+            "desc" : "Les attaques magiques infligent un effet Poison qui se cumule. Chaque effet Poison inflige des degats a hauteur de 5% des PVs max de l'adversaire a chaque tour d'attaque.",
             "stats" : {
                 "hp" : 0,
                 "atk" : 0,
@@ -87,7 +87,7 @@
         {
             "id" : 6,
             "name" : "Sorcier",
-            "desc" : "Tous vos sorts coûtent 1 point de mana en moins.",
+            "desc" : "Tous vos sorts coutent 1 point de mana en moins.",
             "stats" : {
                 "hp" : 0,
                 "atk" : 0,

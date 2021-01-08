@@ -471,6 +471,17 @@
 			"spd" : 11,
 			"spe" : 11,
             "exp" : 1554
+        },
+
+        {
+            "id" : 1007,
+            "name" : "Ecobosto Slayer",
+            "atk" : 0,
+			"def" : 0,
+			"spa" : 100,
+			"spd" : 0,
+			"spe" : 0,
+            "exp" : 0
         }
     ]
 }

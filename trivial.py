@@ -1307,45 +1307,60 @@ async def sellCurrentWeapon(ctx):
 
 
 splist = "Assassin, Alchimiste, Battlemage, Berserker, Bloodmage, Sorcier, Vampire"
+splist1 = ['Assassin', 'Alchimiste', 'Battlemage', 'Berserker', 'Bloodmage', 'Sorcier', 'Vampire']
+
+def makeSPEmbed(sp, embed):
+    embed.add_field(name = "Spécialité : " + sp["name"], value = "- - - - - - - - - -", inline = False)
+
+    spstats = sp["stats"]
+    spdesc = sp["desc"]
+    hp = spstats["hp"]
+    atk = spstats["atk"]
+    de = spstats["def"]
+    spa = spstats["spa"]
+    spd = spstats["spd"]
+    spe = spstats["spe"]
+    embed.add_field(name=('HP ' + str(hp)), value=("Attaque " + str(atk)), inline = False)
+    embed.add_field(name='Defense ' + str(de), value="Att. Spe " + str(spa), inline = False)
+    embed.add_field(name='Def. Spe ' + str(spd), value="Vitesse " + str(spe), inline = False)
+    embed.add_field(name = "- - - - - - - - - -", value = "\u200b", inline = False)
+    embed.add_field(name = spdesc, value = "\u200b", inline = False)
+
+    return embed
+
 
 @bot.command(name='sp')
-async def sp(ctx):
-    useri1 = ctx.message.author.id
-    user1 = game.getUserData(useri1)
+async def sp(ctx, *args):
     embed = discord.Embed(
         colour = discord.Colour.purple(),
         title = 'Spécialité'
     )
-    sp = user1["sp"]
-    if user1["stats"]["level"] < 30 :
-        embed.add_field(name = "Vous n'avez pas accès à cette fonctionnalité pour l'instant!", value = "Montez d'abord niveau 30.", inline = False)
-    elif sp == "None" :
-        embed.add_field(name = "Vous n'avez pas de spécialité! Tapez lefevre spec <nom de la specialité> pour vous spécialiser!", value = "Liste des sps actuelles : " + splist, inline = False)
-    else :
-        embed.add_field(name = "Spécialité : " + sp, value = "- - - - - - - - - -", inline = False)
-
-        spstats = game.getSP(sp)["stats"]
-        spdesc = game.getSP(sp)["desc"]
-        hp = spstats["hp"]
-        atk = spstats["atk"]
-        de = spstats["def"]
-        spa = spstats["spa"]
-        spd = spstats["spd"]
-        spe = spstats["spe"]
-        embed.add_field(name=('HP ' + str(hp)), value=("Attaque " + str(atk)), inline = False)
-        embed.add_field(name='Defense ' + str(de), value="Att. Spe " + str(spa), inline = False)
-        embed.add_field(name='Def. Spe ' + str(spd), value="Vitesse " + str(spe), inline = False)
-        embed.add_field(name = "- - - - - - - - - -", value = "\u200b", inline = False)
-        embed.add_field(name = spdesc, value = "\u200b", inline = False)
-
-    await ctx.send(embed = embed)
+    try :
+        spname = args[0].capitalize()
+        if spname in splist1 :
+            sp = game.getSP(spname)
+            embed = makeSPEmbed(sp, embed)
+        else :
+            embed.add_field(name = "Cette spécialité n'existe pas!", value = "Liste des sps actuelles : " + splist, inline = False)
+    except :
+        useri1 = ctx.message.author.id
+        user1 = game.getUserData(useri1)
+        sp = user1["sp"]
+        if user1["stats"]["level"] < 30 :
+            embed.add_field(name = "Vous n'avez pas accès à cette fonctionnalité pour l'instant!", value = "Montez d'abord niveau 30.", inline = False)
+        elif sp == "None" :
+            embed.add_field(name = "Vous n'avez pas de spécialité! Tapez lefevre spec <nom de la specialité> pour vous spécialiser!", value = "Liste des sps actuelles : " + splist, inline = False)
+        else :
+            embed = makeSPEmbed(game.getSP(sp), embed)
+    finally :
+        await ctx.send(embed = embed)
 
 
 @bot.command(name='spec')
 async def spec(ctx, *args):
     try :
-        spname = args[0]
-        if spname in splist.split(", "):
+        spname = args[0].capitalize()
+        if spname in splist1:
             if game.chgSpec(ctx.message.author.id, spname) :
                 msg = "Vous avez changé de specialité!"
             else :

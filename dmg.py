@@ -16,12 +16,15 @@ class Dmg:
         atkatk = attacker["stats"]["atk"] + attacker["weapon"]["atk"] + sp1["stats"]["atk"]
 
         if sp1["name"] == "Berserker" :
-            atkatk += int( 0.5 * ( attacker["stats"]["hp"] - hpAtk ) )
+            atkatk += int( 0.5 * ( (attacker["stats"]["hp"] + sp1["stats"]["hp"]) - hpAtk ) )
 
         atkspa = attacker["stats"]["spa"] + attacker["weapon"]["spa"] + sp1["stats"]["spa"]
 
         if sp1["name"] == "Bloodmage" :
-            atkspa += int( 0.5 * ( attacker["stats"]["hp"] - hpAtk ) )
+            print(atkspa)
+            atkspa += int( 0.5 * ( (attacker["stats"]["hp"] + sp1["stats"]["hp"]) - hpAtk ) )
+
+            print(atkspa)
 
         defdef = defender["stats"]["def"] + defender["weapon"]["def"] + sp2["stats"]["def"]
 

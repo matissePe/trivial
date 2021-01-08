@@ -1401,7 +1401,7 @@
                 "spd" : 20,
                 "spe" : 5
             },
-            "sp" : "None"
+            "sp" : "Bloodmage"
         },
 
 
@@ -1422,13 +1422,13 @@
             }, "weapon": {
                 "id" : 1001,
                 "name" : "Kick",
-                "atk" : 10,
-                "def" : 10,
-                "spa" : 10,
-                "spd" : 10,
-                "spe" : 10
+                "atk" : 15,
+                "def" : 15,
+                "spa" : 15,
+                "spd" : 15,
+                "spe" : 15
             },
-            "sp" : "None"
+            "sp" : "Alchimiste"
         },
 
 
@@ -1448,13 +1448,13 @@
             }, "weapon": {
                 "id": 50,
                 "name": "Trivial",
-                "atk" : 10,
+                "atk" : 40,
 			    "def" : 0,
 			    "spa" : 40,
 			    "spd" : 0,
-			    "spe" : 10
+			    "spe" : 20
             },
-            "sp" : "None"
+            "sp" : "Vampire"
         }
     ]
 }

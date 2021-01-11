@@ -21,10 +21,7 @@ class Dmg:
         atkspa = attacker["stats"]["spa"] + attacker["weapon"]["spa"] + sp1["stats"]["spa"]
 
         if sp1["name"] == "Bloodmage" :
-            print(atkspa)
             atkspa += int( 0.5 * ( (attacker["stats"]["hp"] + sp1["stats"]["hp"]) - hpAtk ) )
-
-            print(atkspa)
 
         defdef = defender["stats"]["def"] + defender["weapon"]["def"] + sp2["stats"]["def"]
 
@@ -114,4 +111,5 @@ class Dmg:
             self.dmg = int(0.65 * random.randint(60, 100) * calcdmg / 100)
 
         self.dmg = max(1, self.dmg)
+
 

@@ -441,6 +441,7 @@ async def on_reaction_add(reaction, user):
                                     battledesc += "Coup critique! "
                                     battledesc += user.name + " inflige " + str(dmg) + " dégâts à l'aide d'" + attacktype + "!"
 
+                                psnDmg = 0
 
                                 if p1Psn > 0 and pnumber == 2 or p2Psn > 0 and pnumber == 1 :
                                     if not isPve :
@@ -548,7 +549,7 @@ async def on_reaction_add(reaction, user):
                                                     # si on peut se heal l'équivalent de 1,.. tours de dégâts quand on est midlife, c'est worth
 
 
-                                                    if hps[2] * 2 < hps[3] and (min(hps[3], int(hps[2] + 5 + 1/10 * hps[3] + spa * hps[3]/100))) - hps[2] > dmg + 7 :
+                                                    if hps[2] * 2 < hps[3] and (min(hps[3], int(hps[2] + 5 + 1/10 * hps[3] + spa * hps[3]/100))) - hps[2] > dmg + psnDmg + 7 :
                                                         hps[2] = min(hps[3], int(hps[2] + 5 + 1/10 * hps[3] + spa * hps[3]/100))
                                                         manacost = 5
                                                         if fighter2["sp"] == "Sorcier" :

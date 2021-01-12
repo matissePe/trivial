@@ -32,7 +32,7 @@ class Dmg:
 
         critchance = 5 + atkspeed - 0.5 * defdef
 
-        critdmg = max(2, 2 + 0.05 * atkatk - 0.05 * defdef)
+        critdmg = max(2, 2 + 0.03 * atkatk - 0.03 * defdef)
 
 
 

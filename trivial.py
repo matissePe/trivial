@@ -379,13 +379,13 @@ async def on_reaction_add(reaction, user):
                         await reaction.remove(user)
 
 
-                        hps = getHp(embed.fields[1].name)
+                        hps = getHp(embed.fields[1].name, embed.fields[2].name)
 
                         p1Psn = int(embed.fields[1].name.split('[')[1].split(']')[0])
 
-                        p2Psn = int(embed.fields[1].name.split('[')[2].split(']')[0])
+                        p2Psn = int(embed.fields[2].name.split('[')[1].split(']')[0])
 
-                        manas = getMana(embed.fields[2].name)
+                        manas = getMana(embed.fields[4].name, embed.fields[5].name)
 
                         if emoji == "sword" or emoji == "wand" or emoji == "dagg" :
 
@@ -1086,20 +1086,22 @@ async def duel(ctx, *args):
 
 
 
-def getHp(hpembed):
-    hpembed = " ".join(hpembed.split())
-    hp1 = int(hpembed.split(' ')[1])
-    maxhp1 = int(hpembed.split(' ')[3])
-    hp2 = int(hpembed.split(' ')[5])
-    maxhp2 = int(hpembed.split(' ')[7])
+def getHp(hpembed1, hpembed2):
+    hpembed1 = " ".join(hpembed1.split())
+    hpembed2 = " ".join(hpembed2.split())
+    hp1 = int(hpembed1.split(' ')[1])
+    maxhp1 = int(hpembed1.split(' ')[3])
+    hp2 = int(hpembed2.split(' ')[1])
+    maxhp2 = int(hpembed2.split(' ')[3])
     return [hp1, maxhp1, hp2, maxhp2]
 
-def getMana(manaembed):
-    manaembed = " ".join(manaembed.split())
-    mana1 = int(manaembed.split(' ')[1])
-    maxmana1 = int(manaembed.split(' ')[3])
-    mana2 = int(manaembed.split(' ')[5])
-    maxmana2 = int(manaembed.split(' ')[7])
+def getMana(manaembed1, manaembed2):
+    manaembed1 = " ".join(manaembed1.split())
+    manaembed2 = " ".join(manaembed2.split())
+    mana1 = int(manaembed1.split(' ')[1])
+    maxmana1 = int(manaembed1.split(' ')[3])
+    mana2 = int(manaembed2.split(' ')[1])
+    maxmana2 = int(manaembed2.split(' ')[3])
     return [mana1, maxmana1, mana2, maxmana2]
 
 def dmgCalc(attacker, defender, w, hpAtk):
@@ -1124,14 +1126,20 @@ def createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, maxh
     manabar1 = "█" * int(10 * mana1/10) + "░" * (10 - int(10 * mana1/maxmana1))
     manabar2 = "█" * int(10 * mana2/10) + "░" * (10 - int(10 * mana2/maxmana2))
 
-    spacebetween= " " * 24
-    spacebetween2= " " * 12
+    newembed.add_field(name = names, value = "Lvl " + lvl1 + " VS Lvl " + lvl2, inline = False)
 
-    newembed.add_field(name = names, value = "Lvl " + lvl1 + " VS Lvl " + lvl2)
+    newembed.add_field(name = "HP[" + str(p1Psn) + "] " + str(hp1) + " / " + str(maxhp1), value = hpbar1, inline = True)
 
-    newembed.add_field(name =  "HP[" + str(p1Psn) + "] " + str(hp1) + " / " + str(maxhp1) + spacebetween + "HP[" + str(p2Psn) + "] " + str(hp2) + " / " + str(maxhp2), value = hpbar1 + " - - - " + hpbar2, inline = False)
+    newembed.add_field(name = "HP[" + str(p2Psn) + "] " + str(hp2) + " / " + str(maxhp2), value = hpbar2, inline = True)
 
-    newembed.add_field(name =  "Mana " + str(mana1) + " / " + str(maxmana1) + spacebetween2 + "Mana " + str(mana2) + " / " + str(maxmana2), value = manabar1 + " - - - " + manabar2, inline = False)
+    newembed.add_field(name = '\u200b',value = '\u200b', inline = True)
+
+    newembed.add_field(name = "Mana " + str(mana1) + " / " + str(maxmana1), value = manabar1, inline = True)
+
+    newembed.add_field(name = "Mana " + str(mana2) + " / " + str(maxmana2), value = manabar2, inline = True)
+
+    newembed.add_field(name = '\u200b', value = '\u200b', inline = True)
+
 
     newembed.add_field(name = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - -", value = "\u200b", inline = False)
 

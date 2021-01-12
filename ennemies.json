@@ -1344,7 +1344,7 @@
                 "spd" : 12,
                 "spe" : 12
             },
-            "sp" : "None"
+            "sp" : "Berserker"
         },
 
         {
@@ -1369,7 +1369,7 @@
                 "spd" : 40,
                 "spe" : 10
             },
-            "sp" : "None"
+            "sp" : "Bloodmage"
         },
 
 

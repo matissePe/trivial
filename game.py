@@ -5,18 +5,18 @@ def retDefaultUser(userID, statpoints, level, exp, wep):
     return {"id" : str(userID),
                 "stats" : {
                     "level" : level,
-                    "hp" : 5,
-                    "atk" : 1,
-                    "def" : 1,
-                    "spa" : 1,
-                    "spd" : 1,
-                    "spe" : 1,
+                    "hp" : 10,
+                    "atk" : 5,
+                    "def" : 5,
+                    "spa" : 5,
+                    "spd" : 5,
+                    "spe" : 5,
                     "statpoints": statpoints,
                     "exp" : exp
                     },
                 "weapon": wep,
 			     "inventaire": [
-
+                    {"id" : 0}
 			     ],
                  "pvebattles" : 0,
                  "sp" : "None"
@@ -53,7 +53,7 @@ def getUserData(userID):
     				"spe" : 2
 			     }
 
-        user = retDefaultUser(userID, 10, 0, 0, wep)
+        user = retDefaultUser(userID, 0, 0, 0, wep)
         users.append(user)
         write_json(data)
         return user
@@ -154,7 +154,7 @@ def resetStats(userID):
 
     user = getUserData(userID)
     wep = user["weapon"]
-    totalstatpoints = user["stats"]["level"] * 5 + 10
+    totalstatpoints = user["stats"]["level"] * 5
     user = retDefaultUser(userID, totalstatpoints, user["stats"]["level"], user["stats"]["exp"], wep)
 
 

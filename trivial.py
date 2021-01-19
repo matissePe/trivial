@@ -3,13 +3,18 @@ import os
 import random
 import pages
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 from dotenv import load_dotenv
 from datetime import datetime
 from discord.ext.commands import CommandNotFound
 import game
 from dmg import *
 import math
+from discord import Intents
+intents = Intents.default()
+intents.members = True
+intents.presences = True
+
 
 HELP_PAGES = 3
 
@@ -20,9 +25,9 @@ USER_RATE_CONST2 = 112680
 USER_RATE_CONST3 = 130984
 
 
-TUFFIGANG_C_ID = 783647651349659698
+TUFFIGANG_C_ID = 788041672210382858 # LOCAL
 
-TUFFIGANG_R_ID = 783647539840286741
+TUFFIGANG_R_ID = 788041712890675237 # LOCAL
 
 EVAN_ID = 282264924472737792
 
@@ -38,7 +43,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 BOT_ID = int(os.getenv('BOT_ID'))
 
 
-bot = commands.Bot(command_prefix='lefevre ')
+bot = commands.Bot(command_prefix='lefevre ', intents = intents)
 bot.remove_command('help')
 
 
@@ -70,6 +75,7 @@ def canGain(userID, msgID, content):
 async def on_ready():
     myActivity = discord.Game("'lefevre help' pour la liste de commandes!")
     await bot.change_presence(status=discord.Status.dnd, activity=myActivity)
+    insulte_tuffigang.start()
     print("C'est trivial")
 
 
@@ -439,7 +445,7 @@ async def on_reaction_add(reaction, user):
                                 battledesc = ""
                                 if isCrit :
                                     battledesc += "Coup critique! "
-                                    battledesc += user.name + " inflige " + str(dmg) + " dégâts à l'aide d'" + attacktype + "!"
+                                battledesc += user.name + " inflige " + str(dmg) + " dégâts à l'aide d'" + attacktype + "!"
 
                                 psnDmg = 0
 
@@ -549,8 +555,8 @@ async def on_reaction_add(reaction, user):
                                                     # si on peut se heal l'équivalent de 1,.. tours de dégâts quand on est midlife, c'est worth
 
 
-                                                    if hps[2] * 2 < hps[3] and (min(hps[3], int(hps[2] + 5 + 1/10 * hps[3] + spa * hps[3]/100))) - hps[2] > dmg + psnDmg + 7 :
-                                                        hps[2] = min(hps[3], int(hps[2] + 5 + 1/10 * hps[3] + spa * hps[3]/100))
+                                                    if hps[2] * 2 < hps[3] and heal(hps[2], hps[3], spa) - hps[2] > dmg + psnDmg + 7 :
+                                                        hps[2] = heal(hps[2], hps[3], spa)
                                                         manacost = 5
                                                         if fighter2["sp"] == "Sorcier" :
                                                             manacost -= 1
@@ -678,7 +684,7 @@ async def on_reaction_add(reaction, user):
                                 spa = fighter1["stats"]["spa"] + fighter1["weapon"]["spa"] + game.getSP(fighter1["sp"])["stats"]["spa"]
                                 if fighter1["sp"] == "Bloodmage" :
                                     spa += int( 0.5 * (hps[1 + 2 * (pnumber - 1)] - hps[2 * (pnumber - 1)] ) )
-                                hps[2 * (pnumber - 1)] = int(min(hps[1 + 2 * (pnumber - 1)], hps[2 * (pnumber - 1)] + 5 + 1/10 * hps[1 + 2 * (pnumber - 1)] + spa * hps[1 + 2 * (pnumber - 1)]/100))
+                                hps[2 * (pnumber - 1)] = heal(hps[2 * (pnumber - 1)], hps[2 * (pnumber - 1) + 1], spa)
                                 battledesc = user.name + " se soigne!"
 
                                 lvl1 = str(fighter1["stats"]["level"])
@@ -705,6 +711,9 @@ async def on_reaction_add(reaction, user):
                     await reaction.remove(user)
 
 
+
+def heal(hp, maxhp, spa):
+    return min(maxhp, int(hp + 5 + 2/10 * maxhp + spa))
 
 
 @bot.event
@@ -896,7 +905,6 @@ async def serverinfo(ctx):
     if (guild != None) :
         ts = guild.created_at
         ts = ts.strftime('%Y-%m-%d %H:%M:%S')
-        print(ctx.guild)
         embed = discord.Embed(
             colour = discord.Colour.purple(),
             title = ('Server info'),
@@ -1012,7 +1020,7 @@ async def usepoint(ctx, *args):
         else :
             response = "Indiquez une stat valide (hp, atk, def, spa, spd, spe)"
     except Exception as e:
-        response = 'lefevre usepoint <stat> [amount]'
+        response = 'lefevre up <stat> [amount]'
     finally :
         await ctx.send(response)
 
@@ -1162,55 +1170,58 @@ async def pve(ctx, *args):
     useri1 = ctx.message.author.id
     user1 = game.getUserData(useri1)
     if (game.canPve(useri1)):
+        if user1["stats"]["statpoints"] <= 10 :
 
-        ennemy = game.randomEnnemy(user1)
+            ennemy = game.randomEnnemy(user1)
 
-        sp1 = game.getSP(user1["sp"])
-        sp2 = game.getSP(ennemy["sp"])
+            sp1 = game.getSP(user1["sp"])
+            sp2 = game.getSP(ennemy["sp"])
 
-        maxhp1 = user1["stats"]["hp"] + sp1["stats"]["hp"]
+            maxhp1 = user1["stats"]["hp"] + sp1["stats"]["hp"]
 
-        hp1 = maxhp1
-        hp2 = ennemy["stats"]["hp"] + sp2["stats"]["hp"]
+            hp1 = maxhp1
+            hp2 = ennemy["stats"]["hp"] + sp2["stats"]["hp"]
 
-        speed1 = user1["stats"]["spe"] + user1["weapon"]["spe"] + sp1["stats"]["spe"]
-        speed2 = ennemy["stats"]["spe"] + ennemy["weapon"]["spe"] + sp2["stats"]["spe"]
+            speed1 = user1["stats"]["spe"] + user1["weapon"]["spe"] + sp1["stats"]["spe"]
+            speed2 = ennemy["stats"]["spe"] + ennemy["weapon"]["spe"] + sp2["stats"]["spe"]
 
-        if  speed1 < speed2 :
-            damage = dmgCalc(ennemy, user1, 2, hp2)
-            dmg = max(1, int(0.5 * damage.dmg))
-            battledesc = ""
+            if  speed1 < speed2 :
+                damage = dmgCalc(ennemy, user1, 2, hp2)
+                dmg = max(1, int(0.5 * damage.dmg))
+                battledesc = ""
 
-            if damage.crit :
-                battledesc += "Coup critique! "
-            battledesc += ennemy["name"] + " inflige " + str(dmg) + " dégâts à l'aide d'un coup sournois!"
+                if damage.crit :
+                    battledesc += "Coup critique! "
+                battledesc += ennemy["name"] + " inflige " + str(dmg) + " dégâts à l'aide d'un coup sournois!"
 
-            hp1 = max(1, hp1 - dmg)
+                hp1 = max(1, hp1 - dmg)
 
+            else :
+                battledesc = "Le combat vient de commencer, on souhaite bonne chance au joueur humain " + ctx.message.author.name +  "."
+
+
+
+            firstturn = str(useri1)
+            secondturn = ennemy["name"]
+
+
+            lvl1 = str(user1["stats"]["level"])
+            lvl2 = str(ennemy["stats"]["level"])
+
+            footer = "PVE"
+
+            names = ctx.message.author.name + " VS " + ennemy["name"]
+
+            embed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, hp2, 10, 10, 10, 10, battledesc, footer, True, 0, 0)
+
+            msg = await ctx.send(embed = embed)
+
+            reacts = ["\U00002694", "\U0001FA84", "\U0001F5E1", "\U0001F966"]
+
+            for r in reacts :
+                await msg.add_reaction(r)
         else :
-            battledesc = "Le combat vient de commencer, on souhaite bonne chance au joueur humain " + ctx.message.author.name +  "."
-
-
-
-        firstturn = str(useri1)
-        secondturn = ennemy["name"]
-
-
-        lvl1 = str(user1["stats"]["level"])
-        lvl2 = str(ennemy["stats"]["level"])
-
-        footer = "PVE"
-
-        names = ctx.message.author.name + " VS " + ennemy["name"]
-
-        embed = createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, hp2, 10, 10, 10, 10, battledesc, footer, True, 0, 0)
-
-        msg = await ctx.send(embed = embed)
-
-        reacts = ["\U00002694", "\U0001FA84", "\U0001F5E1", "\U0001F966"]
-
-        for r in reacts :
-            await msg.add_reaction(r)
+            msg = await ctx.send("Vous avez beaucoup de points de stats à dépenser. Faites `lefevre up <stat> <amount>` pour améliorer vos stats, visibles avec la commande `lefevre ss`.")
 
     else :
         embed = discord.Embed(
@@ -1380,5 +1391,56 @@ async def spec(ctx, *args):
         msg = "Une erreur est survenue lors de la séléction de votre spécialité. Veuillez utiliser la commande `lefevre spec <specialite>` avec une des spécialités suivantes : " + splist
     finally :
         await ctx.send(msg)
+
+
+
+
+@bot.command(name='ban')
+async def ban(ctx, *args):
+    try:
+        mentionned_user = ctx.message.mentions[0]
+        useri1 = ctx.message.author.id
+        if useri1 == 143350417093296128 :
+            await mentionned_user.kick() # C'EST UN KICK PAS UN BAN OK JE FAIS PAS DES PRANKS DE BATARD NON PLUS
+            response = "ok bro"
+        else :
+            response = "t'es qui en fait"
+
+    except Exception as e:
+        response = "bah non du coup"
+    finally:
+        msg = await ctx.send(response)
+
+
+
+
+
+
+
+@tasks.loop(seconds=3600)
+async def insulte_tuffigang():
+    channel = bot.get_channel(TUFFIGANG_C_ID)
+    tuffig = channel.guild.get_role(TUFFIGANG_R_ID)
+    if tuffig != None :
+        members = channel.members
+        tuffimembers = []
+        for member in members :
+            if tuffig in member.roles and member.status!=discord.Status.offline and not member.bot :
+                tuffimembers.append(member)
+        if tuffimembers != [] :
+            chosen_user = random.choice(tuffimembers)
+
+            insultes = ["Va te faire cuire un oeuf", "Espèce de fan d'Ecobosto",
+                        "On est obligés de compter en base 3 pour que tu aies un QI à 3 chiffres",
+                        "T'es un peu cringe", "Bannez moi ça les admins :",
+                        "Get gulaged", "je te ban en fait", "rôle pedance direct",
+                        "Marin d'eau douce", "Petit gougnafier", "Sale goujat",
+                        "Pauvre Bélître", "Tu n'est qu'un Butor", "Fieffé Faquin",
+                        "Orchidoclaste", "Méchant Fripon", "je vais vous ban, toi et ta bande de malapris,",
+                        "Tu n'est qu'un simple Olibrius"]
+
+            msg = random.choice(insultes) + ' ' + chosen_user.name
+
+            await channel.send(msg)
 
 bot.run(TOKEN)

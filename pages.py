@@ -39,14 +39,16 @@ def page_3(embed):
     embed.add_field(name='lefevre pve', value='Faites un combat en PVE', inline = False)
     embed.add_field(name='lefevre pveamount', value='Montre vos nombres de combats en PVE restants', inline = False)
     embed.add_field(name='lefevre cw', value='Permet de changer d\'arme', inline = False)
+
+
+
+def page_4(embed):
     embed.add_field(name='lefevre resetstats', value='Permet de reset vos stats', inline = False)
     embed.add_field(name='lefevre sellcurrweapon', value='Permet de vendre votre arme contre de l\'exp', inline = False)
     embed.add_field(name='lefevre sp', value='Montre les stats de votre spécialité', inline = False)
     embed.add_field(name='lefevre spec', value='Permet de changer de spécialité', inline = False)
-
-
-def page_4(embed):
-    embed.add_field(name='TEXTE p4', value='HOHOHO', inline = False)
+    embed.add_field(name='lefevre prestige', value='Vous explique comment fonctionne le prestige', inline = False)
+    embed.add_field(name='lefevre pshop', value="Vous permet d'acceder au magasin de prestige", inline = False)
 
 
 def page_5(embed):

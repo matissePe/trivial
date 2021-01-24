@@ -1373,7 +1373,757 @@
         },
 
 
+        {
+            "id": "54",
+            "name" : "Hackonfrerie",
+            "IA" : 3,
+            "stats": {
+                "level": 82,
+                "hp": 255,
+                "atk": 10,
+                "def": 125,
+                "spa": 125,
+                "spd": 125,
+                "spe": 10,
+                "exp": 3000
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 10,
+                "spd" : 40,
+                "spe" : 10
+            },
+            "sp" : "Sorcier+"
+        },
 
+        {
+            "id": "55",
+            "name" : "Brhackage",
+            "IA" : 3,
+            "stats": {
+                "level": 83,
+                "hp": 260,
+                "atk": 100,
+                "def": 90,
+                "spa": 45,
+                "spd": 90,
+                "spe": 100,
+                "exp": 3100
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 40,
+                "def" : 10,
+                "spa" : 10,
+                "spd" : 10,
+                "spe" : 40
+            },
+            "sp" : "Assassin+"
+        },
+
+        {
+            "id": "56",
+            "name" : "TrivialCorp",
+            "IA" : 3,
+            "stats": {
+                "level": 84,
+                "hp": 265,
+                "atk": 15,
+                "def": 165,
+                "spa": 165,
+                "spd": 60,
+                "spe": 15,
+                "exp": 3200
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 0,
+                "def" : 40,
+                "spa" : 20,
+                "spd" : 40,
+                "spe" : 0
+            },
+            "sp" : "Bloodmage+"
+        },
+
+
+        {
+            "id": "57",
+            "name" : "StonksIndustries",
+            "IA" : 3,
+            "stats": {
+                "level": 87,
+                "hp": 270,
+                "atk": 86,
+                "def": 86,
+                "spa": 86,
+                "spd": 86,
+                "spe": 86,
+                "exp": 3400
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 10,
+                "spd" : 40,
+                "spe" : 10
+            },
+            "sp" : "Battlemage+"
+        },
+
+        {
+            "id": "58",
+            "name" : "TempleOS",
+            "IA" : 3,
+            "stats": {
+                "level": 88,
+                "hp": 275,
+                "atk": 125,
+                "def": 125,
+                "spa": 75,
+                "spd": 97,
+                "spe": 15,
+                "exp": 3500
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 10,
+                "spd" : 40,
+                "spe" : 10
+            },
+            "sp" : "Bloodmage+"
+        },
+
+
+        {
+            "id": "59",
+            "name" : "Pepe",
+            "IA" : 3,
+            "stats": {
+                "level": 89,
+                "hp": 280,
+                "atk": 85,
+                "def": 135,
+                "spa": 15,
+                "spd": 135,
+                "spe": 70,
+                "exp": 3600
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 0,
+                "def" : 25,
+                "spa" : 0,
+                "spd" : 25,
+                "spe" : 50
+            },
+            "sp" : "Berserker+"
+        },
+
+        {
+            "id": "60",
+            "name" : "Jak",
+            "IA" : 3,
+            "stats": {
+                "level": 92,
+                "hp": 285,
+                "atk": 15,
+                "def": 180,
+                "spa": 65,
+                "spd": 180,
+                "spe": 15,
+                "exp": 3800
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 0,
+                "def" : 40,
+                "spa" : 20,
+                "spd" : 40,
+                "spe" : 0
+            },
+            "sp" : "Alchimiste+"
+        },
+
+        {
+            "id": "61",
+            "name" : "xkcd",
+            "IA" : 3,
+            "stats": {
+                "level": 93,
+                "hp": 290,
+                "atk": 135,
+                "def": 135,
+                "spa": 15,
+                "spd": 135,
+                "spe": 35,
+                "exp": 3900
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 0,
+                "def" : 25,
+                "spa" : 0,
+                "spd" : 25,
+                "spe" : 50
+            },
+            "sp" : "Vampire+"
+        },
+
+        {
+            "id": "62",
+            "name" : "NNN",
+            "IA" : 3,
+            "stats": {
+                "level": 94,
+                "hp": 295,
+                "atk": 45,
+                "def": 115,
+                "spa": 115,
+                "spd": 115,
+                "spe": 65,
+                "exp": 4000
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 10,
+                "spd" : 40,
+                "spe" : 10
+            },
+            "sp" : "Sorcier+"
+        },
+
+        {
+            "id": "63",
+            "name" : "CheeseCake",
+            "IA" : 3,
+            "stats": {
+                "level": 97,
+                "hp": 300,
+                "atk": 115,
+                "def": 105,
+                "spa": 45,
+                "spd": 105,
+                "spe": 100,
+                "exp": 4200
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 10,
+                "spd" : 40,
+                "spe" : 10
+            },
+            "sp" : "Bloodmage+"
+        },
+
+        {
+            "id": "64",
+            "name" : "EvanGang",
+            "IA" : 3,
+            "stats": {
+                "level": 98,
+                "hp": 305,
+                "atk": 95,
+                "def": 85,
+                "spa": 95,
+                "spd": 85,
+                "spe": 115,
+                "exp": 4300
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 30,
+                "spa" : 30,
+                "spd" : 30,
+                "spe" : 10
+            },
+            "sp" : "Battlemage+"
+        },
+
+        {
+            "id": "65",
+            "name" : "ez",
+            "IA" : 3,
+            "stats": {
+                "level": 99,
+                "hp": 310,
+                "atk": 165,
+                "def": 75,
+                "spa": 15,
+                "spd": 75,
+                "spe": 155,
+                "exp": 4400
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 10,
+                "spd" : 40,
+                "spe" : 10
+            },
+            "sp" : "Assassin+"
+        },
+
+        {
+            "id": "66",
+            "name" : "Bepis",
+            "IA" : 3,
+            "stats": {
+                "level": 102,
+                "hp": 315,
+                "atk": 15,
+                "def": 125,
+                "spa": 125,
+                "spd": 125,
+                "spe": 100,
+                "exp": 4600
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 10,
+                "spd" : 40,
+                "spe" : 10
+            },
+            "sp" : "Alchimiste+"
+        },
+
+        {
+            "id": "67",
+            "name" : "Conke",
+            "IA" : 3,
+            "stats": {
+                "level": 103,
+                "hp": 320,
+                "atk": 125,
+                "def": 125,
+                "spa": 15,
+                "spd": 125,
+                "spe": 105,
+                "exp": 4700
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 10,
+                "spd" : 40,
+                "spe" : 10
+            },
+            "sp" : "Vampire+"
+        },
+
+        {
+            "id": "68",
+            "name" : "`\\\\.\\globalroot\\device\\condrv\\kernelconnect`",
+            "IA" : 3,
+            "stats": {
+                "level": 104,
+                "hp": 325,
+                "atk": 55,
+                "def": 115,
+                "spa": 115,
+                "spd": 115,
+                "spe": 95,
+                "exp": 4800
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 10,
+                "spd" : 40,
+                "spe" : 10
+            },
+            "sp" : "Berserker+"
+        },
+
+        {
+            "id": "69",
+            "name" : "root",
+            "IA" : 3,
+            "stats": {
+                "level": 107,
+                "hp": 330,
+                "atk": 15,
+                "def": 115,
+                "spa": 145,
+                "spd": 115,
+                "spe": 115,
+                "exp": 5000
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 10,
+                "spd" : 40,
+                "spe" : 10
+            },
+            "sp" : "Sorcier+"
+        },
+
+        {
+            "id": "70",
+            "name" : "uBlock",
+            "IA" : 3,
+            "stats": {
+                "level": 108,
+                "hp": 335,
+                "atk": 185,
+                "def": 65,
+                "spa": 15,
+                "spd": 65,
+                "spe": 180,
+                "exp": 5100
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 50,
+                "def" : 0,
+                "spa" : 0,
+                "spd" : 0,
+                "spe" : 50
+            },
+            "sp" : "Assassin+"
+        },
+
+        {
+            "id": "71",
+            "name" : "pasdinspi",
+            "IA" : 3,
+            "stats": {
+                "level": 109,
+                "hp": 340,
+                "atk": 102,
+                "def": 102,
+                "spa": 102,
+                "spd": 102,
+                "spe": 102,
+                "exp": 5200
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 20,
+                "def" : 20,
+                "spa" : 20,
+                "spd" : 20,
+                "spe" : 20
+            },
+            "sp" : "Battlemage+"
+        },
+
+        {
+            "id": "72",
+            "name" : "BDE.deficit",
+            "IA" : 3,
+            "stats": {
+                "level": 112,
+                "hp": 345,
+                "atk": 15,
+                "def": 215,
+                "spa": 65,
+                "spd": 215,
+                "spe": 15,
+                "exp": 5400
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 0,
+                "def" : 50,
+                "spa" : 0,
+                "spd" : 50,
+                "spe" : 0
+            },
+            "sp" : "Alchimiste+"
+        },
+
+        {
+            "id": "73",
+            "name" : "InfiNiert",
+            "IA" : 3,
+            "stats": {
+                "level": 113,
+                "hp": 350,
+                "atk": 35,
+                "def": 175,
+                "spa": 15,
+                "spd": 175,
+                "spe": 125,
+                "exp": 5500
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 0,
+                "def" : 50,
+                "spa" : 0,
+                "spd" : 50,
+                "spe" : 0
+            },
+            "sp" : "Berserker+"
+        },
+
+        {
+            "id": "74",
+            "name" : "Chris-Chan",
+            "IA" : 3,
+            "stats": {
+                "level": 114,
+                "hp": 355,
+                "atk": 120,
+                "def": 190,
+                "spa": 15,
+                "spd": 190,
+                "spe": 15,
+                "exp": 5600
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 10,
+                "spd" : 40,
+                "spe" : 10
+            },
+            "sp" : "Bloodmage+"
+        },
+
+        {
+            "id": "75",
+            "name" : "OpenBosto",
+            "IA" : 3,
+            "stats": {
+                "level": 117,
+                "hp": 360,
+                "atk": 115,
+                "def": 195,
+                "spa": 15,
+                "spd": 195,
+                "spe": 20,
+                "exp": 5800
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 0,
+                "spd" : 40,
+                "spe" : 10
+            },
+            "sp" : "Vampire+"
+        },
+
+        {
+            "id": "76",
+            "name" : "MTP",
+            "IA" : 3,
+            "stats": {
+                "level": 118,
+                "hp": 365,
+                "atk": 109,
+                "def": 109,
+                "spa": 109,
+                "spd": 109,
+                "spe": 109,
+                "exp": 5900
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 20,
+                "def" : 20,
+                "spa" : 20,
+                "spd" : 20,
+                "spe" : 20
+            },
+            "sp" : "Battlemage+"
+        },
+
+        {
+            "id": "77",
+            "name" : "e",
+            "IA" : 3,
+            "stats": {
+                "level": 119,
+                "hp": 370,
+                "atk": 150,
+                "def": 115,
+                "spa": 15,
+                "spd": 115,
+                "spe": 150,
+                "exp": 6000
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 40,
+                "def" : 10,
+                "spa" : 0,
+                "spd" : 10,
+                "spe" : 40
+            },
+            "sp" : "Vampire+"
+        },
+
+        {
+            "id": "78",
+            "name" : "GNU+Linux",
+            "IA" : 3,
+            "stats": {
+                "level": 122,
+                "hp": 375,
+                "atk": 35,
+                "def": 205,
+                "spa": 185,
+                "spd": 200,
+                "spe": 35,
+                "exp": 6500
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 10,
+                "spd" : 40,
+                "spe" : 10
+            },
+            "sp" : "Sorcier++"
+        },
+
+        {
+            "id": "79",
+            "name" : "Twitter-Cancel",
+            "IA" : 3,
+            "stats": {
+                "level": 123,
+                "hp": 380,
+                "atk": 210,
+                "def": 105,
+                "spa": 35,
+                "spd": 105,
+                "spe": 205,
+                "exp": 6700
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 50,
+                "def" : 0,
+                "spa" : 0,
+                "spd" : 0,
+                "spe" : 50
+            },
+            "sp" : "Assassin++"
+        },
+
+        {
+            "id": "80",
+            "name" : "Boris",
+            "IA" : 3,
+            "stats": {
+                "level": 124,
+                "hp": 385,
+                "atk": 35,
+                "def": 205,
+                "spa": 185,
+                "spd": 205,
+                "spe": 35,
+                "exp": 6900
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 10,
+                "spd" : 40,
+                "spe" : 10
+            },
+            "sp" : "Bloodmage++"
+        },
+
+        {
+            "id": "81",
+            "name" : "Test-Unitaires",
+            "IA" : 3,
+            "stats": {
+                "level": 127,
+                "hp": 390,
+                "atk": 85,
+                "def": 185,
+                "spa": 35,
+                "spd": 185,
+                "spe": 185,
+                "exp": 7200
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 10,
+                "spd" : 40,
+                "spe" : 10
+            },
+            "sp" : "Berserker++"
+        },
+
+        {
+            "id": "82",
+            "name" : "Thomas13",
+            "IA" : 3,
+            "stats": {
+                "level": 128,
+                "hp": 395,
+                "atk": 35,
+                "def": 280,
+                "spa": 50,
+                "spd": 280,
+                "spe": 35,
+                "exp": 7400
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 10,
+                "def" : 40,
+                "spa" : 10,
+                "spd" : 40,
+                "spe" : 10
+            },
+            "sp" : "Alchimiste++"
+        },
+
+        {
+            "id": "83",
+            "name" : "Time-Cube",
+            "IA" : 3,
+            "stats": {
+                "level": 129,
+                "hp": 400,
+                "atk": 136,
+                "def": 136,
+                "spa": 136,
+                "spd": 136,
+                "spe": 136,
+                "exp": 7600
+            }, "weapon": {
+                "id" : 32,
+                "name" : "OMEGA Stonks",
+                "atk" : 20,
+                "def" : 20,
+                "spa" : 20,
+                "spd" : 20,
+                "spe" : 20
+            },
+            "sp" : "Battlemage++"
+        },
         
 
 
@@ -1411,14 +2161,14 @@
             "name" : "Thomas",
             "IA" : 3,
             "stats": {
-                "level": 70,
-                "hp": 250,
-                "atk": 85,
-                "def": 85,
-                "spa": 85,
-                "spd": 85,
-                "spe": 85,
-                "exp": 22500
+                "level": 100,
+                "hp": 400,
+                "atk": 120,
+                "def": 120,
+                "spa": 120,
+                "spd": 120,
+                "spe": 120,
+                "exp": 50000
             }, "weapon": {
                 "id" : 1001,
                 "name" : "Kick",
@@ -1428,7 +2178,7 @@
                 "spd" : 15,
                 "spe" : 15
             },
-            "sp" : "Alchimiste"
+            "sp" : "Alchimiste+"
         },
 
 
@@ -1437,24 +2187,24 @@
             "name" : "Lefevre",
             "IA" : 3,
             "stats": {
-                "level": 80,
-                "hp": 300,
-                "atk": 100,
-                "def": 100,
-                "spa": 100,
-                "spd": 100,
-                "spe": 100,
-                "exp": 30000
+                "level": 150,
+                "hp": 800,
+                "atk": 200,
+                "def": 200,
+                "spa": 200,
+                "spd": 200,
+                "spe": 200,
+                "exp": 300000
             }, "weapon": {
                 "id": 50,
                 "name": "Trivial",
                 "atk" : 40,
-			    "def" : 0,
+			    "def" : 40,
 			    "spa" : 40,
-			    "spd" : 0,
-			    "spe" : 20
+			    "spd" : 40,
+			    "spe" : 40
             },
-            "sp" : "Vampire"
+            "sp" : "Vampire++"
         }
     ]
 }

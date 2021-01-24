@@ -1,7 +1,7 @@
 import json
 import random
 
-def retDefaultUser(userID, statpoints, level, exp, wep):
+def retDefaultUser(userID, statpoints, level, exp, wep, ppoint, pstat, pperk):
     return {"id" : str(userID),
                 "stats" : {
                     "level" : level,
@@ -19,7 +19,10 @@ def retDefaultUser(userID, statpoints, level, exp, wep):
                     {"id" : 0}
 			     ],
                  "pvebattles" : 0,
-                 "sp" : "None"
+                 "sp" : "None",
+                 "ppoints" : ppoint,
+                 "pstats" : pstat,
+                 "pperks" : pperk
                 }
 
 
@@ -39,6 +42,22 @@ def getUserData(userID):
             if userID == user['id']:
                 if "sp" not in user :
                     user["sp"] = "None"
+                if "ppoints" not in user :
+                    user["ppoints"] = 0
+                    user["pstats"] = {
+                        "hp"  : 0,
+                        "atk" : 0,
+        				"def" : 0,
+        				"spa" : 0,
+        				"spd" : 0,
+        				"spe" : 0,
+                        "exp" : 1
+                    }
+                    user["pperks"] = {
+                        "exp" : 0,
+                        "stats" : 0,
+                        "sp" : 0
+                    }
                 return user
 
         # si user not found
@@ -53,7 +72,23 @@ def getUserData(userID):
     				"spe" : 2
 			     }
 
-        user = retDefaultUser(userID, 0, 0, 0, wep)
+        pstat = {
+                "hp"  : 0,
+                "atk" : 0,
+				"def" : 0,
+				"spa" : 0,
+				"spd" : 0,
+				"spe" : 0,
+                "exp" : 1
+                }
+        pperk = {
+            "exp" : 0,
+            "stats" : 0,
+            "sp" : 0
+        }
+
+
+        user = retDefaultUser(userID, 0, 0, 0, wep, 0, pstat, pperk)
         users.append(user)
         write_json(data)
         return user
@@ -155,7 +190,8 @@ def resetStats(userID):
     user = getUserData(userID)
     wep = user["weapon"]
     totalstatpoints = user["stats"]["level"] * 5
-    user = retDefaultUser(userID, totalstatpoints, user["stats"]["level"], user["stats"]["exp"], wep)
+    user = retDefaultUser(userID, totalstatpoints, user["stats"]["level"], user["stats"]["exp"], wep, user["ppoints"], user["pstats"], user["pperks"])
+    user = updateFromPStats(user, True)
 
 
     updateUser(user)
@@ -180,6 +216,10 @@ def giveExp(userID, amount):
             amount -= (maxexp - exp)
             exp = 0
             user["stats"]["statpoints"] += 5
+            if level == 70 and user["sp"] is not None and user["pperks"]["sp"] > 0 :
+                user["sp"] += "+"
+            elif level == 120 and user["sp"] is not None and user["pperks"]["sp"] > 1 :
+                user["sp"] += "+"
         else :
             exp += amount
             amount = 0
@@ -359,7 +399,7 @@ def sellWeapon(userID):
     user = getUserData(userID)
 
     try :
-        weaponExp = user["weapon"]["exp"]
+        weaponExp = int(user["weapon"]["exp"] * user["pstats"]["exp"])
         weaponId = user["weapon"]["id"]
         if weaponExp == 0 :
             return False, 0
@@ -388,10 +428,78 @@ def chgSpec(userID, spname):
     user = getUserData(userID)
     if user["stats"]["level"] < 30 :
         return False
+    if user["stats"]["level"] >= 70 and user["pperks"]["sp"] > 0:
+        spname += "+"
+    if user["stats"]["level"] >= 120 and user["pperks"]["sp"] > 1:
+        spname += "+"
     user["sp"] = spname
     updateUser(user)
     return True
 
+
+def givePrestige(userID, amount):
+    user = getUserData(userID)
+    user["ppoints"] += amount
+    user["stats"]["level"] = 0
+    user["stats"]["exp"] = 0
+    updateUser(user)
+    resetStats(userID)
+
+
+def upPres(userID, item, costs):
+    user = getUserData(userID)
+
+    eCost, stCost, spCost = costs
+
+    p = user["ppoints"]
+
+    if item == 'sp' :
+        if user["pperks"]["sp"] >= 2 or p < spCost:
+            return False
+        else :
+            user["ppoints"] -= spCost
+    elif item == 'exp' :
+        if p < eCost :
+            return False
+        else :
+            user["pstats"]["exp"] += 0.5
+            user["ppoints"] -= eCost
+    else :
+        if p < stCost :
+            return False
+        else :
+            user["pstats"]["hp"] += 10
+            user["pstats"]["atk"] += 5
+            user["pstats"]["def"] += 5
+            user["pstats"]["spa"] += 5
+            user["pstats"]["spd"] += 5
+            user["pstats"]["spe"] += 5
+
+            user = updateFromPStats(user, False)
+            user["ppoints"] -= stCost
+
+    user["pperks"][item] += 1
+
+    updateUser(user)
+
+    return True
+
+
+
+def updateFromPStats(user, isReset):
+    s = user["stats"]
+
+    if isReset :
+        r = user["pperks"]["stats"]
+    else :
+        r = 1
+    s["hp"] += 10 * r
+    s["atk"] += 5 * r
+    s["def"] += 5 * r
+    s["spa"] += 5 * r
+    s["spd"] += 5 * r
+    s["spe"] += 5 * r
+    return user
 
 #resetStats(143350417093296128)
 #getBestPlayers()

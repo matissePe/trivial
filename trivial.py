@@ -16,7 +16,7 @@ intents.members = True
 intents.presences = True
 
 
-HELP_PAGES = 3
+HELP_PAGES = 4
 
 USER_RATE_CONST1 = 267234
 
@@ -36,6 +36,11 @@ MINDELAY = 60
 MAXDELAY = 90
 
 maxoddstime = 600
+
+
+MAX_SP_TIER = 2
+
+
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -405,18 +410,22 @@ async def on_reaction_add(reaction, user):
                             if emoji == "sword":
                                 myDmg = dmgCalc(fighter1, fighter2, 0, hps[2 * (pnumber - 1)])
                                 attacktype = "une attaque physique"
-                                if fighter1["sp"] == "Vampire" :
+                                if "Vampire" in fighter1["sp"] :
                                     vmpHeal = True
 
 
                             elif emoji == "wand":
-                                if manas[2 * (pnumber - 1)] >= 3 or (manas[2 * (pnumber - 1)] >= 2 and fighter1["sp"] == "Sorcier") :
+                                if manas[2 * (pnumber - 1)] >= 3 or (manas[2 * (pnumber - 1)] >= 2 and "Sorcier" in fighter1["sp"]) :
                                     myDmg = dmgCalc(fighter1, fighter2, 1, hps[2 * (pnumber - 1)])
                                     manas[2 * (pnumber - 1)] -= 4
 
                                     if fighter1["sp"] == "Sorcier" :
                                         manas[2 * (pnumber - 1)] += 1
-                                    elif fighter1["sp"] == "Alchimiste" :
+                                    elif fighter1["sp"] == "Sorcier+" :
+                                        manas[2 * (pnumber - 1)] += 2
+                                    elif fighter1["sp"] == "Sorcier++" :
+                                        manas[2 * (pnumber - 1)] += 3
+                                    elif "Alchimiste" in fighter1["sp"] :
                                         if pnumber == 1:
                                             p2Psn += 1
                                         else :
@@ -440,7 +449,12 @@ async def on_reaction_add(reaction, user):
 
 
                                 if vmpHeal :
-                                    hps[2 * (pnumber - 1)] = min(hps[2 * (pnumber - 1) + 1], int(hps[2 * (pnumber - 1)] + 0.5 * dmg))
+                                    if fighter1["sp"] == "Vampire++" :
+                                        hps[2 * (pnumber - 1)] = min(hps[2 * (pnumber - 1) + 1], int(hps[2 * (pnumber - 1)] + 0.8 * dmg))
+                                    elif fighter1["sp"] == "Vampire+" :
+                                        hps[2 * (pnumber - 1)] = min(hps[2 * (pnumber - 1) + 1], int(hps[2 * (pnumber - 1)] + 0.65 * dmg))
+                                    else :
+                                        hps[2 * (pnumber - 1)] = min(hps[2 * (pnumber - 1) + 1], int(hps[2 * (pnumber - 1)] + 0.5 * dmg))
 
                                 battledesc = ""
                                 if isCrit :
@@ -461,7 +475,12 @@ async def on_reaction_add(reaction, user):
                                         username = fighter2["name"]
                                         pPsn = p2Psn
 
-                                    psnDmg = int(hps[1 + 2 * (2 - pnumber)] * 5 * pPsn / 100)
+                                    if fighter1["sp"] == "Alchimiste++" :
+                                        psnDmg = int(hps[1 + 2 * (2 - pnumber)] * 8 * pPsn / 100)
+                                    elif fighter1["sp"] == "Alchimiste+" :
+                                        psnDmg = int(hps[1 + 2 * (2 - pnumber)] * 6.5 * pPsn / 100)
+                                    else :
+                                        psnDmg = int(hps[1 + 2 * (2 - pnumber)] * 5 * pPsn / 100)
 
 
                                     battledesc += username + " subit " + str(psnDmg) + " dégâts de poison!"
@@ -530,7 +549,7 @@ async def on_reaction_add(reaction, user):
                                                 atktype = 2
                                                 atkdesc = "un coup sournois"
 
-                                            if manas[2] >= 3 or (manas[2] >= 2 and fighter2["sp"] == "Sorcier") :
+                                            if manas[2] >= 3 or (manas[2] >= 2 and "Sorcier" in fighter2["sp"]) :
                                                 d3 = dmgCalc(fighter2, fighter1, 1, hps[2])
 
                                                 if damage.dmg + 5 < d3.dmg :
@@ -538,6 +557,10 @@ async def on_reaction_add(reaction, user):
                                                     manacost = 4
                                                     if fighter2["sp"] == "Sorcier" :
                                                         manacost -= 1
+                                                    elif fighter2["sp"] == "Sorcier+" :
+                                                        manacost -= 2
+                                                    elif fighter2["sp"] == "Sorcier++" :
+                                                        manacost -= 3
                                                     atktype = 1
                                                     atkdesc = "une attaque magique"
 
@@ -546,10 +569,14 @@ async def on_reaction_add(reaction, user):
 
                                         # IA lvl 3 : Attaque et heal, meilleur move possible
                                             if ia == 3 :
-                                                if manas[2] >= 5 or (manas[2] >= 4 and fighter2["sp"] == "Sorcier"):
+                                                if manas[2] >= 5 or (manas[2] >= 4 and "Sorcier" in fighter2["sp"]):
                                                     spa = fighter2["stats"]["spa"] + fighter2["weapon"]["spa"] + game.getSP(fighter2["sp"])["stats"]["spa"]
                                                     if fighter2["sp"] == "Bloodmage" :
                                                         spa += int( 0.5 * (hps[3] - hps[2] ) )
+                                                    elif fighter2["sp"] == "Bloodmage+" :
+                                                        spa += int( 0.6 * (hps[3] - hps[2] ) )
+                                                    elif fighter2["sp"] == "Bloodmage++" :
+                                                        spa += int( 0.7 * (hps[3] - hps[2] ) )
 
 
                                                     # si on peut se heal l'équivalent de 1,.. tours de dégâts quand on est midlife, c'est worth
@@ -557,12 +584,15 @@ async def on_reaction_add(reaction, user):
 
                                                     if hps[2] * 2 < hps[3] and heal(hps[2], hps[3], spa) - hps[2] > dmg + psnDmg + 7 :
                                                         hps[2] = heal(hps[2], hps[3], spa)
-                                                        manacost = 5
+                                                        manacost = 6
                                                         if fighter2["sp"] == "Sorcier" :
                                                             manacost -= 1
+                                                        elif fighter2["sp"] == "Sorcier+" :
+                                                            manacost -= 2
+                                                        elif fighter2["sp"] == "Sorcier++" :
+                                                            manacost -= 3
                                                         manas[3] -= 1
                                                         healing = True
-
 
 
 
@@ -575,7 +605,7 @@ async def on_reaction_add(reaction, user):
 
 
                                         if not healing :
-                                            if atktype == 1 and fighter2["sp"] == "Alchimiste":
+                                            if atktype == 1 and "Alchimiste" in fighter2["sp"]:
                                                 p1Psn += 1
                                             dmg = damage.dmg
                                             battledesc = ""
@@ -586,14 +616,26 @@ async def on_reaction_add(reaction, user):
                                             battledesc += fighter2["name"] + " inflige " + str(dmg) + " dégâts à l'aide d'" + atkdesc + "! "
 
                                             if p1Psn > 0 :
-                                                psnDmg = int(hps[1] * 5 * p1Psn / 100)
+
+                                                if fighter2["sp"] == "Alchimiste++" :
+                                                    psnDmg = int(hps[1] * 8 * p1Psn / 100)
+                                                elif fighter2["sp"] == "Alchimiste++" :
+                                                    psnDmg = int(hps[1] * 6.5 * p1Psn / 100)
+                                                else :
+                                                    psnDmg = int(hps[1] * 5 * p1Psn / 100)
+
                                                 battledesc += user.name + " subit " + str(psnDmg) + " dégâts de poison!"
                                                 hps[0] -= psnDmg
 
                                             hps[0] -= dmg
 
                                             if vmpHeal :
-                                                hps[2] = min(hps[3], int(hps[2] + 0.5 * dmg))
+                                                if fighter2["sp"] == "Vampire++" :
+                                                    hps[2] = min(hps[3], int(hps[2] + 0.8 * dmg))
+                                                elif fighter2["sp"] == "Vampire+" :
+                                                    hps[2] = min(hps[3], int(hps[2] + 0.65 * dmg))
+                                                else :
+                                                    hps[2] = min(hps[3], int(hps[2] + 0.5 * dmg))
                                         else :
                                             battledesc = fighter2["name"] + " se soigne!"
 
@@ -658,6 +700,8 @@ async def on_reaction_add(reaction, user):
                                         if r.id == TUFFIGANG_R_ID :
                                             exptogain = int(exptogain * 1) # confused stonks
 
+                                    exptogain = int(exptogain * fighter1["pstats"]["exp"])
+
 
                                     game.giveExp(firstuser, exptogain)
 
@@ -676,14 +720,26 @@ async def on_reaction_add(reaction, user):
                                                 await areaction.remove(user)
 
                         elif emoji == "broc" :
-                            if (manas[2 * (pnumber - 1)] >= 5 or (manas[2 * (pnumber - 1)] >= 4 and fighter1["sp"] == "Sorcier"))and hps[2 * (pnumber - 1)] != hps[1 + 2 * (pnumber - 1)]:
+                            if (manas[2 * (pnumber - 1)] >= 5 or (manas[2 * (pnumber - 1)] >= 4 and "Sorcier" in fighter1["sp"]))and hps[2 * (pnumber - 1)] != hps[1 + 2 * (pnumber - 1)]:
                                 manas[2 * (pnumber - 1)] -= 5
                                 if fighter1["sp"] == "Sorcier":
                                     manas[2 * (pnumber - 1)] += 1
+                                elif fighter1["sp"] == "Sorcier+":
+                                    manas[2 * (pnumber - 1)] += 2
+                                elif fighter1["sp"] == "Sorcier++":
+                                    manas[2 * (pnumber - 1)] += 3
                                 manas[1 + 2 * (pnumber - 1)] -= 1
                                 spa = fighter1["stats"]["spa"] + fighter1["weapon"]["spa"] + game.getSP(fighter1["sp"])["stats"]["spa"]
+
+
                                 if fighter1["sp"] == "Bloodmage" :
                                     spa += int( 0.5 * (hps[1 + 2 * (pnumber - 1)] - hps[2 * (pnumber - 1)] ) )
+                                elif fighter1["sp"] == "Bloodmage+" :
+                                    spa += int( 0.6 * (hps[1 + 2 * (pnumber - 1)] - hps[2 * (pnumber - 1)] ) )
+                                elif fighter1["sp"] == "Bloodmage++" :
+                                    spa += int( 0.7 * (hps[1 + 2 * (pnumber - 1)] - hps[2 * (pnumber - 1)] ) )
+
+
                                 hps[2 * (pnumber - 1)] = heal(hps[2 * (pnumber - 1)], hps[2 * (pnumber - 1) + 1], spa)
                                 battledesc = user.name + " se soigne!"
 
@@ -1415,6 +1471,125 @@ async def ban(ctx, *args):
 
 
 
+def getPrestigeGain(user):
+    lvl = user["stats"]["level"]
+
+    return int(10 + (lvl - 50)**1.2)
+
+
+
+@bot.command(name='prestige')
+async def prestige(ctx):
+    useri = ctx.message.author.id
+    user = game.getUserData(useri)
+    if user["stats"]["level"] < 50 :
+        await ctx.send("Vous ne pouvez pas prestige car vous n'avez pas encore atteint le niveau 50.")
+    else :
+
+        pgain = getPrestigeGain(user)
+
+        embed = discord.Embed(
+                colour = discord.Colour.purple(),
+                title = ('Prestige'),
+        )
+        embed.add_field(name='Voulez-vous vraiment prestige ?', value="\u200b", inline = False)
+        embed.add_field(name='Vous recommencerez au niveau 0, en perdant votre équipement et votre spécialité.', value="\u200b", inline = False)
+        embed.add_field(name='Vous obtiendrez ' + str(pgain) + ' points de prestige.', value="Si vous êtes sûr de vouloir prestige, faites `lefevre prestigeconfirm`.", inline = False)
+        await ctx.send(embed=embed)
+
+
+
+@bot.command(name='prestigeconfirm')
+async def prestigeconfirm(ctx):
+    useri = ctx.message.author.id
+    user = game.getUserData(useri)
+    if user["stats"]["level"] < 50 :
+        await ctx.send("Vous ne pouvez pas prestige car vous n'avez pas encore atteint le niveau 50.")
+    else :
+
+        pgain = getPrestigeGain(user)
+        game.givePrestige(useri, pgain)
+        await ctx.send("Vous êtes revenus au niveau 0, avec un gain de " + str(pgain) + " points de prestige!")
+
+
+
+
+def costs(user):
+    pperks = user["pperks"]
+
+    expLvl = pperks["exp"]
+    statLvl = pperks["stats"]
+    spLvl = pperks["sp"]
+
+    BASE_EXP_COST = 10
+    BASE_STAT_COST = 2
+    BASE_SP_COST = 35
+
+    expCost = int(BASE_EXP_COST * (1.5 * (expLvl + 1)))
+
+    statCost = int(BASE_STAT_COST * 1.5 * statLvl)
+
+    spCost = int(BASE_SP_COST * ((spLvl + 1) ** 1.6))
+
+    return expCost, statCost, spCost
+
+
+@bot.command(name='pshop')
+async def prestigeshop(ctx):
+
+    useri = ctx.message.author.id
+    user = game.getUserData(useri)
+
+    eCost, stCost, spCost = costs(user)
+
+    embed = discord.Embed(
+        colour = discord.Colour.purple(),
+        title = ('Prestige Shop'),
+        description = 'Vous avez ' + str(user["ppoints"]) + ' points de prestige à dépenser.'
+    )
+
+    pperks = user["pperks"]
+
+    expLvl = pperks["exp"]
+    statLvl = pperks["stats"]
+    spLvl = pperks["sp"]
+
+    exp_mul = 1 + 0.5 * expLvl
+    nexp_mul = 1.5 + 0.5 * expLvl
+
+
+    sBonus = statLvl * 5
+
+
+    embed.add_field(name="Multiplicateur d'experience actuel : " + str(exp_mul), value="Suivant : " + str(nexp_mul) + " Cout : " + str(eCost), inline = False)
+    embed.add_field(name="Bonus de stats actuel (pour toutes les stats) : " + str(sBonus), value="Suivant : " + str(sBonus + 5) + " Cout : " + str(stCost), inline = False)
+    if spLvl < MAX_SP_TIER :
+        embed.add_field(name="Tier des spécialités déverouillées : " + str(spLvl), value="Suivant : " + str(spLvl + 1) + " Cout : " + str(spCost) + " Max : " + str(MAX_SP_TIER), inline = False)
+    embed.add_field(name='Pour dépenser vos points de prestiges, utilisez la commande `lefevre pbuy <item>`', value="<item> : (sp | exp | stats)", inline = False)
+
+
+    await ctx.send(embed = embed)
+
+
+
+
+
+@bot.command(name='pbuy')
+async def pbuy(ctx, *args):
+    try :
+        item = args[0]
+        if item in ['sp', 'exp', 'stats']:
+            if game.upPres(ctx.message.author.id, item, costs(game.getUserData(ctx.message.author.id))) :
+                msg = "Achat réussi."
+            else :
+                msg = "Vous n'avez pas assez de points pour cet item, ou vous êtes déjà au niveau de récompense maximum."
+        else :
+            msg = "`lefevre pbuy <item>` avec `<item> : (sp | exp | stats)`"
+    except Exception as e:
+        msg = "Une erreur est survenue lors de l'achat. Avez vous bien fait `lefevre pbuy <item>` avec `<item> : (sp | exp | stats)` ?"
+    finally :
+        await ctx.send(msg)
+
 
 
 @tasks.loop(seconds=3600)
@@ -1437,9 +1612,10 @@ async def insulte_tuffigang():
                         "Marin d'eau douce", "Petit gougnafier", "Sale goujat",
                         "Pauvre Bélître", "Tu n'est qu'un Butor", "Fieffé Faquin",
                         "Orchidoclaste", "Méchant Fripon", "je vais vous ban, toi et ta bande de malapris,",
-                        "Tu n'est qu'un simple Olibrius"]
+                        "Tu n'est qu'un simple Olibrius", "Visiblement, depuis le début du confinement tu vois plus souvent ta mère sur PHub qu'en vrai",
+                        "Petit con", "Je te signale au secrétariat"]
 
-            msg = random.choice(insultes) + ' ' + chosen_user.name
+            msg = random.choice(insultes) + ' <@!' + str(chosen_user.id) + '>'
 
             await channel.send(msg)
 

@@ -17,11 +17,19 @@ class Dmg:
 
         if sp1["name"] == "Berserker" :
             atkatk += int( 0.5 * ( (attacker["stats"]["hp"] + sp1["stats"]["hp"]) - hpAtk ) )
+        elif sp1["name"] == "Berserker+" :
+            atkatk += int( 0.6 * ( (attacker["stats"]["hp"] + sp1["stats"]["hp"]) - hpAtk ) )
+        elif sp1["name"] == "Berserker++" :
+            atkatk += int( 0.7 * ( (attacker["stats"]["hp"] + sp1["stats"]["hp"]) - hpAtk ) )
 
         atkspa = attacker["stats"]["spa"] + attacker["weapon"]["spa"] + sp1["stats"]["spa"]
 
         if sp1["name"] == "Bloodmage" :
             atkspa += int( 0.5 * ( (attacker["stats"]["hp"] + sp1["stats"]["hp"]) - hpAtk ) )
+        elif sp1["name"] == "Bloodmage+" :
+            atkspa += int( 0.6 * ( (attacker["stats"]["hp"] + sp1["stats"]["hp"]) - hpAtk ) )
+        elif sp1["name"] == "Bloodmage++" :
+            atkspa += int( 0.7 * ( (attacker["stats"]["hp"] + sp1["stats"]["hp"]) - hpAtk ) )
 
         defdef = defender["stats"]["def"] + defender["weapon"]["def"] + sp2["stats"]["def"]
 
@@ -30,14 +38,22 @@ class Dmg:
 
 
 
-        critchance = 5 + atkspeed - 0.5 * defdef
+        critchance = 5 + atkspeed - defspd
 
-        critdmg = max(2, 2 + 0.03 * atkatk - 0.03 * defdef)
+        critdmg = max(2, 2 + 0.01 * (atkatk - defdef))
 
 
 
-        if sp1["name"] == "Battlemage":
+        if "Battlemage" in sp1["name"]:
             atkatk += atkspa
+            atkspa = atkatk
+
+        if sp1["name"] == "Battlemage+" :
+            atkatk = atkatk * 1.2
+            atkspa = atkatk
+
+        elif sp1["name"] == "Battlemage++" :
+            atkatk = atkatk * 1.4
             atkspa = atkatk
 
 
@@ -53,7 +69,11 @@ class Dmg:
                 mult = critdmg
 
                 if sp1["name"] == "Assassin" :
+                    defstat = int(max(1, 0.8 * defstat))
+                elif sp1["name"] == "Assassin+" :
                     defstat = int(max(1, 0.7 * defstat))
+                elif sp1["name"] == "Assassin++" :
+                    defstat = int(max(1, 0.6 * defstat))
 
 
             else :
@@ -82,7 +102,11 @@ class Dmg:
                 mult = 1
 
                 if sp1["name"] == "Assassin" :
+                    defstat = int(max(1, 0.8 * defstat))
+                elif sp1["name"] == "Assassin+" :
                     defstat = int(max(1, 0.7 * defstat))
+                elif sp1["name"] == "Assassin++" :
+                    defstat = int(max(1, 0.6 * defstat))
 
             calcdmg = mult * ((((atklevel)/5 + 2) * 3 * (atkstat + 2) + atklevel * 2) / (defstat + 2))
 
@@ -104,12 +128,17 @@ class Dmg:
                 mult = 1
 
                 if sp1["name"] == "Assassin" :
+                    defstat = int(max(1, 0.8 * defstat))
+                elif sp1["name"] == "Assassin+" :
                     defstat = int(max(1, 0.7 * defstat))
+                elif sp1["name"] == "Assassin++" :
+                    defstat = int(max(1, 0.6 * defstat))
 
             calcdmg = mult * ((((atklevel)/5 + 2) * 2 * (atkstat + 2) + atklevel * 2) / (defstat + 2))
 
             self.dmg = int(0.65 * random.randint(60, 100) * calcdmg / 100)
 
         self.dmg = max(1, self.dmg)
+
 
 

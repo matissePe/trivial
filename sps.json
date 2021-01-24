@@ -17,7 +17,7 @@
         {
             "id" : 1,
             "name" : "Assassin",
-            "desc" : "Les coups critiques ignorent 30% de l'armure adverse.",
+            "desc" : "Les coups critiques ignorent 20% de la defense adverse.",
             "stats" : {
                 "hp" : 0,
                 "atk" : 25,
@@ -45,7 +45,7 @@
         {
             "id" : 3,
             "name" : "Battlemage",
-            "desc" : "Toutes vos attaques infligent des dégâts en fonction de la somme de votre attaque et attaque spéciale",
+            "desc" : "Toutes vos attaques infligent des degats en fonction de la somme de votre attaque et attaque speciale",
             "stats" : {
                 "hp" : 0,
                 "atk" : 25,
@@ -101,7 +101,7 @@
         {
             "id" : 7,
             "name" : "Vampire",
-            "desc" : "Vous vous soignez à hauteur de 50% des dégâts infligés avec vos attaques physiques",
+            "desc" : "Vous vous soignez a hauteur de 50% des degats infliges avec vos attaques physiques",
             "stats" : {
                 "hp" : 0,
                 "atk" : 50,
@@ -109,6 +109,202 @@
                 "spa" : 0,
                 "spd" : 0,
                 "spe" : 0
+            }
+        },
+
+        {
+            "id" : 8,
+            "name" : "Assassin+",
+            "desc" : "Les coups critiques ignorent 30% de l'armure adverse.",
+            "stats" : {
+                "hp" : 10,
+                "atk" : 40,
+                "def" : 5,
+                "spa" : 5,
+                "spd" : 5,
+                "spe" : 40
+            }
+        },
+
+        {
+            "id" : 9,
+            "name" : "Alchimiste+",
+            "desc" : "Les attaques magiques infligent un effet Poison qui se cumule. Chaque effet Poison inflige des degats a hauteur de 6.5% des PVs max de l'adversaire a chaque tour d'attaque.",
+            "stats" : {
+                "hp" : 10,
+                "atk" : 5,
+                "def" : 20,
+                "spa" : 45,
+                "spd" : 20,
+                "spe" : 5
+            }
+        },
+
+        {
+            "id" : 10,
+            "name" : "Battlemage+",
+            "desc" : "Toutes vos attaques infligent des degats en fonction de la somme de votre attaque et attaque speciale, et vous degats sont multiplies par 1.2",
+            "stats" : {
+                "hp" : 10,
+                "atk" : 40,
+                "def" : 5,
+                "spa" : 40,
+                "spd" : 5,
+                "spe" : 5
+            }
+        },
+
+        {
+            "id" : 11,
+            "name" : "Berserker+",
+            "desc" : "Pour chaque PV qu'il vous manque, gagne 0.6 en ATK.",
+            "stats" : {
+                "hp" : 80,
+                "atk" : 40,
+                "def" : 5,
+                "spa" : 5,
+                "spd" : 5,
+                "spe" : 5
+            }
+        },
+
+        {
+            "id" : 12,
+            "name" : "Bloodmage+",
+            "desc" : "Pour chaque PV qu'il vous manque, gagne 0.6 en SPA.",
+            "stats" : {
+                "hp" : 80,
+                "atk" : 5,
+                "def" : 5,
+                "spa" : 40,
+                "spd" : 5,
+                "spe" : 5
+            }
+        },
+
+        {
+            "id" : 13,
+            "name" : "Sorcier+",
+            "desc" : "Tous vos sorts coutent 2 points de mana en moins.",
+            "stats" : {
+                "hp" : 10,
+                "atk" : 5,
+                "def" : 5,
+                "spa" : 75,
+                "spd" : 5,
+                "spe" : 5
+            }
+        },
+
+        {
+            "id" : 14,
+            "name" : "Vampire+",
+            "desc" : "Vous vous soignez a hauteur de 65% des degats infliges avec vos attaques physiques",
+            "stats" : {
+                "hp" : 10,
+                "atk" : 75,
+                "def" : 5,
+                "spa" : 5,
+                "spd" : 5,
+                "spe" : 5
+            }
+        },
+
+        {
+            "id" : 15,
+            "name" : "Assassin++",
+            "desc" : "Les coups critiques ignorent 40% de l'armure adverse.",
+            "stats" : {
+                "hp" : 20,
+                "atk" : 60,
+                "def" : 10,
+                "spa" : 10,
+                "spd" : 10,
+                "spe" : 60
+            }
+        },
+
+        {
+            "id" : 16,
+            "name" : "Alchimiste++",
+            "desc" : "Les attaques magiques infligent un effet Poison qui se cumule. Chaque effet Poison inflige des degats a hauteur de 8% des PVs max de l'adversaire a chaque tour d'attaque.",
+            "stats" : {
+                "hp" : 20,
+                "atk" : 10,
+                "def" : 30,
+                "spa" : 70,
+                "spd" : 30,
+                "spe" : 10
+            }
+        },
+
+        {
+            "id" : 17,
+            "name" : "Battlemage++",
+            "desc" : "Toutes vos attaques infligent des degats en fonction de la somme de votre attaque et attaque speciale, et vous degats sont multiplies par 1.4",
+            "stats" : {
+                "hp" : 20,
+                "atk" : 60,
+                "def" : 10,
+                "spa" : 60,
+                "spd" : 10,
+                "spe" : 10
+            }
+        },
+
+        {
+            "id" : 18,
+            "name" : "Berserker++",
+            "desc" : "Pour chaque PV qu'il vous manque, gagne 0.7 en ATK.",
+            "stats" : {
+                "hp" : 120,
+                "atk" : 60,
+                "def" : 10,
+                "spa" : 10,
+                "spd" : 10,
+                "spe" : 10
+            }
+        },
+
+        {
+            "id" : 19,
+            "name" : "Bloodmage++",
+            "desc" : "Pour chaque PV qu'il vous manque, gagne 0.7 en SPA.",
+            "stats" : {
+                "hp" : 120,
+                "atk" : 10,
+                "def" : 10,
+                "spa" : 60,
+                "spd" : 10,
+                "spe" : 10
+            }
+        },
+
+        {
+            "id" : 20,
+            "name" : "Sorcier++",
+            "desc" : "Tous vos sorts coutent 3 points de mana en moins.",
+            "stats" : {
+                "hp" : 20,
+                "atk" : 10,
+                "def" : 10,
+                "spa" : 110,
+                "spd" : 10,
+                "spe" : 10
+            }
+        },
+
+        {
+            "id" : 21,
+            "name" : "Vampire++",
+            "desc" : "Vous vous soignez a hauteur de 80% des degats infliges avec vos attaques physiques",
+            "stats" : {
+                "hp" : 20,
+                "atk" : 110,
+                "def" : 10,
+                "spa" : 10,
+                "spd" : 10,
+                "spe" : 10
             }
         }
     ]

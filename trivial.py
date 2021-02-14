@@ -1020,7 +1020,6 @@ async def showweaponstats(ctx):
     spe = weapon["spe"]
 
     embed.add_field(name=('Nom : ' + nom), value="-----------", inline=False)
-
     embed.add_field(name=('Attaque ' + str(atk)),
                     value=("Defense " + str(de)), inline=False)
     embed.add_field(name=('Att. Spe ' + str(spa)),
@@ -1155,29 +1154,17 @@ def createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, maxh
     manabar2 = "█" * int(10 * mana2/10) + "░" * (10 - int(10 * mana2/maxmana2))
 
     newembed.add_field(name=names, value= "Lvl " + lvl1 + " VS Lvl " + lvl2, inline = False)
-
     newembed.add_field(name="HP[" + str(p1Psn) + "] " + str(hp1) + " / " + str(maxhp1), value= hpbar1, inline = True)
-
     newembed.add_field(name="HP[" + str(p2Psn) + "] " + str(hp2) + " / " + str(maxhp2), value= hpbar2, inline = True)
-
     newembed.add_field(name='\u200b', value = '\u200b', inline = True)
-
     newembed.add_field(name="Mana " + str(mana1) + " / " + str(maxmana1), value= manabar1, inline = True)
-
     newembed.add_field(name="Mana " + str(mana2) + " / " + str(maxmana2), value= manabar2, inline = True)
-
     newembed.add_field(name='\u200b', value= '\u200b', inline = True)
-
     newembed.add_field(name="- - - - - - - - - - - - - - - - - - - - - - - - - - - - -", value= "\u200b", inline = False)
-
     newembed.add_field(name=":crossed_swords: Attaque physique        :magic_wand: Attaque magique", value= "\u200b", inline = False)
-
     newembed.add_field(name=":dagger: Coup sournois             :broccoli: Sort de soin", value= "\u200b", inline = False)
-
     newembed.add_field(name="- - - - - - - - - - - - - - - - - - - - - - - - - - - - -", value= "\u200b", inline = False)
-
     newembed.add_field(name=battledesc, value= "\u200b", inline = False)
-
     newembed.set_footer(text=footer)
 
     return newembed
@@ -1271,16 +1258,14 @@ def createWeaponEmbed(userID, pageNumber):
     fields = game.retInventory(userID, pageNumber - 1)
 
     emojis = [":zap:", ":fire:", ":droplet:"]
-    i = 0
 
     if fields != None:
-        for f in fields:
-            embed.add_field(name=f, value= "Equippez l'arme en reagissant avec " + emojis[i], inline = False)
-            i += 1
+        for idx, f in enumerate(fields):
+            embed.add_field(name=f, value= "Equippez l'arme en reagissant avec " + emojis[idx], inline = False)
 
     fi = game.fullInventory(userID)
 
-    nbPages = int(1 + (- 1 + len(fi)) / 3)
+    nbPages = int(1 + (len(fi) - 1) / 3)
 
     ft = str("Page " + str(pageNumber) + " / " + str(nbPages))
 
@@ -1312,12 +1297,9 @@ async def leaderboard(ctx):
 
     lead = game.getBestPlayers()
 
-    i = 1
-
-    for u in lead:
+    for idx, u in enumerate(lead):
         duser = await bot.fetch_user(u[0])
-        embed.add_field(name=str(duser), value= str("#" + str(i) + " Level " + str(u[1])), inline = False)
-        i += 1
+        embed.add_field(name=str(duser), value= str("#" + str(idx) + " Level " + str(u[1])), inline = False)
 
     await ctx.send(embed=embed)
 
@@ -1428,8 +1410,7 @@ async def ban(ctx, *args):
             response = "ok bro"
         else:
             response = "t'es qui en fait"
-
-    except Exception as e:
+    except:
         response = "bah non du coup"
     finally:
         msg = await ctx.send(response)
@@ -1438,7 +1419,6 @@ def getPrestigeGain(user):
     lvl = user["stats"]["level"]
 
     return int(10 + (lvl - 50)**1.2)
-
 
 @bot.command(name='prestige')
 async def prestige(ctx):
@@ -1498,7 +1478,6 @@ def costs(user):
 
 @bot.command(name='pshop')
 async def prestigeshop(ctx):
-
     useri = ctx.message.author.id
     user = game.getUserData(useri)
 
@@ -1507,8 +1486,7 @@ async def prestigeshop(ctx):
     embed = discord.Embed(
         colour=discord.Colour.purple(),
         title=('Prestige Shop'),
-        description='Vous avez ' + \
-            str(user["ppoints"]) + ' points de prestige à dépenser.'
+        description='Vous avez ' + str(user["ppoints"]) + ' points de prestige à dépenser.'
     )
 
     pperks = user["pperks"]
@@ -1528,7 +1506,7 @@ async def prestigeshop(ctx):
                     value="Suivant : " + str(sBonus + 5) + " Cout : " + str(stCost), inline=False)
     if spLvl < MAX_SP_TIER:
         embed.add_field(name="Tier des spécialités déverouillées : " + str(spLvl), value="Suivant : " + \
-                        str(spLvl + 1) + " Cout : " + str(spCost) + " Max : " + str(MAX_SP_TIER), inline=False)
+            str(spLvl + 1) + " Cout : " + str(spCost) + " Max : " + str(MAX_SP_TIER), inline=False)
     embed.add_field(name='Pour dépenser vos points de prestiges, utilisez la commande `lefevre pbuy <item>`',
                     value="<item> : (sp | exp | stats)", inline=False)
 
@@ -1550,6 +1528,27 @@ async def pbuy(ctx, *args):
         msg = "Une erreur est survenue lors de l'achat. Avez vous bien fait `lefevre pbuy <item>` avec `<item> : (sp | exp | stats)` ?"
     finally:
         await ctx.send(msg)
+
+@bot.command(name='abusereset')
+async def abusereset(ctx, *args):
+    response = ""
+    try:
+        userid = ctx.message.author.id
+        if userid == 143350417093296128 or userid == 135321090699427840:
+            abuser = 0
+            try:
+                abuser = ctx.message.mentions[0]
+                abuserid = abuser.id
+                #On reset les stats
+                game.resetStats(abuserid)
+                game.setPrestige(abuserid, 200)
+                await ctx.send("Vous etes revenus a 0 !\nIl vous reste 200 points de prestige")
+            except:
+                await ctx.send("Syntaxe: lefevre abusereset @User")
+        else:
+            await ctx.send("Bonsoir non")
+    except:
+        await ctx.send("W00dy sait pas coder :(")
 
 
 @tasks.loop(seconds=3600)

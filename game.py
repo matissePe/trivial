@@ -13,18 +13,17 @@ def retDefaultUser(userID, statpoints, level, exp, wep, ppoint, pstat, pperk):
                     "spe" : 5,
                     "statpoints": statpoints,
                     "exp" : exp
-                    },
+                },
                 "weapon": wep,
-			     "inventaire": [
+			    "inventaire": [
                     {"id" : 0}
-			     ],
+			    ],
                  "pvebattles" : 0,
                  "sp" : "None",
                  "ppoints" : ppoint,
                  "pstats" : pstat,
                  "pperks" : pperk
                 }
-
 
 
 def write_json(data, filename='users.json'):
@@ -63,24 +62,25 @@ def getUserData(userID):
         # si user not found
 
         wep = {
-                    "id" : 0,
-    				"name" : "Mains",
-    				"atk" : 1,
-    				"def" : 1,
-    				"spa" : 0,
-    				"spd" : 0,
-    				"spe" : 2
-			     }
+            "id" : 0,
+    		"name" : "Mains",
+    		"atk" : 1,
+    		"def" : 1,
+    		"spa" : 0,
+    		"spd" : 0,
+    		"spe" : 2
+		}
 
         pstat = {
-                "hp"  : 0,
-                "atk" : 0,
-				"def" : 0,
-				"spa" : 0,
-				"spd" : 0,
-				"spe" : 0,
-                "exp" : 1
-                }
+            "hp"  : 0,
+            "atk" : 0,
+			"def" : 0,
+			"spa" : 0,
+            "spd" : 0,
+			"spe" : 0,
+            "exp" : 1
+        }
+        
         pperk = {
             "exp" : 0,
             "stats" : 0,
@@ -131,7 +131,6 @@ def increaseStat(userID, stat, points):
     return True
 
 
-
 def pickupRandom(userID):
     user = getUserData(userID)
 
@@ -158,19 +157,12 @@ def pickupRandom(userID):
 
 
 def changeWeapon(userID, weaponID):
-
     user = getUserData(userID)
-
     inventaire = user["inventaire"]
-
     ijsonWeapon = {"id" : weaponID}
-
     if ijsonWeapon in inventaire :
-
         oldWeapon = {"id" : user["weapon"]["id"]}
-
         inventaire.remove(ijsonWeapon)
-
         inventaire.append(oldWeapon)
 
     with open('items.json') as item_file:
@@ -180,7 +172,6 @@ def changeWeapon(userID, weaponID):
             if weapon['id'] == weaponID :
                 user["weapon"] = weapon
                 break
-
 
         updateUser(user)
 
@@ -193,10 +184,7 @@ def resetStats(userID):
     user = retDefaultUser(userID, totalstatpoints, user["stats"]["level"], user["stats"]["exp"], wep, user["ppoints"], user["pstats"], user["pperks"])
     user = updateFromPStats(user, True)
 
-
     updateUser(user)
-
-
 
 
 def giveExp(userID, amount):
@@ -271,7 +259,6 @@ def getEnnemyData(ennemy):
         for e in data :
             if int(e["id"]) == ennemy :
                 return e
-
 
 
 def randomEnnemy(user):
@@ -351,7 +338,6 @@ def handleWeaponChange(userID, page, index):
     return False
 
 
-
 def giveWeapon(userID, newW):
     user = getUserData(userID)
 
@@ -365,20 +351,16 @@ def giveWeapon(userID, newW):
     updateUser(user)
 
 
-
 def getBestPlayers():
     with open('users.json') as user_file:
         data = json.load(user_file)["users"]
         levels = []
         for user in data :
-            levels.append([user["id"], user["stats"]["level"], user["stats"]["exp"]])
-
+            levels.append([user["id"], 
+                           user["stats"]["level"],
+                           user["stats"]["exp"]])
         levels.sort(key = lambda lvl: (lvl[1], lvl[2]), reverse = True)
-
         return levels[:10]
-
-
-
 
 
 def removeFromInventory(userID, itemID):
@@ -391,8 +373,6 @@ def removeFromInventory(userID, itemID):
     inventaire.remove(w)
 
     updateUser(user)
-
-
 
 
 def sellWeapon(userID):
@@ -412,16 +392,12 @@ def sellWeapon(userID):
         return False, 0
 
 
-
-
-
 def getSP(spName):
     with open('sps.json') as sp_file:
         data = json.load(sp_file)["sps"]
         for s in data :
             if s["name"] == spName :
                 return s
-
 
 
 def chgSpec(userID, spname):
@@ -445,6 +421,18 @@ def givePrestige(userID, amount):
     updateUser(user)
     resetStats(userID)
 
+def setPrestige(userID, amount):
+    user = getUserData(userID)
+    user["ppoints"] = amount
+    user["pperks"]["sp"] = 0
+    user["pperks"]["exp"] = 1
+    user["pperks"]["stats"] = 0
+    user["pstats"]["hp"] = 0
+    user["pstats"]["atk"] = 0
+    user["pstats"]["def"] = 0
+    user["pstats"]["spa"] = 0
+    user["pstats"]["spd"] = 0
+    user["pstats"]["spe"] = 0
 
 def upPres(userID, item, costs):
     user = getUserData(userID)
@@ -483,7 +471,6 @@ def upPres(userID, item, costs):
     updateUser(user)
 
     return True
-
 
 
 def updateFromPStats(user, isReset):

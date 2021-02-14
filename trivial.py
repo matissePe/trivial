@@ -1,14 +1,14 @@
 # bot.py
 import os
 import random
-import trivial.pages as pages
+import pages
 import discord
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
 from datetime import datetime
 from discord.ext.commands import CommandNotFound
-import trivial.game as game
-from trivial.dmg import *
+import game
+from dmg import *
 import math
 from discord import Intents
 intents = Intents.default()

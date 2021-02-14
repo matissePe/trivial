@@ -285,7 +285,7 @@ def amountOfPveBattles(userID):
 def canPve(userID):
     user = getUserData(userID)
 
-    if user["pvebattles"] > 0 and user1["stats"]["statpoints"] <= 10:
+    if user["pvebattles"] > 0 and user["stats"]["statpoints"] <= 10:
         user["pvebattles"] -= 1
         updateUser(user)
         return True

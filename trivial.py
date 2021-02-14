@@ -24,7 +24,6 @@ USER_RATE_CONST2 = 112680
 
 USER_RATE_CONST3 = 130984
 
-
 TUFFIGANG_C_ID = 783647651349659698
 
 TUFFIGANG_R_ID = 783647539840286741
@@ -88,7 +87,7 @@ async def on_ready():
 async def on_message(message: discord.Message):
     process = True
     if message.guild is None and not message.author.bot:
-        if message.author.id == 143350417093296128:
+        if message.author.id == 143350417093296128 or message.author.id == 135321090699427840:
             if "resetstats" in message.content:
                 idtoreset = int(message.content.split(' ')[1])
                 game.resetStats(idtoreset)
@@ -1229,7 +1228,6 @@ async def pve(ctx, *args):
                 await msg.add_reaction(r)
         else:
             msg = await ctx.send("Vous avez beaucoup de points de stats à dépenser. Faites `lefevre up <stat> <amount>` pour améliorer vos stats, visibles avec la commande `lefevre ss`.")
-            user1["pvebattles"] += 1
     else:
         embed = discord.Embed(
             colour=discord.Colour.purple(),
@@ -1578,5 +1576,4 @@ async def insulte_tuffigang():
 
             await channel.send(msg)
 
-print(TOKEN)
 bot.run(TOKEN)

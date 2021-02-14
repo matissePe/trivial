@@ -126,11 +126,7 @@ async def on_message(message: discord.Message):
             response = "Debrouille-toi."
             chan = message.channel
             await chan.send(response)
-<<<<<<< HEAD
         elif (str(message.mentions[0].id) == str(EVAN_ID) or str(message.mentions[0].id) == str(GILDAS_ID))and message.reference is None :
-=======
-        elif str(message.mentions[0].id) == str(EVAN_ID) and message.reference is None:
->>>>>>> 31f9d9e11b0d1ceb243a56155a9f09a14af3afea
             response = "J'espere que tu le ping pour une bonne raison."
             chan = message.channel
             await chan.send(response)

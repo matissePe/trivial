@@ -668,10 +668,11 @@ async def on_reaction_add(reaction, user):
                                     )
 
                                     level1 = int(fighter1["stats"]["level"])
-                                    maxexp1 = calcExp(level1)
+                                    
 
                                     level2 = int(fighter2["stats"]["level"])
-                                    maxexp2 = calcExp(level2)
+                                    maxexp1 = calcExp(level1, level2)
+                                    maxexp2 = calcExp(level2, level1)
 
                                     if isPve:
                                         exptogain = fighter2["stats"]["exp"]

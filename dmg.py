@@ -1,4 +1,4 @@
-import trivial.game as game
+import game
 import random
 
 

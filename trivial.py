@@ -1578,4 +1578,5 @@ async def insulte_tuffigang():
 
             await channel.send(msg)
 
+print(TOKEN)
 bot.run(TOKEN)

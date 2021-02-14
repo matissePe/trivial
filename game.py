@@ -246,7 +246,6 @@ def getEnnemyIDFromName(ennemyName):
     with open('ennemies.json') as ennemy_file:
         data = json.load(ennemy_file)["ennemies"]
 
-
         for ennemy in data :
             if ennemy["name"] == ennemyName :
                 return ennemy["id"]
@@ -427,12 +426,9 @@ def setPrestige(userID, amount):
     user["pperks"]["sp"] = 0
     user["pperks"]["exp"] = 1
     user["pperks"]["stats"] = 0
-    user["pstats"]["hp"] = 0
-    user["pstats"]["atk"] = 0
-    user["pstats"]["def"] = 0
-    user["pstats"]["spa"] = 0
-    user["pstats"]["spd"] = 0
-    user["pstats"]["spe"] = 0
+    updateFromPStats(user, True)
+    user["stats"]["level"] = 0
+    updateUser(user)
 
 def upPres(userID, item, costs):
     user = getUserData(userID)

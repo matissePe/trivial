@@ -289,7 +289,9 @@ def canPve(userID):
         user["pvebattles"] -= 1
         updateUser(user)
         return True
-    else :
+    elif user["stats"]["statpoints"] >= 10:
+        return True
+    else:
         return False
 
 

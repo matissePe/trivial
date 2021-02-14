@@ -1563,13 +1563,8 @@ async def insulte_tuffigang():
     if tuffig != None:
         members = channel.members
         tuffimembers = []
-<<<<<<< HEAD
         for member in members :
             if tuffig in member.roles and member.status!=discord.Status.offline and not member.bot and member.id != 315199843238805504:
-=======
-        for member in members:
-            if tuffig in member.roles and member.status != discord.Status.offline and not member.bot:
->>>>>>> 31f9d9e11b0d1ceb243a56155a9f09a14af3afea
                 tuffimembers.append(member)
         if tuffimembers != []:
             chosen_user = random.choice(tuffimembers)

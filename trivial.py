@@ -1,14 +1,14 @@
 # bot.py
 import os
 import random
-import pages
+import trivial.pages as pages
 import discord
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
 from datetime import datetime
 from discord.ext.commands import CommandNotFound
-import game
-from dmg import *
+import trivial.game as game
+from trivial.dmg import *
 import math
 from discord import Intents
 intents = Intents.default()
@@ -204,7 +204,7 @@ async def on_reaction_add(reaction, user):
         emoji = 'right'
         weapon = True
     if (reaction.count != 1 and emoji != '' and not user.bot):
-        if (reaction.me):
+        if reaction.me:
             if helpEmoji:
                 message = reaction.message
                 embed = message.embeds[0]
@@ -498,24 +498,17 @@ async def on_reaction_add(reaction, user):
                                         await reaction.message.edit(embed=newembed)
 
                                     else:
-
                                         manacost = 0
-
                                         # Choix de move en fonction de l'IA de l'ennemi
-
                                         ia = fighter2["IA"]
-
                                         healing = False
-
                                         vmpHeal = False
-
                                         # IA lvl 1 : Coup sournois only
                                         if ia == 1:
                                             damage = dmgCalc(
                                                 fighter2, fighter1, 2, hps[2])
                                             atkdesc = "un coup sournois"
                                             atktype = 2
-
                                         # IA lvl 2 : Attaque only, move le plus puissant
                                         elif ia >= 2:
                                             d1 = dmgCalc(
@@ -675,26 +668,23 @@ async def on_reaction_add(reaction, user):
                                     )
 
                                     level1 = int(fighter1["stats"]["level"])
-                                    maxexp1 = (level1 ** 3 + 1) - \
-                                        ((level1 - 1) ** 3 + 1)
+                                    maxexp1 = calcExp(level1)
 
                                     level2 = int(fighter2["stats"]["level"])
-                                    maxexp2 = (level2 ** 3 + 1) - \
-                                        ((level2 - 1) ** 3 + 1)
+                                    maxexp2 = calcExp(level2)
 
                                     if isPve:
                                         exptogain = fighter2["stats"]["exp"]
                                     else:
-                                        exptogain = int(
-                                            ((level2 + 6)/(level1 + 1)) * .1 * maxexp2 + 20)
+                                        exptogain = int(((level2 + 6)/(level1 + 1)) * .1 * maxexp2 + 20)
 
-                                    for r in user.roles:
-                                        if r.id == TUFFIGANG_R_ID:
-                                            # confused stonks
-                                            exptogain = int(exptogain * 1)
+                                    #Boucle inutile, je laisse en commentaire comme relique
+                                    #for r in user.roles:
+                                    #    if r.id == TUFFIGANG_R_ID:
+                                    #        # confused stonks
+                                    #        exptogain = int(exptogain * 1)
 
-                                    exptogain = int(
-                                        exptogain * fighter1["pstats"]["exp"])
+                                    exptogain = int(exptogain * fighter1["pstats"]["exp"])
 
                                     game.giveExp(firstuser, exptogain)
 
@@ -754,6 +744,18 @@ async def on_reaction_add(reaction, user):
                 else:
                     await reaction.remove(user)
 
+def calcExp(level: int, opponent: int):
+    maxexp1 = (level ** 3 + 1) - ((level - 1) ** 3 + 1)
+    maxexp2 = (opponent ** 3 + 1) - ((opponent - 1) ** 3 + 1)
+
+    difftropelevee = 0.8 * max(level, opponent) - min(level, opponent) - 5
+
+    exptogain = int(((opponent + 6)/(level + 1)) * .1 * maxexp2 + 20)
+    
+    if difftropelevee > 1:
+        exptogain /= difftropelevee
+        exptogain = max(20, int(exptogain)) # au moins 20 d'xp
+    return exptogain
 
 def heal(hp, maxhp, spa):
     return min(maxhp, int(hp + 5 + 2/10 * maxhp + spa))
@@ -1100,8 +1102,7 @@ async def duel(ctx, *args):
             level2 = int(user2["stats"]["level"])
             maxexp2 = (level2 ** 3 + 1) - ((level2 - 1) ** 3 + 1)
 
-            difftropelevee = 0.8 * \
-                max(level1, level2) - min(level1, level2) - 5
+            difftropelevee = 0.8 * max(level1, level2) - min(level1, level2) - 5
 
             exptogain1 = int(((level2 + 6)/(level1 + 1)) * .1 * maxexp2 + 20)
             exptogain2 = int(((level1 + 6)/(level2 + 1)) * .1 * maxexp1 + 20)

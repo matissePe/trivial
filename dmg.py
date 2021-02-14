@@ -134,7 +134,6 @@ class Dmg:
                 elif sp1["name"] == "Assassin++":
                     defstat = int(max(1, 0.6 * defstat))
 
-            calcdmg = mult * ((((atklevel)/5 + 2) * 2 *
-                               (atkstat + 2) + atklevel * 2) / (defstat + 2))
+            calcdmg = mult * ((((atklevel)/5 + 2) * 2 * (atkstat + 2) + atklevel * 2) / (defstat + 2))
             self.dmg = int(0.65 * random.randint(60, 100) * calcdmg / 100)
         self.dmg = max(1, self.dmg)

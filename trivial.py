@@ -668,9 +668,8 @@ async def on_reaction_add(reaction, user):
                                     )
 
                                     level1 = int(fighter1["stats"]["level"])
-                                    
-
                                     level2 = int(fighter2["stats"]["level"])
+                                    
                                     maxexp1 = calcExp(level1, level2)
                                     maxexp2 = calcExp(level2, level1)
 
@@ -1098,22 +1097,9 @@ async def duel(ctx, *args):
             )
 
             level1 = int(user1["stats"]["level"])
-            maxexp1 = (level1 ** 3 + 1) - ((level1 - 1) ** 3 + 1)
-
             level2 = int(user2["stats"]["level"])
-            maxexp2 = (level2 ** 3 + 1) - ((level2 - 1) ** 3 + 1)
-
-            difftropelevee = 0.8 * max(level1, level2) - min(level1, level2) - 5
-
-            exptogain1 = int(((level2 + 6)/(level1 + 1)) * .1 * maxexp2 + 20)
-            exptogain2 = int(((level1 + 6)/(level2 + 1)) * .1 * maxexp1 + 20)
-
-            if difftropelevee > 1:
-                exptogain1 /= difftropelevee
-                exptogain2 /= difftropelevee
-
-                exptogain1 = max(20, int(exptogain1))
-                exptogain2 = max(20, int(exptogain2))
+            exptogain1 = calcExp(level1, level2)
+            exptogain2 = calcExp(level2, level1)
 
             newembed.add_field(name=(ctx.message.author.name + " est niveau " + str(level1) + "."), value = "Il pourrait gagner " + str(exptogain1) + " exp!", inline = False)
             newembed.add_field(name=(mentionned_user.name + " est niveau " + str(level2) + "."), value =  "Il pourrait gagner " + str(exptogain2) + " exp!", inline = False)

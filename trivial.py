@@ -125,7 +125,7 @@ async def on_message(message: discord.Message):
             response = "Debrouille-toi."
             chan = message.channel
             await chan.send(response)
-        elif str(message.mentions[0].id) == str(EVAN_ID) or str(message.mentions[0].id) == str(GILDAS_ID)) and message.reference is None:
+        elif str(message.mentions[0].id) == str(EVAN_ID) or str(message.mentions[0].id) == str(GILDAS_ID) and message.reference is None:
             response = "J'espere que tu le ping pour une bonne raison."
             chan = message.channel
             await chan.send(response)
@@ -1266,7 +1266,7 @@ def createWeaponEmbed(userID, pageNumber):
 
     if fields != None:
         for idx, f in enumerate(fields):
-            embed.add_field(name=f, value= "Equippez l'arme en reagissant avec " + emojis[idx], inline = False)
+            embed.add_field(name=f, value= "Equippez l'arme en reagissant avec " + emojis[idx+1], inline = False)
 
     fi = game.fullInventory(userID)
 
@@ -1304,7 +1304,7 @@ async def leaderboard(ctx):
 
     for idx, u in enumerate(lead):
         duser = await bot.fetch_user(u[0])
-        embed.add_field(name=str(duser), value= str("#" + str(idx) + " Level " + str(u[1])), inline = False)
+        embed.add_field(name=str(duser), value= str("#" + str(idx+1) + " Level " + str(u[1])), inline = False)
 
     await ctx.send(embed=embed)
 
@@ -1554,8 +1554,6 @@ async def abusereset(ctx, *args):
             await ctx.send("Bonsoir non")
     except:
         await ctx.send("W00dy sait pas coder :(")
-
-
 
 
 @bot.command('bde')

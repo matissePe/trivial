@@ -183,7 +183,6 @@ def resetStats(userID):
     totalstatpoints = user["stats"]["level"] * 5
     user = retDefaultUser(userID, totalstatpoints, user["stats"]["level"], user["stats"]["exp"], wep, user["ppoints"], user["pstats"], user["pperks"])
     user = updateFromPStats(user, True)
-
     updateUser(user)
 
 
@@ -428,8 +427,14 @@ def setPrestige(userID, amount):
     user["pperks"]["sp"] = 0
     user["pperks"]["exp"] = 1
     user["pperks"]["stats"] = 0
-    updateFromPStats(user, True)
+    updateUser(user)
     user["stats"]["level"] = 0
+    user["pstats"]["hp"] = 10
+    user["pstats"]["atk"] = 5
+    user["pstats"]["def"] = 5
+    user["pstats"]["spa"] = 5
+    user["pstats"]["spd"] = 5
+    user["pstats"]["spe"] = 5
     updateUser(user)
 
 def upPres(userID, item, costs):

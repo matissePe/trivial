@@ -132,9 +132,12 @@ async def on_message(message: discord.Message):
         elif str(message.mentions[0].id) == str(MAIWEN_ID) and message.reference is None:
             response = "ntm"
             await message.channel.send(message.author, response)
-        elif ':ok:' in message.content or ':cool:' in message.content and '750451627403640974' in [y.id for y in message.author.id]:
-                await message.delete()
-
+        else:
+            try:
+                if ':ok:' in message.content or ':cool:' in message.content and '750451627403640974' in [y.role.id for y in message.author.roles]:
+                    await message.delete()
+            except:
+                pass
 
     if (process and not message.author.bot):
         if message.channel.id != TUFFIGANG_C_ID:

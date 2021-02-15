@@ -10,8 +10,6 @@ def generate_embed(page_number, embed):
 def run(f, embed):
     f(embed)
 
-
-
 def page_1(embed):
     embed.add_field(name='lefevre ant', value="ANT c'est super!", inline = False)
     embed.add_field(name='lefevre noteprojet [@User]', value="Determine votre note au projet de programmation, ou celle de l'utilisateur mentionné", inline = False)
@@ -21,8 +19,6 @@ def page_1(embed):
     embed.add_field(name='lefevre javadoc', value="C'est pas mon travail de vous faire apprendre", inline = False)
     embed.add_field(name='lefevre question', value='Déjà répondu à cette question.', inline = False)
     embed.add_field(name='lefevre random', value='( ͡° ͜ʖ ͡°)', inline = False)
-
-
 
 
 def page_2(embed):

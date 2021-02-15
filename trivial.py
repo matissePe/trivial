@@ -28,6 +28,8 @@ TUFFIGANG_C_ID = 783647651349659698
 
 TUFFIGANG_R_ID = 783647539840286741
 
+MAIWEN_ID = 688075252281901084
+
 EVAN_ID = 282264924472737792
 
 MINDELAY = 60
@@ -112,7 +114,6 @@ async def on_message(message: discord.Message):
             elif "givepve" in message.content:
                 uid = int(message.content.split(' ')[1])
                 game.incPveBattles(uid)
-
         else:
             response = "Hop hop hop, on n'envoie pas de messages privés. Si tu as une question, il faut la poser sur le forum!"
             chan = message.channel
@@ -124,8 +125,12 @@ async def on_message(message: discord.Message):
             response = "Debrouille-toi."
             chan = message.channel
             await chan.send(response)
-        elif str(message.mentions[0].id) == str(EVAN_ID) and message.reference is None:
+        elif str(message.mentions[0].id) == str(EVAN_ID) or str(message.mentions[0].id) == str(GILDAS_ID)) and message.reference is None:
             response = "J'espere que tu le ping pour une bonne raison."
+            chan = message.channel
+            await chan.send(response)
+        elif str(message.mentions[0].id) == str(MAIWEN_ID) and message.reference is None:
+            response = "ntm"
             chan = message.channel
             await chan.send(response)
 
@@ -1547,6 +1552,13 @@ async def abusereset(ctx, *args):
             await ctx.send("Bonsoir non")
     except:
         await ctx.send("W00dy sait pas coder :(")
+
+
+
+
+@bot.command('bde')
+async def bde(ctx):
+    await ctx.send('Votez BrHackage !')
 
 
 @tasks.loop(seconds=3600)

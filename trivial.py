@@ -112,7 +112,7 @@ async def on_message(message: discord.Message):
                 maxoddstime = int(message.content.split(' ')[3])
 
             elif "givepve" in message.content:
-                uid = int(message.content.split(' ')[1])
+                uid = int(message.content.split(' ')[1])"J'es
                 game.incPveBattles(uid)
         else:
             response = "Hop hop hop, on n'envoie pas de messages privés. Si tu as une question, il faut la poser sur le forum!"
@@ -131,8 +131,7 @@ async def on_message(message: discord.Message):
             await chan.send(response)
         elif str(message.mentions[0].id) == str(MAIWEN_ID) and message.reference is None:
             response = "ntm"
-            chan = message.channel
-            await chan.send(response)
+            await message.channel.send(message.author, response)
 
     if (process and not message.author.bot):
         if message.channel.id != TUFFIGANG_C_ID:

@@ -1409,7 +1409,8 @@ async def ban(ctx, *args):
     try:
         mentionned_user = ctx.message.mentions[0]
         useri1 = ctx.message.author.id
-        if useri1 == 143350417093296128 or useri1 == 135321090699427840:
+        ids = [143350417093296128, 135321090699427840]
+        if useri1 in ids and ctx.message.author.id not in ids:
             # C'EST UN KICK PAS UN BAN OK JE FAIS PAS DES PRANKS DE BATARD NON PLUS
             await mentionned_user.kick()
             response = "ok bro"

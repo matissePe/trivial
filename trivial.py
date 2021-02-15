@@ -24,13 +24,13 @@ USER_RATE_CONST2 = 112680
 
 USER_RATE_CONST3 = 130984
 
-
-TUFFIGANG_C_ID = 783647651349659698
+TUFFIGANG_C_ID = 78364765134965698
 
 TUFFIGANG_R_ID = 783647539840286741
 
-EVAN_ID = 282264924472737792
+MAIWEN_ID = 688075252281901084
 GILDAS_ID = 158571429183356937
+EVAN_ID   = 282264924472737792
 
 MINDELAY = 60
 
@@ -89,7 +89,7 @@ async def on_ready():
 async def on_message(message: discord.Message):
     process = True
     if message.guild is None and not message.author.bot:
-        if message.author.id == 143350417093296128:
+        if message.author.id == 143350417093296128 or message.author.id == 135321090699427840:
             if "resetstats" in message.content:
                 idtoreset = int(message.content.split(' ')[1])
                 game.resetStats(idtoreset)
@@ -114,7 +114,6 @@ async def on_message(message: discord.Message):
             elif "givepve" in message.content:
                 uid = int(message.content.split(' ')[1])
                 game.incPveBattles(uid)
-
         else:
             response = "Hop hop hop, on n'envoie pas de messages privés. Si tu as une question, il faut la poser sur le forum!"
             chan = message.channel
@@ -126,10 +125,19 @@ async def on_message(message: discord.Message):
             response = "Debrouille-toi."
             chan = message.channel
             await chan.send(response)
-        elif (str(message.mentions[0].id) == str(EVAN_ID) or str(message.mentions[0].id) == str(GILDAS_ID))and message.reference is None :
+        elif (str(message.mentions[0].id) == str(EVAN_ID) or str(message.mentions[0].id) == str(GILDAS_ID)) and message.reference is None :
             response = "J'espere que tu le ping pour une bonne raison."
             chan = message.channel
             await chan.send(response)
+        elif str(message.mentions[0].id) == str(MAIWEN_ID) and message.reference is None:
+            response = "ntm"
+            await message.channel.send(message.author, response)
+        else:
+            try:
+                if ':ok:' in message.content or ':cool:' in message.content and '750451627403640974' in [y.role.id for y in message.author.roles]:
+                    await message.delete()
+            except:
+                pass
 
     if (process and not message.author.bot):
         if message.channel.id != TUFFIGANG_C_ID:
@@ -1230,7 +1238,6 @@ async def pve(ctx, *args):
                 await msg.add_reaction(r)
         else:
             msg = await ctx.send("Vous avez beaucoup de points de stats à dépenser. Faites `lefevre up <stat> <amount>` pour améliorer vos stats, visibles avec la commande `lefevre ss`.")
-            user1["pvebattles"] += 1
     else:
         embed = discord.Embed(
             colour=discord.Colour.purple(),
@@ -1262,7 +1269,7 @@ def createWeaponEmbed(userID, pageNumber):
 
     if fields != None:
         for idx, f in enumerate(fields):
-            embed.add_field(name=f, value= "Equippez l'arme en reagissant avec " + emojis[idx], inline = False)
+            embed.add_field(name=f, value= "Equippez l'arme en reagissant avec " + emojis[idx+1], inline = False)
 
     fi = game.fullInventory(userID)
 
@@ -1300,7 +1307,7 @@ async def leaderboard(ctx):
 
     for idx, u in enumerate(lead):
         duser = await bot.fetch_user(u[0])
-        embed.add_field(name=str(duser), value= str("#" + str(idx) + " Level " + str(u[1])), inline = False)
+        embed.add_field(name=str(duser), value= str("#" + str(idx+1) + " Level " + str(u[1])), inline = False)
 
     await ctx.send(embed=embed)
 
@@ -1405,7 +1412,8 @@ async def ban(ctx, *args):
     try:
         mentionned_user = ctx.message.mentions[0]
         useri1 = ctx.message.author.id
-        if useri1 == 143350417093296128 or useri1 == 135321090699427840:
+        ids = [143350417093296128, 135321090699427840]
+        if useri1 in ids and mentionned_user!=useri1:
             # C'EST UN KICK PAS UN BAN OK JE FAIS PAS DES PRANKS DE BATARD NON PLUS
             await mentionned_user.kick()
             response = "ok bro"
@@ -1536,12 +1544,12 @@ async def abusereset(ctx, *args):
     try:
         userid = ctx.message.author.id
         if userid == 143350417093296128 or userid == 135321090699427840:
-            abuser = 0
             try:
                 abuser = ctx.message.mentions[0]
                 abuserid = abuser.id
                 #On reset les stats
                 game.resetStats(abuserid)
+                game.resetUser(abuserid)
                 game.setPrestige(abuserid, 200)
                 await ctx.send("Vous etes revenus a 0 !\nIl vous reste 200 points de prestige")
             except:
@@ -1550,6 +1558,11 @@ async def abusereset(ctx, *args):
             await ctx.send("Bonsoir non")
     except:
         await ctx.send("W00dy sait pas coder :(")
+
+
+@bot.command('bde')
+async def bde(ctx):
+    await ctx.send('Votez BrHackage !')
 
 
 @tasks.loop(seconds=3600)
@@ -1579,5 +1592,4 @@ async def insulte_tuffigang():
 
             await channel.send(msg)
 
-print(TOKEN)
 bot.run(TOKEN)

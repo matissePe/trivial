@@ -125,7 +125,7 @@ async def on_message(message: discord.Message):
             response = "Debrouille-toi."
             chan = message.channel
             await chan.send(response)
-        elif str(message.mentions[0].id) == str(EVAN_ID) or str(message.mentions[0].id) == str(GILDAS_ID) and message.reference is None:
+        elif (str(message.mentions[0].id) == str(EVAN_ID) or str(message.mentions[0].id) == str(GILDAS_ID)) and message.reference is None :
             response = "J'espere que tu le ping pour une bonne raison."
             chan = message.channel
             await chan.send(response)
@@ -1567,8 +1567,8 @@ async def insulte_tuffigang():
     if tuffig != None:
         members = channel.members
         tuffimembers = []
-        for member in members:
-            if tuffig in member.roles and member.status != discord.Status.offline and not member.bot:
+        for member in members :
+            if tuffig in member.roles and member.status!=discord.Status.offline and not member.bot and member.id != 315199843238805504:
                 tuffimembers.append(member)
         if tuffimembers != []:
             chosen_user = random.choice(tuffimembers)

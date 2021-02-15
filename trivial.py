@@ -1540,12 +1540,11 @@ async def abusereset(ctx, *args):
     try:
         userid = ctx.message.author.id
         if userid == 143350417093296128 or userid == 135321090699427840:
-            abuser = 0
             try:
                 abuser = ctx.message.mentions[0]
                 abuserid = abuser.id
                 #On reset les stats
-                game.resetStats(abuserid)
+                game.resetUser(abuserid)
                 game.setPrestige(abuserid, 200)
                 await ctx.send("Vous etes revenus a 0 !\nIl vous reste 200 points de prestige")
             except:

@@ -26,6 +26,48 @@ def retDefaultUser(userID, statpoints, level, exp, wep, ppoint, pstat, pperk):
                 }
 
 
+def resetUser(userID):
+    defaultData = {
+        "id": userID,
+        "stats": {
+            "level": 0,
+            "hp": 5,
+            "atk": 1,
+            "def": 1,
+            "spa": 1,
+            "spd": 1,
+            "spe": 1,
+            "statpoints": 10,
+            "exp": 0
+        },
+        "weapon": {
+            "id": 0,
+            "name": "Mains",
+            "atk": 1,
+            "def": 1,
+            "spa": 0,
+            "spd": 0,
+            "spe": 2
+        },
+        "inventaire": [
+            {"id" : 0}
+	    ],
+        "pvebattles": 0
+    }
+    
+    with open('users.json') as json_file:
+        data = json.load(json_file)
+        users = data["users"]
+        
+        for iuser in users:
+            if userID == iuser['id']:
+                users.remove(iuser)
+                users.append(defaultData)
+                break
+        write_json(data)
+    
+    
+
 def write_json(data, filename='users.json'):
     with open(filename,'w') as f:
         json.dump(data, f, indent=4)
@@ -424,17 +466,6 @@ def givePrestige(userID, amount):
 def setPrestige(userID, amount):
     user = getUserData(userID)
     user["ppoints"] = amount
-    user["pperks"]["sp"] = 0
-    user["pperks"]["exp"] = 1
-    user["pperks"]["stats"] = 0
-    updateUser(user)
-    user["stats"]["level"] = 0
-    user["pstats"]["hp"] = 10
-    user["pstats"]["atk"] = 5
-    user["pstats"]["def"] = 5
-    user["pstats"]["spa"] = 5
-    user["pstats"]["spd"] = 5
-    user["pstats"]["spe"] = 5
     updateUser(user)
 
 def upPres(userID, item, costs):

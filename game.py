@@ -1,7 +1,7 @@
 import json
 import random
 from ennemies import *
-
+import xp
 
 def retDefaultUser(user_id, statpoints, level, exp, wep, ppoint, pstat, pperk):
     default_user = {
@@ -231,33 +231,6 @@ def resetStats(user_id):
     updateUser(user)
 
 
-def giveExp(user_id, amount):
-    user = getUserData(user_id)
-    level = user["stats"]["level"]
-    exp = user["stats"]["exp"]
-
-    while amount > 0:
-        maxexp = (level ** 3 + 1) - ((level - 1) ** 3 + 1)
-
-        if amount >= maxexp - exp:
-            level += 1
-            amount -= (maxexp - exp)
-            exp = 0
-            user["stats"]["statpoints"] += 5
-            if level == 70 and user["sp"] is not None and user["pperks"]["sp"] > 0:
-                user["sp"] += "+"
-            elif level == 120 and user["sp"] is not None and user["pperks"]["sp"] > 1:
-                user["sp"] += "+"
-        else:
-            exp += amount
-            amount = 0
-
-    user["stats"]["level"] = level
-    user["stats"]["exp"] = exp
-
-    updateUser(user)
-
-
 def randomEnnemy(user):
     level = user["stats"]["level"]
     rd = random.randint(0, 1000)
@@ -368,7 +341,9 @@ def removeFromInventory(user_id, itemID):
 
     inventaire = user["inventaire"]
 
-    w = {"id": itemID}
+    w = {
+        "id": itemID
+    }
 
     inventaire.remove(w)
 
@@ -386,7 +361,7 @@ def sellWeapon(user_id):
         else:
             changeWeapon(user_id, 0)
             removeFromInventory(user_id, weaponId)
-            giveExp(user_id, weaponExp)
+            xp.giveExp(user_id, weaponExp)
             return True, weaponExp
     except:
         return False, 0

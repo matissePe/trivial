@@ -11,10 +11,10 @@ from discord.ext.commands import CommandNotFound
 from dotenv import load_dotenv
 
 from ennemies import *
-from embed import createWeaponEmbed
+from embed import createWeaponEmbed, createEmbed
 import game
 import pages
-import xp
+from xp import getPrestigeGain, calcExp, giveExp
 from dmg import *
 
 intents = Intents.default()
@@ -34,9 +34,10 @@ TUFFIGANG_C_ID = 783647651349659698
 
 TUFFIGANG_R_ID = 783647539840286741
 
-MAIWEN_ID = 688075252281901084
-GILDAS_ID = 158571429183356937
-EVAN_ID   = 282264924472737792
+MAIWEN_ID  = 688075252281901084
+GILDAS_ID  = 158571429183356937
+EVAN_ID    = 282264924472737792
+ANTOINE_ID = 319444688694280192
 
 MINDELAY = 60
 
@@ -44,13 +45,10 @@ MAXDELAY = 90
 
 maxoddstime = 600
 
-
 MAX_SP_TIER = 2
-
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
-
 BOT_ID = int(os.getenv('BOT_ID'))
 
 
@@ -102,7 +100,7 @@ async def on_message(message: discord.Message):
             elif "giveexp" in message.content:
                 uid = int(message.content.split(' ')[1])
                 amount = int(message.content.split(' ')[2])
-                game.giveExp(uid, amount)
+                giveExp(uid, amount)
 
             elif "giveweapon" in message.content:
                 uid = int(message.content.split(' ')[1])
@@ -135,9 +133,9 @@ async def on_message(message: discord.Message):
             response = "J'espere que tu le ping pour une bonne raison."
             chan = message.channel
             await chan.send(response)
-        elif str(message.mentions[0].id) == str(319444688694280192) and message.author.id == 135321090699427840 :
+        elif str(message.mentions[0].id) == str(ANTOINE_ID) and message.author.id == 135321090699427840 :
             message.author.kick()
-        elif str(message.mentions[0].id) == str(MAIWEN_ID) and message.reference is None:
+        elif str(message.mentions[0].id) == str(MAIWEN_ID) and '750451627403640974' in [y.id for y in message.author.roles]:
             message.delete()
             response = "ntm"
             await message.channel.send(message.author, response)
@@ -154,13 +152,13 @@ async def on_message(message: discord.Message):
                 g, p = canGain(message.author.id, message.id, message.content)
                 if g:
                     if p == 100:
-                        game.giveExp(message.author.id,
+                        giveExp(message.author.id,
                                      random.randint(60, 105))
                         game.pickupRandom(message.author.id)
 
                     else:
 
-                        game.giveExp(message.author.id,
+                        giveExp(message.author.id,
                                      random.randint(30, 55))
 
                     if random.randint(1, 100) <= p and game.amountOfPveBattles(message.author.id) < 5:
@@ -702,7 +700,7 @@ async def on_reaction_add(reaction, user):
 
                                     exptogain = int(exptogain * fighter1["pstats"]["exp"])
 
-                                    game.giveExp(firstuser, exptogain)
+                                    giveExp(firstuser, exptogain)
 
                                     newembed.add_field(name="Il gagne " + str(exptogain) + " points d'experience.", value= "\u200b", inline = False)
 
@@ -760,18 +758,6 @@ async def on_reaction_add(reaction, user):
                 else:
                     await reaction.remove(user)
 
-def calcExp(level: int, opponent: int):
-    maxexp1 = (level ** 3 + 1) - ((level - 1) ** 3 + 1)
-    maxexp2 = (opponent ** 3 + 1) - ((opponent - 1) ** 3 + 1)
-
-    difftropelevee = 0.8 * max(level, opponent) - min(level, opponent) - 5
-
-    exptogain = int(((opponent + 6)/(level + 1)) * .1 * maxexp2 + 20)
-    
-    if difftropelevee > 1:
-        exptogain /= difftropelevee
-        exptogain = max(20, int(exptogain)) # au moins 20 d'xp
-    return exptogain
 
 def heal(hp, maxhp, spa):
     return min(maxhp, int(hp + 5 + 2/10 * maxhp + spa))
@@ -929,7 +915,6 @@ async def noteprojet(ctx):
                           str(nbpages3) + \
                               " pages, il mérite donc la note de " + str(note3)
                       )
-
             await ctx.send(msg)
     except:
         response = 'Il y a eu un problème. Utilisez lefevre noteprojet ou lefevre noteprojet <@User>'
@@ -1147,43 +1132,6 @@ def getMana(manaembed1, manaembed2):
 
 def dmgCalc(attacker, defender, w, hpAtk):
     return Dmg(attacker, defender, w, hpAtk)
-
-
-def createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, maxhp2, mana1, mana2, maxmana1, maxmana2, battledesc, footer, isPve, p1Psn, p2Psn):
-    if isPve:
-        mydesc = str("<@!" + firstturn +
-                     ">, choisis une attaque! " + secondturn + " se défend.")
-    else:
-        mydesc = str("<@!" + firstturn +
-                     ">, choisis une attaque! <@!" + secondturn + "> se défend.")
-
-    newembed = discord.Embed(
-        colour=discord.Colour.purple(),
-        title='Duel',
-        description=mydesc
-    )
-
-    hpbar1 = "█" * int(10 * hp1/maxhp1) + "░" * (10 - int(10 * hp1/maxhp1))
-    hpbar2 = "█" * int(10 * hp2/maxhp2) + "░" * (10 - int(10 * hp2/maxhp2))
-
-    manabar1 = "█" * int(10 * mana1/10) + "░" * (10 - int(10 * mana1/maxmana1))
-    manabar2 = "█" * int(10 * mana2/10) + "░" * (10 - int(10 * mana2/maxmana2))
-
-    newembed.add_field(name=names, value= "Lvl " + lvl1 + " VS Lvl " + lvl2, inline = False)
-    newembed.add_field(name="HP[" + str(p1Psn) + "] " + str(hp1) + " / " + str(maxhp1), value= hpbar1, inline = True)
-    newembed.add_field(name="HP[" + str(p2Psn) + "] " + str(hp2) + " / " + str(maxhp2), value= hpbar2, inline = True)
-    newembed.add_field(name='\u200b', value = '\u200b', inline = True)
-    newembed.add_field(name="Mana " + str(mana1) + " / " + str(maxmana1), value= manabar1, inline = True)
-    newembed.add_field(name="Mana " + str(mana2) + " / " + str(maxmana2), value= manabar2, inline = True)
-    newembed.add_field(name='\u200b', value= '\u200b', inline = True)
-    newembed.add_field(name="- - - - - - - - - - - - - - - - - - - - - - - - - - - - -", value= "\u200b", inline = False)
-    newembed.add_field(name=":crossed_swords: Attaque physique        :magic_wand: Attaque magique", value= "\u200b", inline = False)
-    newembed.add_field(name=":dagger: Coup sournois             :broccoli: Sort de soin", value= "\u200b", inline = False)
-    newembed.add_field(name="- - - - - - - - - - - - - - - - - - - - - - - - - - - - -", value= "\u200b", inline = False)
-    newembed.add_field(name=battledesc, value= "\u200b", inline = False)
-    newembed.set_footer(text=footer)
-
-    return newembed
 
 
 @bot.command(name='pve')
@@ -1441,11 +1389,6 @@ async def ban(ctx, *args):
     finally:
         msg = await ctx.send(response)
 
-def getPrestigeGain(user):
-    lvl = user["stats"]["level"]
-
-    return int(10 + (lvl - 50)**1.2)
-
 @bot.command(name='prestige')
 async def prestige(ctx):
     useri = ctx.message.author.id
@@ -1554,6 +1497,7 @@ async def pbuy(ctx, *args):
         msg = "Une erreur est survenue lors de l'achat. Avez vous bien fait `lefevre pbuy <item>` avec `<item> : (sp | exp | stats)` ?"
     finally:
         await ctx.send(msg)
+
 
 @bot.command(name='abusereset')
 async def abusereset(ctx, *args):

@@ -1,16 +1,22 @@
 # bot.py
+import math
 import os
 import random
-import pages
-import discord
-from discord.ext import commands, tasks
-from dotenv import load_dotenv
 from datetime import datetime
-from discord.ext.commands import CommandNotFound
-import game
-from dmg import *
-import math
+
+import discord
 from discord import Intents
+from discord.ext import commands, tasks
+from discord.ext.commands import CommandNotFound
+from dotenv import load_dotenv
+
+from ennemies import *
+from embed import createWeaponEmbed
+import game
+import pages
+import xp
+from dmg import *
+
 intents = Intents.default()
 intents.members = True
 intents.presences = True
@@ -351,8 +357,7 @@ async def on_reaction_add(reaction, user):
 
                         isPve = footertxt == "PVE"
 
-                        firstuser = desc.split(' ')[0].split('!')[
-                            1].split('>')[0]
+                        firstuser = desc.split(' ')[0].split('!')[1].split('>')[0]
 
                         if not isPve:
                             seconduser = desc.split(' ')[4].split('!')[
@@ -366,8 +371,7 @@ async def on_reaction_add(reaction, user):
                         else:
                             seconduser = desc.split(' ')[4]
 
-                            fighter2 = game.getEnnemyData(
-                                game.getEnnemyIDFromName(seconduser))
+                            fighter2 = getEnnemyData(getEnnemyIDFromName(seconduser))
 
                         firstturn = str(firstuser)
                         secondturn = str(seconduser)
@@ -1324,7 +1328,7 @@ async def resetstats(ctx):
 
 @bot.command(name='secret')
 async def secret(ctx):
-    msg = str("Cette commande ne sera disponible qu'à partir du 29 Janvier.")
+    msg = str("Cette commande ne sera disponible qu'à partir du 29 Janvier.") # On est le 17 février là quand meme
     await ctx.send(msg)
 
 
@@ -1344,7 +1348,9 @@ splist1 = ['Assassin', 'Alchimiste', 'Battlemage',
 
 
 def makeSPEmbed(sp, embed):
-    embed.add_field(name="Spécialité : " + sp["name"], value= "- - - - - - - - - -", inline = False)
+    embed.add_field(name="Spécialité : " + sp["name"], 
+                    value= "- - - - - - - - - -", 
+                    inline = False)
 
     spstats = sp["stats"]
     spdesc = sp["desc"]
@@ -1354,14 +1360,22 @@ def makeSPEmbed(sp, embed):
     spa = spstats["spa"]
     spd = spstats["spd"]
     spe = spstats["spe"]
+    
     embed.add_field(name=('HP ' + str(hp)),
-                    value=("Attaque " + str(atk)), inline=False)
+                    value=("Attaque " + str(atk)), 
+                    inline=False)
     embed.add_field(name='Defense ' + str(de),
-                    value="Att. Spe " + str(spa), inline=False)
+                    value="Att. Spe " + str(spa), 
+                    inline=False)
     embed.add_field(name='Def. Spe ' + str(spd),
-                    value="Vitesse " + str(spe), inline=False)
-    embed.add_field(name="- - - - - - - - - -", value= "\u200b", inline = False)
-    embed.add_field(name=spdesc, value= "\u200b", inline = False)
+                    value="Vitesse " + str(spe), 
+                    inline=False)
+    embed.add_field(name="- - - - - - - - - -", 
+                    value= "\u200b", 
+                    inline = False)
+    embed.add_field(name=spdesc, 
+                    value= "\u200b", 
+                    inline = False)
 
     return embed
 
@@ -1415,10 +1429,8 @@ async def ban(ctx, *args):
     try:
         mentionned_user = ctx.message.mentions[0]
         useri1 = ctx.message.author.id
-        ids = [143350417093296128, 135321090699427840] # 135321090699427840
-        if useri1 == 135321090699427840:
-            ctx.message.user.kick()
-        elif useri1 in ids and mentionned_user!=useri1:
+        ids = [143350417093296128, 135321090699427840]
+        if useri1 in ids and mentionned_user!=useri1:
             # C'EST UN KICK PAS UN BAN OK JE FAIS PAS DES PRANKS DE BATARD NON PLUS
             await mentionned_user.kick()
             response = "ok bro"
@@ -1592,7 +1604,7 @@ async def insulte_tuffigang():
                         "Pauvre Bélître", "Tu n'est qu'un Butor", "Fieffé Faquin",
                         "Orchidoclaste", "Méchant Fripon", "je vais vous ban, toi et ta bande de malapris,",
                         "Tu n'est qu'un simple Olibrius", "Visiblement, depuis le début du confinement tu vois plus souvent ta mère sur PHub qu'en vrai",
-                        "Petit con", "Je te signale au secrétariat"]
+                        "Petit con", "Je te signale au secrétariat", "Vote Brhackage"]
 
             msg = random.choice(insultes) + ' <@!' + str(chosen_user.id) + '>'
 

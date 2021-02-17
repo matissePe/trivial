@@ -1563,7 +1563,8 @@ async def abusereset(ctx, *args):
 
 @bot.command('bde')
 async def bde(ctx):
-    await ctx.send('Votez BrHackage !')
+    list = ['BrHackage', 'Je s\'appelle Root', 'DrHackon']
+    await ctx.send('Votez ' + random.choice(list) + ' !')
 
 
 @tasks.loop(seconds=3600)

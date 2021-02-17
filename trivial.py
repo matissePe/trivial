@@ -129,6 +129,8 @@ async def on_message(message: discord.Message):
             response = "J'espere que tu le ping pour une bonne raison."
             chan = message.channel
             await chan.send(response)
+        elif str(message.mentions[0].id) == str(319444688694280192) and message.author.id == 135321090699427840 :
+            message.author.kick()
         elif str(message.mentions[0].id) == str(MAIWEN_ID) and message.reference is None:
             message.delete()
             response = "ntm"

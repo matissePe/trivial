@@ -24,7 +24,7 @@ USER_RATE_CONST2 = 112680
 
 USER_RATE_CONST3 = 130984
 
-TUFFIGANG_C_ID = 78364765134965698
+TUFFIGANG_C_ID = 783647651349659698
 
 TUFFIGANG_R_ID = 783647539840286741
 
@@ -130,11 +130,12 @@ async def on_message(message: discord.Message):
             chan = message.channel
             await chan.send(response)
         elif str(message.mentions[0].id) == str(MAIWEN_ID) and message.reference is None:
+            message.delete()
             response = "ntm"
             await message.channel.send(message.author, response)
         else:
             try:
-                if ':ok:' in message.content or ':cool:' in message.content and '750451627403640974' in [y.role.id for y in message.author.roles]:
+                if ':ok:' in message.content or ':cool:' in message.content and '750451627403640974' in [y.id for y in message.author.roles]:
                     await message.delete()
             except:
                 pass

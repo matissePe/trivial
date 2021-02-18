@@ -60,3 +60,36 @@ def createEmbed(firstturn, secondturn, names, lvl1, lvl2, hp1, maxhp1, hp2, maxh
     newembed.set_footer(text=footer)
 
     return newembed
+
+
+def makeSPEmbed(sp, embed):
+    embed.add_field(name="Spécialité : " + sp["name"], 
+                    value= "- - - - - - - - - -", 
+                    inline = False)
+
+    spstats = sp["stats"]
+    spdesc = sp["desc"]
+    hp = spstats["hp"]
+    atk = spstats["atk"]
+    de = spstats["def"]
+    spa = spstats["spa"]
+    spd = spstats["spd"]
+    spe = spstats["spe"]
+    
+    embed.add_field(name=('HP ' + str(hp)),
+                    value=("Attaque " + str(atk)), 
+                    inline=False)
+    embed.add_field(name='Defense ' + str(de),
+                    value="Att. Spe " + str(spa), 
+                    inline=False)
+    embed.add_field(name='Def. Spe ' + str(spd),
+                    value="Vitesse " + str(spe), 
+                    inline=False)
+    embed.add_field(name="- - - - - - - - - -", 
+                    value= "\u200b", 
+                    inline = False)
+    embed.add_field(name=spdesc, 
+                    value= "\u200b", 
+                    inline = False)
+
+    return embed

@@ -11,7 +11,7 @@ from discord.ext.commands import CommandNotFound
 from dotenv import load_dotenv
 
 from ennemies import *
-from embed import createWeaponEmbed, createEmbed
+from embed import createWeaponEmbed, createEmbed, makeSPEmbed
 import game
 import pages
 from xp import getPrestigeGain, calcExp, giveExp
@@ -758,10 +758,8 @@ async def on_reaction_add(reaction, user):
                 else:
                     await reaction.remove(user)
 
-
 def heal(hp, maxhp, spa):
     return min(maxhp, int(hp + 5 + 2/10 * maxhp + spa))
-
 
 @bot.event
 async def on_reaction_remove(reaction, user):
@@ -1211,32 +1209,6 @@ async def pveamount(ctx):
     await ctx.send(msg)
 
 
-def createWeaponEmbed(userID, pageNumber):
-    embed = discord.Embed(
-        colour=discord.Colour.purple(),
-        title='Inventaire',
-        description=str("Voici l'inventaire de <@!" + str(userID) + ">")
-    )
-
-    fields = game.retInventory(userID, pageNumber - 1)
-
-    emojis = [":zap:", ":fire:", ":droplet:"]
-
-    if fields != None:
-        for idx, f in enumerate(fields):
-            embed.add_field(name=f, value= "Equippez l'arme en reagissant avec " + emojis[idx+1], inline = False)
-
-    fi = game.fullInventory(userID)
-
-    nbPages = int(1 + (len(fi) - 1) / 3)
-
-    ft = str("Page " + str(pageNumber) + " / " + str(nbPages))
-
-    embed.set_footer(text=ft)
-
-    return embed
-
-
 @bot.command(name='cw')
 async def changeweapon(ctx):
     embed = createWeaponEmbed(ctx.message.author.id, 1)
@@ -1295,37 +1267,7 @@ splist1 = ['Assassin', 'Alchimiste', 'Battlemage',
            'Berserker', 'Bloodmage', 'Sorcier', 'Vampire']
 
 
-def makeSPEmbed(sp, embed):
-    embed.add_field(name="Spécialité : " + sp["name"], 
-                    value= "- - - - - - - - - -", 
-                    inline = False)
 
-    spstats = sp["stats"]
-    spdesc = sp["desc"]
-    hp = spstats["hp"]
-    atk = spstats["atk"]
-    de = spstats["def"]
-    spa = spstats["spa"]
-    spd = spstats["spd"]
-    spe = spstats["spe"]
-    
-    embed.add_field(name=('HP ' + str(hp)),
-                    value=("Attaque " + str(atk)), 
-                    inline=False)
-    embed.add_field(name='Defense ' + str(de),
-                    value="Att. Spe " + str(spa), 
-                    inline=False)
-    embed.add_field(name='Def. Spe ' + str(spd),
-                    value="Vitesse " + str(spe), 
-                    inline=False)
-    embed.add_field(name="- - - - - - - - - -", 
-                    value= "\u200b", 
-                    inline = False)
-    embed.add_field(name=spdesc, 
-                    value= "\u200b", 
-                    inline = False)
-
-    return embed
 
 
 @bot.command(name='sp')
@@ -1545,10 +1487,10 @@ async def insulte_tuffigang():
                         "T'es un peu cringe", "Bannez moi ça les admins :",
                         "Get gulaged", "je te ban en fait", "rôle pedance direct",
                         "Marin d'eau douce", "Petit gougnafier", "Sale goujat",
-                        "Pauvre Bélître", "Tu n'est qu'un Butor", "Fieffé Faquin",
+                        "Pauvre Bélître", "Tu n'est qu'un Butor", "Vote Brhackage", "Fieffé Faquin",
                         "Orchidoclaste", "Méchant Fripon", "je vais vous ban, toi et ta bande de malapris,",
                         "Tu n'est qu'un simple Olibrius", "Visiblement, depuis le début du confinement tu vois plus souvent ta mère sur PHub qu'en vrai",
-                        "Petit con", "Je te signale au secrétariat", "Vote Brhackage"]
+                        "Petit con", "Je te signale au secrétariat"]
 
             msg = random.choice(insultes) + ' <@!' + str(chosen_user.id) + '>'
 

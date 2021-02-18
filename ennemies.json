@@ -1422,6 +1422,31 @@
             },
             "sp" : "Assassin+"
         },
+        
+        {
+            "id": "55",
+            "name" : "DrHackon",
+            "IA" : 3,
+            "stats": {
+                "level": 100,
+                "hp": 300,
+                "atk": 80,
+                "def": 150,
+                "spa": 45,
+                "spd": 150,
+                "spe": 150,
+                "exp": 3100
+            }, "weapon": {
+                "id" : 32,
+                "name" : "Shield de support",
+                "atk" : 40,
+                "def" : 10,
+                "spa" : 10,
+                "spd" : 10,
+                "spe" : 40
+            },
+            "sp" : "Alchimiste+"
+        },
 
         {
             "id": "56",
@@ -2125,9 +2150,9 @@
             "sp" : "Battlemage++"
         },
         
-
-
-        
+        {
+            
+        },
 
         {
             "id": "1001",

@@ -33,11 +33,14 @@ USER_RATE_CONST3 = 130984
 TUFFIGANG_C_ID = 783647651349659698
 
 TUFFIGANG_R_ID = 783647539840286741
+D1A_ID         = 750451627403640974
+
 
 MAIWEN_ID  = 688075252281901084
 GILDAS_ID  = 158571429183356937
 EVAN_ID    = 282264924472737792
 ANTOINE_ID = 319444688694280192
+GABRIEL_ID = 135321090699427840 #C'est moi le plus vieux sur discord hehe
 
 MINDELAY = 60
 
@@ -93,7 +96,7 @@ async def on_ready():
 async def on_message(message: discord.Message):
     process = True
     if message.guild is None and not message.author.bot:
-        if message.author.id == 143350417093296128 or message.author.id == 135321090699427840:
+        if message.author.id == 143350417093296128 or message.author.id == GABRIEL_ID:
             if "resetstats" in message.content:
                 idtoreset = int(message.content.split(' ')[1])
                 game.resetStats(idtoreset)
@@ -124,42 +127,42 @@ async def on_message(message: discord.Message):
             await chan.send(response)
             process = False
 
-    if not message.author.bot and len(message.mentions) > 0:
-        if str(message.mentions[0].id) == str(BOT_ID):
+    elif not message.author.bot and len(message.mentions) > 0:
+        if BOT_ID in [m.id for m in message.mentions]:
             response = "Debrouille-toi."
+            if message.author.id == GABRIEL_ID:
+                response = "^ Cet homme a raison"
             chan = message.channel
             await chan.send(response)
-        elif (str(message.mentions[0].id) == str(EVAN_ID) or str(message.mentions[0].id) == str(GILDAS_ID)) and message.reference is None :
+            
+        elif (EVAN_ID in [m.id for m in message.mentions] or GILDAS_ID in [m.id for m in message.mentions]) and message.reference is None:
             response = "J'espere que tu le ping pour une bonne raison."
             chan = message.channel
             await chan.send(response)
-        elif str(message.mentions[0].id) == str(ANTOINE_ID) and message.author.id == 135321090699427840 :
-            message.author.kick()
-        elif str(message.mentions[0].id) == str(MAIWEN_ID) and '750451627403640974' in [y.id for y in message.author.roles]:
-            message.delete()
-            response = "ntm"
-            await message.channel.send(message.author, response)
-        else:
+            
+        elif message.mentions[0].id == MAIWEN_ID and message.reference is None and D1A_ID in [y.id for y in message.author.roles]:
             try:
-                if ':ok:' in message.content or ':cool:' in message.content and '750451627403640974' in [y.id for y in message.author.roles]:
-                    await message.delete()
+                bot.delete_message(message)
             except:
                 pass
-
+            finally:
+                response = "ntm"
+                await message.channel.send(response)
+    elif not message.author.bot:
+        if ('🆗' in message.content or '🆒' in message.content) and D1A_ID in [y.id for y in message.author.roles]:
+            await message.channel.send("pas sympa ca khey")
+    
     if (process and not message.author.bot):
         if message.channel.id != TUFFIGANG_C_ID:
             if len(message.content) >= 10 and 'lefevre' not in message.content:
                 g, p = canGain(message.author.id, message.id, message.content)
                 if g:
                     if p == 100:
-                        giveExp(message.author.id,
-                                     random.randint(60, 105))
+                        giveExp(message.author.id, random.randint(60, 105))
                         game.pickupRandom(message.author.id)
 
                     else:
-
-                        giveExp(message.author.id,
-                                     random.randint(30, 55))
+                        giveExp(message.author.id, random.randint(30, 55))
 
                     if random.randint(1, 100) <= p and game.amountOfPveBattles(message.author.id) < 5:
                         game.incPveBattles(message.author.id)
@@ -758,6 +761,7 @@ async def on_reaction_add(reaction, user):
                 else:
                     await reaction.remove(user)
 
+
 def heal(hp, maxhp, spa):
     return min(maxhp, int(hp + 5 + 2/10 * maxhp + spa))
 
@@ -945,13 +949,21 @@ async def serverinfo(ctx):
             description=guild.description
         )
         embed.set_author(name=guild.name, icon_url= str(guild.icon_url))
-        embed.add_field(name='Creation date', value=str(ts), inline=False)
-        embed.add_field(name='Member count', value=str(
-            guild.member_count), inline=False)
-        embed.add_field(name='Region', value=str(guild.region), inline=False)
-        embed.add_field(name='Custom emoji count', value=str(
-            len(guild.emojis)), inline=False)
-        embed.add_field(name='Owner', value=str(guild.owner), inline=False)
+        embed.add_field(name='Creation date', 
+                        value=str(ts), 
+                        inline=False)
+        embed.add_field(name='Member count', 
+                        value=str(guild.member_count), 
+                        inline=False)
+        embed.add_field(name='Region', 
+                        value=str(guild.region), 
+                        inline=False)
+        embed.add_field(name='Custom emoji count', 
+                        value=str(len(guild.emojis)), 
+                        inline=False)
+        embed.add_field(name='Owner',
+                        value=str(guild.owner), 
+                        inline=False)
 
         await ctx.send(embed=embed)
 
@@ -990,15 +1002,20 @@ async def showstats(ctx):
     bar = "█" * progression + "░" * (10 - progression)
 
     embed.add_field(name=('Level ' + str(level)),
-                    value=("HP " + str(hp)), inline=False)
-    embed.add_field(name=('Attaque ' + str(atk) + "  [ +" + atkbonus + " ] (atk)"), value=(
-        "Defense " + str(de) + "  [ +" + defbonus + " ] (def)"), inline=False)
-    embed.add_field(name=('Att. Spe ' + str(spa) + "  [ +" + spabonus + " ] (spa)"), value=(
-        "Def. Spe " + str(spd) + "  [ +" + spdbonus + " ] (spd)"), inline=False)
-    embed.add_field(name=('Vitesse ' + str(spe) + "  [ +" + spebonus + " ] (spe)"), value=(
-        "Points de stats restants " + str(statpoints)), inline=False)
-    embed.add_field(name=('Exp : ' + str(exp) + " / " + \
-                    str(maxexp)), value=bar, inline=False)
+                    value=("HP " + str(hp)), 
+                    inline=False)
+    embed.add_field(name=('Attaque ' + str(atk) + "  [ +" + atkbonus + " ] (atk)"), 
+                    value=("Defense " + str(de) + "  [ +" + defbonus + " ] (def)"), 
+                    inline=False)
+    embed.add_field(name=('Att. Spe ' + str(spa) + "  [ +" + spabonus + " ] (spa)"), 
+                    value=("Def. Spe " + str(spd) + "  [ +" + spdbonus + " ] (spd)"),
+                    inline=False)
+    embed.add_field(name='Vitesse ' + str(spe) + "  [ +" + spebonus + " ] (spe)",
+                    value=f"Points de stats restants f{str(statpoints)}",
+                    inline=False)
+    embed.add_field(name=('Exp : ' + str(exp) + " / " + str(maxexp)),
+                    value=bar, 
+                    inline=False)
     await ctx.send(embed=embed)
 
 
@@ -1018,13 +1035,18 @@ async def showweaponstats(ctx):
     spd = weapon["spd"]
     spe = weapon["spe"]
 
-    embed.add_field(name=('Nom : ' + nom), value="-----------", inline=False)
+    embed.add_field(name=('Nom : ' + nom), 
+                    value="-----------", 
+                    inline=False)
     embed.add_field(name=('Attaque ' + str(atk)),
-                    value=("Defense " + str(de)), inline=False)
+                    value=("Defense " + str(de)), 
+                    inline=False)
     embed.add_field(name=('Att. Spe ' + str(spa)),
-                    value=("Def. Spe " + str(spd)), inline=False)
+                    value=("Def. Spe " + str(spd)), 
+                    inline=False)
     embed.add_field(name=('Vitesse ' + str(spe)),
-                    value="-----------", inline=False)
+                    value="-----------", 
+                    inline=False)
 
     await ctx.send(embed=embed)
 
@@ -1081,7 +1103,6 @@ async def duel(ctx, *args):
 
         else:
             response = "Vous ne pouvez pas vous battre en duel contre vous-même!"
-
     except:
         response = "lefevre duel @User"
     finally:
@@ -1204,8 +1225,7 @@ async def pve(ctx, *args):
 
 @bot.command(name='pveamount')
 async def pveamount(ctx):
-    msg = str("Vous avez " +
-              str(game.amountOfPveBattles(ctx.message.author.id)) + " combats restants.")
+    msg = str("Vous avez " + str(game.amountOfPveBattles(ctx.message.author.id)) + " combats restants.")
     await ctx.send(msg)
 
 
@@ -1262,12 +1282,9 @@ async def sellCurrentWeapon(ctx):
     await ctx.send(msg)
 
 
-splist = "Assassin, Alchimiste, Battlemage, Berserker, Bloodmage, Sorcier, Vampire"
 splist1 = ['Assassin', 'Alchimiste', 'Battlemage',
            'Berserker', 'Bloodmage', 'Sorcier', 'Vampire']
-
-
-
+splist = ', '.join(splist1)
 
 
 @bot.command(name='sp')
@@ -1331,6 +1348,7 @@ async def ban(ctx, *args):
     finally:
         msg = await ctx.send(response)
 
+
 @bot.command(name='prestige')
 async def prestige(ctx):
     useri = ctx.message.author.id
@@ -1346,11 +1364,14 @@ async def prestige(ctx):
             title=('Prestige'),
         )
         embed.add_field(name='Voulez-vous vraiment prestige ?',
-                        value="\u200b", inline=False)
-        embed.add_field(
-            name='Vous recommencerez au niveau 0, en perdant votre équipement et votre spécialité.', value="\u200b", inline=False)
+                        value="\u200b",
+                        inline=False)
+        embed.add_field(name='Vous recommencerez au niveau 0, en perdant votre équipement et votre spécialité.',
+                        value="\u200b",
+                        inline=False)
         embed.add_field(name='Vous obtiendrez ' + str(pgain) + ' points de prestige.',
-                        value="Si vous êtes sûr de vouloir prestige, faites `lefevre prestigeconfirm`.", inline=False)
+                        value="Si vous êtes sûr de vouloir prestige, faites `lefevre prestigeconfirm`.",
+                        inline=False)
         await ctx.send(embed=embed)
 
 
@@ -1412,14 +1433,18 @@ async def prestigeshop(ctx):
     sBonus = statLvl * 5
 
     embed.add_field(name="Multiplicateur d'experience actuel : " + str(exp_mul),
-                    value="Suivant : " + str(nexp_mul) + " Cout : " + str(eCost), inline=False)
+                    value="Suivant : " + str(nexp_mul) + " Cout : " + str(eCost), 
+                    inline=False)
     embed.add_field(name="Bonus de stats actuel (pour toutes les stats) : " + str(sBonus),
-                    value="Suivant : " + str(sBonus + 5) + " Cout : " + str(stCost), inline=False)
+                    value="Suivant : " + str(sBonus + 5) + " Cout : " + str(stCost), 
+                    inline=False)
     if spLvl < MAX_SP_TIER:
-        embed.add_field(name="Tier des spécialités déverouillées : " + str(spLvl), value="Suivant : " + \
-            str(spLvl + 1) + " Cout : " + str(spCost) + " Max : " + str(MAX_SP_TIER), inline=False)
+        embed.add_field(name="Tier des spécialités déverouillées : " + str(spLvl), 
+                        value="Suivant : " + str(spLvl + 1) + " Cout : " + str(spCost) + " Max : " + str(MAX_SP_TIER),
+                        inline=False)
     embed.add_field(name='Pour dépenser vos points de prestiges, utilisez la commande `lefevre pbuy <item>`',
-                    value="<item> : (sp | exp | stats)", inline=False)
+                    value="<item> : (sp | exp | stats)",
+                    inline=False)
 
     await ctx.send(embed=embed)
 
@@ -1446,7 +1471,7 @@ async def abusereset(ctx, *args):
     response = ""
     try:
         userid = ctx.message.author.id
-        if userid == 143350417093296128 or userid == 135321090699427840:
+        if userid == 143350417093296128 or userid == GABRIEL_ID:
             try:
                 abuser = ctx.message.mentions[0]
                 abuserid = abuser.id

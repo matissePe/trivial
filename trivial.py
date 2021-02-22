@@ -1110,8 +1110,7 @@ async def duel(ctx, *args):
             newembed = discord.Embed(
                 colour=discord.Colour.purple(),
                 title='Duel',
-                description=str("<@!" + str(useri1) + \
-                                "> a provoque <@!" + str(useri2) + "> en duel!")
+                description=str("<@!" + str(useri1) + "> a provoque <@!" + str(useri2) + "> en duel!")
             )
 
             level1 = int(user1["stats"]["level"])

@@ -1066,8 +1066,7 @@ async def usepoint(ctx, *args):
             if game.increaseStat(useri, stat, amount):
                 if (stat == "hp"):
                     amount *= 2
-                response = "La stat de " + stat + \
-                    " a ete augmentée de " + str(amount)
+                response = f"La stat de {stat} a ete augmentée de {str(amount)}"
             else:
                 response = "Une erreur s'est produite en tentant d'augmenter votre stat"
         else:

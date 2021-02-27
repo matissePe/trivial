@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 
 from ennemies import *
 from embed import createWeaponEmbed, createEmbed, makeSPEmbed
+from utils import *
 import game
 import pages
 from xp import getPrestigeGain, calcExp, giveExp
@@ -41,6 +42,8 @@ GILDAS_ID  = 158571429183356937
 EVAN_ID    = 282264924472737792
 ANTOINE_ID = 319444688694280192
 GABRIEL_ID = 135321090699427840 #C'est moi le plus vieux sur discord hehe
+
+INSULTES_ACTIVATED = True
 
 MINDELAY = 60
 
@@ -1491,12 +1494,20 @@ async def bde(ctx):
     list = ['BrHackage', 'Je s\'appelle Root', 'DrHackon']
     await ctx.send('Votez ' + random.choice(list) + ' !')
 
+@bot.command('toggleinsults')
+async def toggleinsults(ctx):
+    response = "C'est pas toi qui decide !"
+    if ctx.message.author.id == GABRIEL_ID:
+        INSULTES_ACTIVATED = not INSULTES_ACTIVATED
+        response = "Pas de probleme khet"
+    await ctx.send(response)
+
 
 @tasks.loop(seconds=3600)
 async def insulte_tuffigang():
     channel = bot.get_channel(TUFFIGANG_C_ID)
     tuffig = channel.guild.get_role(TUFFIGANG_R_ID)
-    if tuffig != None:
+    if tuffig != None and INSULTES_ACTIVATED:
         members = channel.members
         tuffimembers = []
         for member in members :
@@ -1516,7 +1527,15 @@ async def insulte_tuffigang():
                         "Petit con", "Je te signale au secrétariat"]
 
             msg = random.choice(insultes) + ' <@!' + str(chosen_user.id) + '>'
-
             await channel.send(msg)
+
+@tasks.loop(seconds=3600)
+async def image_tuffigang():
+    channel = bot.get_channel(TUFFIGANG_C_ID)
+    if not INSULTES_ACTIVATED:
+        photo = get_random_photo()
+        await channel.send(photo)
+
+
 
 bot.run(TOKEN)
